@@ -45,6 +45,8 @@ final blog_posts_widget = BWidget(
             ),
           ],
         ),
+
+        // 1. Multiple items page layout (grid)
         BIf(
           cond: 'data:view.isMultipleItems',
           children: [
@@ -60,271 +62,330 @@ final blog_posts_widget = BWidget(
                 ),
               ],
             ),
-          ],
-        ),
-        BElse(),
-        BLoop(
-          values: 'data:posts',
-          varName: 'post',
-          children: [
-            Div(
-              attributes: {'id': 'app-item'},
+            BElse(),
+
+            // 2. Error Page Viewport Fallback
+            BIf(
+              cond: 'data:view.isError',
               children: [
                 Div(
                   attributes: {
-                    'class': 'breadcrumb',
-                    'style': 'margin-bottom:20px; font-size:0.9rem;'
+                    'style': 'text-align:center; padding:80px 20px; color:var(--text-main);'
                   },
                   children: [
+                    H1(children: [Text('404 - Not Found')]),
+                    P(
+                      attributes: {'style': 'opacity:0.6; margin-top:10px;'},
+                      children: [Text('The requested service, product, or page could not be located.')],
+                    ),
                     A(
-                      attributes: {'expr:href': 'data:blog.homepageUrl'},
-                      children: [Text('Home')],
+                      attributes: {
+                        'expr:href': 'data:blog.homepageUrl',
+                        'class': 'v-btn active',
+                        'style': 'display:inline-block; margin-top:25px; text-decoration:none;'
+                      },
+                      children: [Text('Return to Marketplace')],
                     ),
-                    Text(' / '),
-                    BIf(
-                      cond: 'data:post.labels',
-                      children: [
-                        BLoop(
-                          values: 'data:post.labels',
-                          varName: 'label',
-                          index: 'i',
-                          children: [
-                            A(
-                              attributes: {'expr:href': 'data:label.url'},
-                              children: [BData(value: 'label.name')],
-                            ),
-                            BIf(
-                              cond: 'data:i < data:post.labels.size - 1',
-                              children: [Text(', ')],
-                            ),
-                          ],
-                        ),
-                        Text(' / '),
-                      ],
-                    ),
-                    BData(value: 'post.title'),
                   ],
                 ),
-                Div(
-                  attributes: {'class': 'product-layout', 'id': 'main-renderer'},
+                BElse(),
+
+                // 3. Static Page Viewport Fallback
+                BIf(
+                  cond: 'data:view.isPage',
                   children: [
-                    Div(
-                      attributes: {
-                        'id': 'initializing-state',
-                        'style': 'padding:40px; text-align:center; grid-column: 1 / -1;'
-                      },
+                    BLoop(
+                      values: 'data:posts',
+                      varName: 'post',
                       children: [
                         Div(
                           attributes: {
-                            'class': 'v-btn',
-                            'style': 'display:inline-block; cursor:default; animation: pulse 1.5s infinite;'
+                            'style': 'padding:35px; background:var(--bg-surface); border-radius:16px; border:1px solid var(--border-ui); box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05); color:var(--text-main);'
                           },
-                          children: [Text('Preparing Data Engine...')],
-                        ),
-                      ],
-                    ),
-                    Div(
-                      attributes: {
-                        'class': 'carousel-container hidden',
-                        'id': 'carousel-section'
-                      },
-                      children: [
-                        Div(
-                          attributes: {'class': 'carousel', 'id': 'main-carousel'},
                           children: [
-                            Div(attributes: {'class': 'carousel-inner', 'id': 'carousel-inner'}),
-                            Button(
-                              attributes: {
-                                'class': 'carousel-btn',
-                                'onclick': 'window.prevSlide()',
-                                'style': 'left:10px;'
-                              },
-                              children: [RawText('&#10094;')],
+                            H1(
+                              attributes: {'style': 'margin-bottom:20px;'},
+                              children: [BData(value: 'post.title')],
                             ),
-                            Button(
-                              attributes: {
-                                'class': 'carousel-btn',
-                                'onclick': 'window.nextSlide()',
-                                'style': 'right:10px;'
-                              },
-                              children: [RawText('&#10095;')],
+                            Div(
+                              attributes: {'style': 'line-height:1.7;'},
+                              children: [BData(value: 'post.body')],
                             ),
                           ],
                         ),
-                        Div(
-                          attributes: {
-                            'class': 'h-scroll',
-                            'id': 'thumbnail-row',
-                            'style': 'margin-top:20px; gap:10px;'
-                          },
-                        ),
                       ],
                     ),
-                    Div(
-                      attributes: {
-                        'class': 'details-container hidden',
-                        'id': 'details-section'
-                      },
+                    BElse(),
+
+                    // 4. E-Commerce Single Product/Business Post layout
+                    BLoop(
+                      values: 'data:posts',
+                      varName: 'post',
                       children: [
                         Div(
-                          attributes: {
-                            'id': 'p-sku',
-                            'style': 'font-size:0.75rem; color:var(--text); opacity:0.6; font-weight:800; margin-bottom:5px;'
-                          },
-                        ),
-                        H1(
-                          attributes: {
-                            'id': 'p-name',
-                            'style': 'margin-top:0;'
-                          },
-                        ),
-                        Div(
-                          attributes: {
-                            'id': 'p-brand',
-                            'style': 'font-weight:700; color:#777; margin-bottom:15px;'
-                          },
-                        ),
-                        Div(
-                          attributes: {
-                            'style': 'display:flex; align-items:center; margin-bottom:25px;'
-                          },
+                          attributes: {'id': 'app-item'},
                           children: [
                             Div(
                               attributes: {
-                                'class': 'price',
-                                'id': 'p-price'
+                                'class': 'breadcrumb',
+                                'style': 'margin-bottom:20px; font-size:0.9rem;'
                               },
-                              children: [Text('--')],
+                              children: [
+                                A(
+                                  attributes: {'expr:href': 'data:blog.homepageUrl'},
+                                  children: [Text('Home')],
+                                ),
+                                Text(' / '),
+                                BIf(
+                                  cond: 'data:post.labels',
+                                  children: [
+                                    BLoop(
+                                      values: 'data:post.labels',
+                                      varName: 'label',
+                                      index: 'i',
+                                      children: [
+                                        A(
+                                          attributes: {'expr:href': 'data:label.url'},
+                                          children: [BData(value: 'label.name')],
+                                        ),
+                                        BIf(
+                                          cond: 'data:i < data:post.labels.size - 1',
+                                          children: [Text(', ')],
+                                        ),
+                                      ],
+                                    ),
+                                    Text(' / '),
+                                  ],
+                                ),
+                                BData(value: 'post.title'),
+                              ],
                             ),
-                            Div(attributes: {'id': 'stock-badge-container'}),
-                          ],
-                        ),
-                        P(
-                          attributes: {
-                            'id': 'p-desc',
-                            'style': 'opacity:0.8; line-height:1.7;'
-                          },
-                        ),
-                        Div(attributes: {'class': 'variants', 'id': 'p-variants'}),
-                        Div(
-                          attributes: {'class': 'qty-controls'},
-                          children: [
-                            Button(
-                              attributes: {'class': 'qty-btn', 'id': 'qty-minus'},
-                              children: [Text('-')],
-                            ),
-                            Span(
-                              attributes: {
-                                'id': 'qty-val',
-                                'style': 'font-weight:900; font-size:1.4rem; min-width:30px; text-align:center;'
-                              },
-                              children: [Text('1')],
-                            ),
-                            Button(
-                              attributes: {'class': 'qty-btn', 'id': 'qty-plus'},
-                              children: [Text('+')],
-                            ),
-                          ],
-                        ),
-                        Button(
-                          attributes: {
-                            'class': 'v-btn active',
-                            'id': 'add-to-cart-btn',
-                            'style': 'width:100%; padding:20px; font-size:1.1rem; border-radius:15px; margin-top:25px;'
-                          },
-                          children: [Text('Add to Shopping Bag')],
-                        ),
-                        Div(
-                          attributes: {
-                            'class': 'seller-box',
-                            'id': 'p-seller',
-                            'style': 'display:none;'
-                          },
-                          children: [
-                            H4(
-                              attributes: {
-                                'style': 'margin:0 0 10px; opacity:0.6; text-transform:uppercase; font-size:0.75rem; letter-spacing:1px;'
-                              },
-                              children: [Text('Seller Details')],
-                            ),
-                            Div(attributes: {'id': 'seller-info'}),
-                            A(
-                              attributes: {
-                                'class': 'geo-badge',
-                                'id': 'maps-link',
-                                'style': 'display:none;',
-                                'target': '_blank'
-                              },
-                              children: [RawText('📍 Map Location')],
-                            ),
-                          ],
-                        ),
-                        Div(
-                          attributes: {
-                            'id': 'p-specs',
-                            'style': 'margin-top:40px; border-top:1px solid rgba(0,0,0,0.05); padding-top:25px; display:none;'
-                          },
-                          children: [
-                            H4(
-                              attributes: {
-                                'style': 'text-transform:uppercase; font-size:0.8rem; letter-spacing:1px; margin-bottom:15px;'
-                              },
-                              children: [Text('Specifications')],
+                            Div(
+                              attributes: {'class': 'product-layout', 'id': 'main-renderer'},
+                              children: [
+                                Div(
+                                  attributes: {
+                                    'id': 'initializing-state',
+                                    'style': 'padding:40px; text-align:center; grid-column: 1 / -1;'
+                                  },
+                                  children: [
+                                    Div(
+                                      attributes: {
+                                        'class': 'v-btn',
+                                        'style': 'display:inline-block; cursor:default; animation: pulse 1.5s infinite;'
+                                      },
+                                      children: [Text('Preparing Data Engine...')],
+                                    ),
+                                  ],
+                                ),
+                                Div(
+                                  attributes: {
+                                    'class': 'carousel-container hidden',
+                                    'id': 'carousel-section'
+                                  },
+                                  children: [
+                                    Div(
+                                      attributes: {'class': 'carousel', 'id': 'main-carousel'},
+                                      children: [
+                                        Div(attributes: {'class': 'carousel-inner', 'id': 'carousel-inner'}),
+                                        Button(
+                                          attributes: {
+                                            'class': 'carousel-btn',
+                                            'onclick': 'window.prevSlide()',
+                                            'style': 'left:10px;'
+                                          },
+                                          children: [RawText('&#10094;')],
+                                        ),
+                                        Button(
+                                          attributes: {
+                                            'class': 'carousel-btn',
+                                            'onclick': 'window.nextSlide()',
+                                            'style': 'right:10px;'
+                                          },
+                                          children: [RawText('&#10095;')],
+                                        ),
+                                      ],
+                                    ),
+                                    Div(
+                                      attributes: {
+                                        'class': 'h-scroll',
+                                        'id': 'thumbnail-row',
+                                        'style': 'margin-top:20px; gap:10px;'
+                                      },
+                                    ),
+                                  ],
+                                ),
+                                Div(
+                                  attributes: {
+                                    'class': 'details-container hidden',
+                                    'id': 'details-section'
+                                  },
+                                  children: [
+                                    Div(
+                                      attributes: {
+                                        'id': 'p-sku',
+                                        'style': 'font-size:0.75rem; color:var(--text); opacity:0.6; font-weight:800; margin-bottom:5px;'
+                                      },
+                                    ),
+                                    H1(
+                                      attributes: {
+                                        'id': 'p-name',
+                                        'style': 'margin-top:0;'
+                                      },
+                                    ),
+                                    Div(
+                                      attributes: {
+                                        'id': 'p-brand',
+                                        'style': 'font-weight:700; color:#777; margin-bottom:15px;'
+                                      },
+                                    ),
+                                    Div(
+                                      attributes: {
+                                        'style': 'display:flex; align-items:center; margin-bottom:25px;'
+                                      },
+                                      children: [
+                                        Div(
+                                          attributes: {
+                                            'class': 'price',
+                                            'id': 'p-price'
+                                          },
+                                          children: [Text('--')],
+                                        ),
+                                        Div(attributes: {'id': 'stock-badge-container'}),
+                                      ],
+                                    ),
+                                    P(
+                                      attributes: {
+                                        'id': 'p-desc',
+                                        'style': 'opacity:0.8; line-height:1.7;'
+                                      },
+                                    ),
+                                    Div(attributes: {'class': 'variants', 'id': 'p-variants'}),
+                                    Div(
+                                      attributes: {'class': 'qty-controls'},
+                                      children: [
+                                        Button(
+                                          attributes: {'class': 'qty-btn', 'id': 'qty-minus'},
+                                          children: [Text('-')],
+                                        ),
+                                        Span(
+                                          attributes: {
+                                            'id': 'qty-val',
+                                            'style': 'font-weight:900; font-size:1.4rem; min-width:30px; text-align:center;'
+                                          },
+                                          children: [Text('1')],
+                                        ),
+                                        Button(
+                                          attributes: {'class': 'qty-btn', 'id': 'qty-plus'},
+                                          children: [Text('+')],
+                                        ),
+                                      ],
+                                    ),
+                                    Button(
+                                      attributes: {
+                                        'class': 'v-btn active',
+                                        'id': 'add-to-cart-btn',
+                                        'style': 'width:100%; padding:20px; font-size:1.1rem; border-radius:15px; margin-top:25px;'
+                                      },
+                                      children: [Text('Add to Shopping Bag')],
+                                    ),
+                                    Div(
+                                      attributes: {
+                                        'class': 'seller-box',
+                                        'id': 'p-seller',
+                                        'style': 'display:none;'
+                                      },
+                                      children: [
+                                        H4(
+                                          attributes: {
+                                            'style': 'margin:0 0 10px; opacity:0.6; text-transform:uppercase; font-size:0.75rem; letter-spacing:1px;'
+                                          },
+                                          children: [Text('Seller Details')],
+                                        ),
+                                        Div(attributes: {'id': 'seller-info'}),
+                                        A(
+                                          attributes: {
+                                            'class': 'geo-badge',
+                                            'id': 'maps-link',
+                                            'style': 'display:none;',
+                                            'target': '_blank'
+                                          },
+                                          children: [RawText('📍 Map Location')],
+                                        ),
+                                      ],
+                                    ),
+                                    Div(
+                                      attributes: {
+                                        'id': 'p-specs',
+                                        'style': 'margin-top:40px; border-top:1px solid rgba(0,0,0,0.05); padding-top:25px; display:none;'
+                                      },
+                                      children: [
+                                        H4(
+                                          attributes: {
+                                            'style': 'text-transform:uppercase; font-size:0.8rem; letter-spacing:1px; margin-bottom:15px;'
+                                          },
+                                          children: [Text('Specifications')],
+                                        ),
+                                        Div(
+                                          attributes: {
+                                            'id': 'specs-list',
+                                            'style': 'font-size:0.95rem;'
+                                          },
+                                        ),
+                                      ],
+                                    ),
+                                  ],
+                                ),
+                              ],
                             ),
                             Div(
                               attributes: {
-                                'id': 'specs-list',
-                                'style': 'font-size:0.95rem;'
+                                'id': 'other-services',
+                                'style': 'margin-top:50px; display:none;'
                               },
+                              children: [
+                                H2(
+                                  attributes: {
+                                    'class': 'section-title',
+                                    'style': 'margin-left:0; padding-left:0; border-left:none;'
+                                  },
+                                  children: [Text('Optional Product-Related Services')],
+                                ),
+                                Div(
+                                  attributes: {
+                                    'class': 'h-scroll',
+                                    'id': 'other-services-list'
+                                  },
+                                ),
+                              ],
+                            ),
+                            Div(
+                              attributes: {
+                                'id': 'comments-section',
+                                'style': 'margin-top:60px; padding-top:40px; border-top:1px solid #eee;'
+                              },
+                              children: [
+                                H2(
+                                  attributes: {
+                                    'class': 'section-title',
+                                    'style': 'margin-left:0; border-left:none; padding-left:0;'
+                                  },
+                                  children: [Text('Customer Reviews & Community')],
+                                ),
+                                BInclude(name: 'comments', data: 'post'),
+                              ],
                             ),
                           ],
                         ),
+                        Div(
+                          attributes: {'class': 'hidden', 'id': 'post-body-raw'},
+                          children: [BData(value: 'post.body')],
+                        ),
                       ],
                     ),
-                  ],
-                ),
-                Div(
-                  attributes: {
-                    'id': 'other-services',
-                    'style': 'margin-top:50px; display:none;'
-                  },
-                  children: [
-                    H2(
-                      attributes: {
-                        'class': 'section-title',
-                        'style': 'margin-left:0; padding-left:0; border-left:none;'
-                      },
-                      children: [Text('Optional Product-Related Services')],
-                    ),
-                    Div(
-                      attributes: {
-                        'class': 'h-scroll',
-                        'id': 'other-services-list'
-                      },
-                    ),
-                  ],
-                ),
-                Div(
-                  attributes: {
-                    'id': 'comments-section',
-                    'style': 'margin-top:60px; padding-top:40px; border-top:1px solid #eee;'
-                  },
-                  children: [
-                    H2(
-                      attributes: {
-                        'class': 'section-title',
-                        'style': 'margin-left:0; border-left:none; padding-left:0;'
-                      },
-                      children: [Text('Customer Reviews & Community')],
-                    ),
-                    BInclude(name: 'comments', data: 'post'),
                   ],
                 ),
               ],
-            ),
-            Div(
-              attributes: {'class': 'hidden', 'id': 'post-body-raw'},
-              children: [BData(value: 'post.body')],
             ),
           ],
         ),

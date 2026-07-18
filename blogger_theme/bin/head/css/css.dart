@@ -255,7 +255,7 @@ html.dark .avatar-footer-row { background-color: rgba(0, 0, 0, 0.2); }
 
 .btn-hamburger {
     background: transparent; border: none; color: var(--text-main); font-size: 1.4rem;
-    cursor: pointer; display: none; height: 40px; width: 40px; align-items: center; justify-content: center;
+    cursor: pointer; display: flex !important; height: 40px; width: 40px; align-items: center; justify-content: center;
 }
 
 .header-center-search { 
@@ -468,8 +468,11 @@ html.dark .bottom-nav-item a:not(.active) .bottom-nav-icon-dot {
         text-transform: uppercase;
       }
 
-
-   
+    /* Prevent Cart FAB overlapping with Mobile Bottom Navigation Bar */
+    .cart-fab {
+        bottom: 94px !important;
+        right: 20px !important;
+    }
 }
 
 /* ==========================================================================
@@ -927,16 +930,108 @@ html.dark .antinna-country-item { border-bottom-color: #334155; }
 .btn-clear-loc:hover { background: rgba(255, 59, 48, 0.2); }
 
 /* --- Cart FAB & Spinner --- */
-.cart-fab { position: fixed; bottom: 30px; right: 30px; z-index: 1000; transition: transform 0.3s; cursor: pointer; display: flex; align-items: center; justify-content: center; }
+.cart-fab {
+    position: fixed !important;
+    top: 12px !important;
+    right: 16px !important;
+    bottom: auto !important;
+    z-index: 1000 !important;
+    width: 40px;
+    height: 40px;
+    background: var(--color-accent);
+    color: #fff;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    box-shadow: 0 4px 12px rgba(37, 99, 235, 0.3);
+    transition: transform 0.3s;
+}
 .cart-fab.loading { pointer-events: none; opacity: 0.8; }
 .cart-spinner {
-    display: none; width: 24px; height: 24px; border: 3px solid rgba(255,255,255,.3);
+    display: none; width: 20px; height: 24px; border: 2.5px solid rgba(255,255,255,.3);
     border-radius: 50%; border-top-color: #fff; animation: cart-spin 1s ease-in-out infinite;
 }
 .cart-fab.loading .cart-spinner { display: block; }
 .cart-fab.loading .cart-icon { display: none; }
 .cart-fab.loading .cart-count { display: none; }
 @keyframes cart-spin { to { transform: rotate(360deg); } }
+.cart-count {
+    position: absolute;
+    top: -5px;
+    right: -5px;
+    background: #ff3b30;
+    color: #fff;
+    border-radius: 50%;
+    width: 20px;
+    height: 20px;
+    font-size: 11px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 2px solid var(--bg-app);
+    font-weight: 800;
+}
+/* Cart backdrop & drawer top level */
+.cart-backdrop {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(0,0,0,0.4);
+    backdrop-filter: blur(2px);
+    z-index: 2000;
+    display: none;
+    opacity: 0;
+    transition: opacity 0.3s;
+    pointer-events: none;
+}
+.cart-backdrop.active {
+    display: block;
+    opacity: 1;
+    pointer-events: auto;
+}
+.cart-drawer {
+    position: fixed;
+    top: 0;
+    right: -400px;
+    width: 100%;
+    max-width: 400px;
+    height: 100vh;
+    background: var(--bg-app);
+    color: var(--text-main);
+    box-shadow: -5px 0 25px rgba(0,0,0,0.1);
+    z-index: 2001;
+    transition: right 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    display: flex;
+    flex-direction: column;
+}
+.cart-drawer.active {
+    right: 0;
+}
+.cart-header {
+    padding: 20px 25px;
+    border-bottom: 1px solid var(--border-ui);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-shrink: 0;
+}
+.cart-body {
+    padding: 0;
+    flex: 1;
+    overflow-y: auto;
+    scrollbar-width: thin;
+    height: 0;
+}
+.cart-footer {
+    padding: 20px 25px;
+    border-top: 1px solid var(--border-ui);
+    background: var(--bg-app);
+    flex-shrink: 0;
+}
 
 .condition-badge { display: inline-block; padding: 4px 12px; border-radius: 6px; font-size: 0.7rem; font-weight: 900; background: #f1f5f9; color: #64748b; text-transform: uppercase; border: 1px solid #e2e8f0; margin-left: 10px; vertical-align: middle; letter-spacing: 0.5px; }
 .condition-badge.cond-new { background: #e0f2fe; color: #0369a1; border-color: #bae6fd; }
