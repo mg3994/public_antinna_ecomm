@@ -368,9 +368,23 @@ html.dark .search-input:focus { background-color: #0f172a; border-color: var(--c
         background-color: #111827 !important;
     }
 
+    #sidebar-backdrop {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 0;
+        height: 0;
+        background-color: transparent;
+        z-index: 90;
+        pointer-events: none;
+        transition: background-color 0.3s ease;
+    }
     #sidebar-backdrop.backdrop-active {
-        position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
-        background-color: rgba(0, 0, 0, 0.4); backdrop-filter: blur(3px); z-index: 90;
+        width: 100vw;
+        height: 100vh;
+        background-color: rgba(0, 0, 0, 0.4);
+        backdrop-filter: blur(3px);
+        pointer-events: auto;
     }
 
     .scrollable-main-content { 
@@ -1000,6 +1014,7 @@ html.dark .antinna-country-item { border-bottom-color: #334155; }
     width: 100%;
     max-width: 400px;
     height: 100vh;
+    height: 100dvh;
     background: var(--bg-app);
     color: var(--text-main);
     box-shadow: -5px 0 25px rgba(0,0,0,0.1);
@@ -1027,7 +1042,7 @@ html.dark .antinna-country-item { border-bottom-color: #334155; }
     height: 0;
 }
 .cart-footer {
-    padding: 20px 25px;
+    padding: 20px 25px calc(24px + env(safe-area-inset-bottom, 0px)) 25px;
     border-top: 1px solid var(--border-ui);
     background: var(--bg-app);
     flex-shrink: 0;
