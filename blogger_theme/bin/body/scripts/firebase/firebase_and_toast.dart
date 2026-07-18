@@ -348,7 +348,8 @@ final firebase_and_toast = Script(
         showToast("Failed to safely terminate session data flow.", "error");
       }
     }
-      window.handleLogout = handleLogout;
+    window.handleLogout = handleLogout;
+
     /**
      * Copy User Unique ID context string buffer to clipboard securely
      */
@@ -476,9 +477,8 @@ final firebase_and_toast = Script(
       if (linkedPhoneNumber) {
         if (modalPhone) modalPhone.textContent = linkedPhoneNumber;
         if (modalPhoneContainer) modalPhoneContainer.classList.remove('ui-hidden');
-      
 
-       // Dynamically append an unlinking management interface state if configured
+        // Dynamically append an unlinking management interface state if configured
         if (modalUnlinkContainer) {
           modalUnlinkContainer.classList.remove('ui-hidden');
           modalUnlinkContainer.innerHTML = `
@@ -538,17 +538,102 @@ final firebase_and_toast = Script(
       } else {
         if (modalPhoneContainer) modalPhoneContainer.classList.add('ui-hidden');
         if (modalUnlinkContainer) {
-          modalUnlinkContainer.classList.add('ui-hidden');
-          modalUnlinkContainer.innerHTML = '';
+          modalUnlinkContainer.classList.remove('ui-hidden');
+          modalUnlinkContainer.innerHTML = `
+            <div class="link-action-row" style="margin-top: 12px; padding-top: 12px; border-top: 1px dashed var(--border-ui); display: flex; flex-direction: column; gap: 8px;">
+              <span style="font-size: 0.85rem; color: var(--text-muted); font-weight: 600;">Link Phone Number</span>
+
+              <div id="modal-link-phone-input-group" style="display: flex; gap: 8px;">
+                <input id="modal-phone-input-field" type="tel" placeholder="+919876543210" style="flex: 1; padding: 8px 12px; border: 1px solid var(--border-ui); border-radius: 8px; font-size: 0.85rem; background: var(--bg-surface); color: var(--text-main);" />
+                <button id="modal-send-otp-btn" style="background: var(--color-accent); color: white; border: none; padding: 8px 12px; border-radius: 8px; font-size: 0.85rem; cursor: pointer; font-weight: 600;">
+                  Send OTP
+                </button>
+              </div>
+
+              <div id="modal-link-otp-group" class="ui-hidden" style="display: flex; flex-direction: column; gap: 8px;">
+                <input id="modal-otp-input-field" type="text" placeholder="6-digit OTP" maxlength="6" style="padding: 8px 12px; border: 1px solid var(--border-ui); border-radius: 8px; font-size: 0.85rem; background: var(--bg-surface); color: var(--text-main);" />
+                <button id="modal-verify-otp-btn" style="background: #10b981; color: white; border: none; padding: 8px; border-radius: 8px; font-size: 0.85rem; cursor: pointer; font-weight: 600;">
+                  Verify & Link Phone
+                </button>
+              </div>
+
+              <div id="modal-recaptcha-container" style="margin-top: 5px;"></div>
+            </div>
+          `;
+
+          let confirmationResult = null;
+
+          const sendOtpBtn = document.getElementById('modal-send-otp-btn');
+          const verifyOtpBtn = document.getElementById('modal-verify-otp-btn');
+
+          sendOtpBtn?.addEventListener('click', async () => {
+            const phoneInput = document.getElementById('modal-phone-input-field');
+            const phoneNumber = phoneInput ? phoneInput.value.trim() : '';
+
+            if (!phoneNumber || phoneNumber.length < 10) {
+              window.showToast("Please enter a valid phone number including country code (e.g. +919876543210)", "error");
+              return;
+            }
+
+            try {
+              sendOtpBtn.disabled = true;
+              sendOtpBtn.textContent = "Sending...";
+
+              // Initialize recaptcha if not already
+              window.modalRecaptchaVerifier = new RecaptchaVerifier(auth, 'modal-recaptcha-container', {
+                size: 'invisible'
+              });
+
+              confirmationResult = await linkWithPhoneNumber(user, phoneNumber, window.modalRecaptchaVerifier);
+
+              window.showToast("OTP sent successfully!", "success");
+
+              // Toggle visibility of input fields
+              document.getElementById('modal-link-phone-input-group')?.classList.add('ui-hidden');
+              document.getElementById('modal-link-otp-group')?.classList.remove('ui-hidden');
+
+            } catch (err) {
+              console.error("Failed to send OTP:", err);
+              window.showToast(err.message || "Failed to send OTP. Make sure country code is correct.", "error");
+              sendOtpBtn.disabled = false;
+              sendOtpBtn.textContent = "Send OTP";
+            }
+          });
+
+          verifyOtpBtn?.addEventListener('click', async () => {
+            const otpInput = document.getElementById('modal-otp-input-field');
+            const code = otpInput ? otpInput.value.trim() : '';
+
+            if (!code || code.length !== 6) {
+              window.showToast("Please enter a valid 6-digit OTP", "error");
+              return;
+            }
+
+            try {
+              verifyOtpBtn.disabled = true;
+              verifyOtpBtn.textContent = "Verifying...";
+
+              await confirmationResult.confirm(code);
+              window.showToast("Phone number linked successfully!", "success");
+
+              // Force update window & session auth indicators
+              window.hasPhoneLinked = true;
+
+              // Close settings modal & refresh UI
+              window.closeSettingsModal();
+
+              // Trigger auth change to repaint
+              renderAuthState(auth.currentUser);
+
+            } catch (err) {
+              console.error("Failed to verify OTP:", err);
+              window.showToast(err.message || "OTP verification failed.", "error");
+              verifyOtpBtn.disabled = false;
+              verifyOtpBtn.textContent = "Verify & Link Phone";
+            }
+          });
         }
       }
-
-
-
-
-      
-
-      
     }
 
     // Modal Copy UID button binding
