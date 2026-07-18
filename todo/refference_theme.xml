@@ -1,0 +1,1706 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<html b:css='false' b:defaultwidgetversion='2' b:layoutsversion='3' b:responsive='true' expr:dir='data:blog.languageDirection' expr:lang='data:blog.locale' xmlns='http://www.w3.org/1999/xhtml' xmlns:b='http://www.google.com/2005/gml/b' xmlns:data='http://www.google.com/2005/gml/data' xmlns:expr='http://www.google.com/2005/gml/expr'>
+<head>
+  <meta content='width=device-width, initial-scale=1' name='viewport'/>
+  <b:include data='blog' name='all-head-content'/>
+  <title><data:blog.pageTitle/></title>
+  
+  <b:skin><![CDATA[
+    /* Premium Schema Engine - Perfected addons.xml */
+    :root {
+      --primary: #2c3e50;
+      --accent: #e67e22;
+      --bg: #f8f9fa;
+      --card: #ffffff;
+      --text: #333333;
+      --radius: 12px;
+      --shadow: 0 4px 6px -1px rgba(0,0,0,0.1), 0 2px 4px -1px rgba(0,0,0,0.06);
+    }
+    html.dark {
+      --bg: #0f172a; --card: #1e293b; --text: #f8fafc;
+      --shadow: 0 4px 6px -1px rgba(0,0,0,0.3);
+    }
+    body { background-color: var(--bg); color: var(--text); font-family: 'Inter', -apple-system, sans-serif; margin: 0; line-height: 1.5; overflow-x: hidden; transition: background 0.3s, color 0.3s; }
+    .container { max-width: 1100px; margin: 0 auto; padding: 20px; }
+
+    /* Navbar */
+    .nav { background: #fff; padding: 15px 0; box-shadow: var(--shadow); position: sticky; top: 0; z-index: 100; }
+    html.dark .nav { background: #1e293b; border-bottom: 1px solid #334155; }
+    .nav-inner { display: flex; justify-content: space-between; align-items: center; max-width: 1100px; margin: 0 auto; padding: 0 20px; gap: 20px; }
+    .brand { font-size: 1.5rem; font-weight: 800; color: var(--primary); text-decoration: none; flex-shrink: 0; }
+    html.dark .brand { color: #fff; }
+
+    /* Enhanced Search Header (Indeed Style) */
+    .header-center-search { flex: 1; max-width: 800px; }
+    .search-form-v2 { display: flex; align-items: center; background: #fff; border-radius: 12px; padding: 4px; box-shadow: 0 2px 8px rgba(0,0,0,0.1); border: 1px solid #ddd; transition: all 0.2s; }
+    html.dark .search-form-v2 { background: #1e293b; border-color: #334155; box-shadow: 0 4px 12px rgba(0,0,0,0.3); }
+    .search-form-v2:focus-within { border-color: var(--accent); box-shadow: 0 4px 12px rgba(230, 126, 34, 0.2); }
+
+    .search-input-group { flex: 1; display: flex; align-items: center; gap: 10px; padding: 0 15px; position: relative; cursor: text; }
+    .search-input-v2 { border: none; background: transparent; padding: 12px 0; width: 100%; outline: none; font-size: 0.95rem; font-weight: 600; color: inherit; }
+    .search-icon-v2 { color: #888; flex-shrink: 0; display: flex; align-items: center; }
+    .search-icon-v2 svg { width: 20px; height: 20px; fill: currentColor; }
+
+    .search-divider { width: 1px; height: 30px; background: #eee; flex-shrink: 0; }
+    html.dark .search-divider { background: #334155; }
+
+    .search-btn-v2 { background: var(--accent); color: #fff; border: none; padding: 10px 25px; border-radius: 10px; font-weight: 800; cursor: pointer; transition: all 0.2s; font-size: 0.9rem; margin-left: 5px; }
+    .search-btn-v2:hover { background: #d35400; transform: translateY(-1px); }
+
+    /* Responsive Header Logic */
+    @media (max-width: 768px) {
+      .nav-inner { padding: 10px 15px; gap: 10px; }
+      .brand { display: none; }
+      .search-form-v2 { flex-direction: column; align-items: stretch; border-radius: 15px; gap: 0; padding: 5px; }
+      .search-divider { display: none; }
+      .search-input-group { padding: 10px 15px; border-bottom: 1px solid #eee; }
+      html.dark .search-input-group { border-color: #334155; }
+      .search-input-group:last-of-type { border-bottom: none; }
+      .search-btn-v2 { margin: 5px 0 0; width: 100%; padding: 15px; }
+      .search-input-v2 { padding: 8px 0; }
+    }
+
+    /* Awesome Location Modal */
+    .modal-backdrop { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: rgba(0,0,0,0.5); backdrop-filter: blur(4px); z-index: 3000; display: none; align-items: center; justify-content: center; opacity: 0; transition: opacity 0.3s; }
+    .modal-backdrop.active { display: flex; opacity: 1; }
+    .modal-content { background: var(--card); width: 90%; max-width: 400px; padding: 30px; border-radius: 20px; box-shadow: 0 20px 40px rgba(0,0,0,0.2); transform: translateY(20px); transition: transform 0.3s; }
+    .modal-backdrop.active .modal-content { transform: translateY(0); }
+    .modal-header { margin-bottom: 20px; text-align: center; }
+    .modal-header h3 { margin: 0; font-size: 1.4rem; font-weight: 800; }
+    .modal-header p { margin: 10px 0 0; font-size: 0.9rem; color: #777; }
+    .loc-btn { width: 100%; padding: 15px; border-radius: 12px; border: 1px solid #eee; background: #f8f9fa; cursor: pointer; font-weight: 700; display: flex; align-items: center; justify-content: center; gap: 10px; margin-bottom: 20px; transition: all 0.2s; color: var(--text); }
+    html.dark .loc-btn { background: #334155; border-color: #475569; }
+    .loc-btn:hover { background: #eef2f7; border-color: var(--accent); }
+    .modal-divider { display: flex; align-items: center; text-align: center; color: #bbb; font-size: 0.8rem; margin-bottom: 20px; }
+    .modal-divider::before, .modal-divider::after { content: ""; flex: 1; border-bottom: 1px solid #eee; }
+    .modal-divider span { padding: 0 10px; }
+    .pin-field { display: flex; gap: 10px; }
+    .pin-field input { flex: 1; padding: 12px 15px; border-radius: 10px; border: 1px solid #ddd; outline: none; font-size: 1rem; font-weight: 700; background: transparent; color: inherit; }
+    .pin-field button { padding: 0 20px; border-radius: 10px; border: none; background: var(--accent); color: #fff; font-weight: 700; cursor: pointer; }
+
+    .cat-bar { background: #fff; border-top: 1px solid #eee; padding: 10px 0; overflow-x: auto; white-space: nowrap; scrollbar-width: none; }
+    html.dark .cat-bar { background: #1e293b; border-color: #334155; }
+    .cat-bar::-webkit-scrollbar { display: none; }
+    .cat-inner { max-width: 1100px; margin: 0 auto; padding: 0 20px; display: flex; gap: 15px; }
+    .cat-link { text-decoration: none; color: #666; font-size: 0.85rem; font-weight: 600; padding: 6px 15px; border-radius: 20px; background: #f0f0f0; transition: all 0.2s; }
+    html.dark .cat-link { background: #334155; color: #cbd5e1; }
+    .cat-link:hover, .cat-link.active { background: var(--accent); color: #fff; }
+
+    /* Grid */
+    .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 25px; margin-top: 30px; }
+    .card { background: var(--card); border-radius: var(--radius); overflow: hidden; box-shadow: var(--shadow); transition: transform 0.3s; text-decoration: none; color: inherit; display: block; position: relative; border: 1px solid transparent; }
+    html.dark .card { border-color: #334155; }
+    .card:hover { transform: translateY(-5px); }
+    .card-img-wrapper { width: 100%; height: 240px; position: relative; overflow: hidden; background: #f0f0f0; }
+    .card-img-scroll { display: flex; width: 100%; height: 100%; overflow-x: auto; scroll-snap-type: x mandatory; scrollbar-width: none; }
+    .card-img-scroll::-webkit-scrollbar { display: none; }
+    .card-img { flex: 0 0 100%; width: 100%; height: 100%; object-fit: cover; scroll-snap-align: start; }
+    .card-dots { position: absolute; bottom: 10px; left: 50%; transform: translateX(-50%); display: flex; gap: 6px; z-index: 5; pointer-events: none; }
+    .dot { width: 6px; height: 6px; border-radius: 50%; background: rgba(255,255,255,0.5); transition: all 0.2s; }
+    .dot.active { background: #fff; width: 12px; border-radius: 4px; }
+    .card-body { padding: 15px; }
+    .card-title { font-weight: 700; margin: 0 0 10px; font-size: 1.1rem; height: 2.8em; overflow: hidden; }
+    .card-badge { display: inline-block; padding: 2px 8px; border-radius: 4px; font-size: 0.7rem; background: #eee; margin-bottom: 8px; font-weight: 700; color: #333; }
+    html.dark .card-badge { background: #334155; color: #cbd5e1; }
+    .card-price { font-weight: 800; color: var(--accent); font-size: 1.1rem; }
+
+    /* Single Product Layout */
+    .product-layout { display: grid; grid-template-columns: 1fr; gap: 40px; background: #fff; padding: 30px; border-radius: var(--radius); box-shadow: var(--shadow); }
+    html.dark .product-layout { background: #1e293b; }
+    @media (min-width: 768px) { .product-layout { grid-template-columns: 1.2fr 1fr; } }
+    .carousel { position: relative; aspect-ratio: 1; background: #f0f0f0; border-radius: var(--radius); overflow: hidden; }
+    html.dark .carousel { background: #0f172a; }
+    .carousel-inner { display: flex; height: 100%; transition: transform 0.5s ease; }
+    .carousel-item { min-width: 100%; height: 100%; }
+    .carousel-item img { width: 100%; height: 100%; object-fit: contain; }
+    .carousel-btn { position: absolute; top: 50%; transform: translateY(-50%); background: rgba(255,255,255,0.9); border: none; width: 44px; height: 44px; border-radius: 50%; cursor: pointer; z-index: 10; display: flex; align-items: center; justify-content: center; font-size: 1.2rem; box-shadow: 0 2px 4px rgba(0,0,0,0.2); transition: all 0.2s; }
+    .carousel-btn:hover { background: #fff; transform: translateY(-50%) scale(1.1); }
+    html.dark .carousel-btn { background: #334155; color: #fff; }
+
+    .price { font-size: 2.2rem; font-weight: 800; color: var(--accent); transition: filter 0.3s; }
+    .price.blurry { filter: blur(4px); opacity: 0.5; pointer-events: none; }
+    .stock-badge { display: inline-block; padding: 4px 12px; border-radius: 4px; font-size: 0.85rem; font-weight: 700; margin-left: 10px; }
+    .in-stock { background: #e8f5e9; color: #2e7d32; }
+    .out-stock { background: #ffebee; color: #c62828; }
+    .instore-only { background: #fffde7; color: #fbc02d; }
+    .pre-order { background: #e3f2fd; color: #1976d2; }
+
+    .v-group { margin-bottom: 20px; }
+    .v-label { font-weight: 700; font-size: 0.85rem; margin-bottom: 10px; display: block; text-transform: uppercase; color: #777; }
+    html.dark .v-label { color: #94a3b8; }
+    .v-options { display: flex; gap: 10px; flex-wrap: wrap; }
+    .v-btn { padding: 12px 20px; border: 2px solid #ddd; border-radius: 10px; background: #fff; color: var(--text); cursor: pointer; font-weight: 600; transition: all 0.2s; }
+    html.dark .v-btn { background: #334155; border-color: #475569; color: #f8fafc; }
+    .v-btn.active { border-color: var(--accent); background: var(--accent); color: #fff; }
+    .v-btn:disabled { opacity: 0.3; cursor: not-allowed; border-style: dashed; }
+    .v-color { width: 44px; height: 44px; border-radius: 50%; border: 2px solid #eee; padding: 0; background-size: cover; background-position: center; transition: transform 0.2s; position: relative; }
+    html.dark .v-color { border-color: #475569; }
+    .v-color.active { outline: 3px solid var(--accent); outline-offset: 2px; border-color: #fff; z-index: 2; }
+
+    .qty-controls { display: flex; align-items: center; gap: 15px; margin: 25px 0; }
+    .qty-btn { width: 40px; height: 40px; border-radius: 50%; border: 2px solid #ddd; background: #fff; cursor: pointer; font-size: 1.2rem; font-weight: 700; display: flex; align-items: center; justify-content: center; transition: all 0.2s; color: var(--text); }
+    html.dark .qty-btn { background: #334155; border-color: #475569; }
+    .qty-btn:hover { border-color: var(--accent); color: var(--accent); }
+
+    .seller-box { margin-top: 30px; padding: 25px; border: 1px solid #eee; border-radius: var(--radius); background: #fafafa; }
+    html.dark .seller-box { background: #0f172a; border-color: #334155; }
+    .geo-badge { display: inline-flex; align-items: center; gap: 8px; background: #e1f5fe; color: #0288d1; padding: 8px 16px; border-radius: 20px; font-size: 0.85rem; margin-top: 15px; text-decoration: none; font-weight: 700; }
+
+    /* Cart Drawer */
+    .cart-backdrop { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: rgba(0,0,0,0.4); backdrop-filter: blur(2px); z-index: 2000; display: none; opacity: 0; transition: opacity 0.3s; pointer-events: none; }
+    .cart-backdrop.active { display: block; opacity: 1; pointer-events: auto; }
+    .cart-drawer { position: fixed; top: 0; right: -400px; width: 100%; max-width: 400px; height: 100vh; background: #fff; box-shadow: -5px 0 25px rgba(0,0,0,0.1); z-index: 2001; transition: right 0.3s cubic-bezier(0.4, 0, 0.2, 1); display: flex; flex-direction: column; }
+    html.dark .cart-drawer { background: #1e293b; color: #fff; }
+    .cart-drawer.active { right: 0; }
+    .cart-header { padding: 20px 25px; border-bottom: 1px solid #eee; display: flex; justify-content: space-between; align-items: center; flex-shrink: 0; }
+    html.dark .cart-header { border-color: #334155; }
+    .cart-body { padding: 0; flex: 1; overflow-y: auto; scrollbar-width: thin; height: 0; }
+    .cart-footer { padding: 20px 25px; border-top: 1px solid #eee; background: #fff; flex-shrink: 0; }
+    html.dark .cart-footer { background: #1e293b; border-color: #334155; }
+
+    .cart-fab { position: fixed; bottom: 30px; right: 30px; width: 64px; height: 64px; background: var(--accent); color: #fff; border-radius: 50%; display: flex; align-items: center; justify-content: center; cursor: pointer; box-shadow: 0 10px 25px rgba(230, 126, 34, 0.4); z-index: 1000; font-size: 1.5rem; transition: transform 0.3s; }
+    .cart-count { position: absolute; top: -5px; right: -5px; background: #ff3b30; color: #fff; border-radius: 50%; width: 26px; height: 26px; font-size: 12px; display: flex; align-items: center; justify-content: center; border: 2.5px solid #fff; font-weight: 900; }
+
+    /* Thumbnails */
+    .thumb { width: 70px; height: 70px; border-radius: 10px; cursor: pointer; border: 2px solid transparent; object-fit: cover; flex-shrink: 0; }
+    .thumb.active { border-color: var(--accent); }
+
+    /* Other Services */
+    .h-scroll { display: flex; overflow-x: auto; gap: 20px; padding: 10px 0; scrollbar-width: none; }
+    .h-scroll::-webkit-scrollbar { display: none; }
+    .h-card { min-width: 240px; background: #fff; padding: 15px; border-radius: var(--radius); box-shadow: var(--shadow); border-top: 4px solid var(--accent); }
+    html.dark .h-card { background: #1e293b; }
+
+    .hidden { display: none !important; }
+    .section-title { font-size: 1.5rem; margin: 40px 0 20px; border-left: 6px solid var(--accent); padding-left: 15px; font-weight: 800; }
+    @keyframes pulse { 0% { opacity: 1; } 50% { opacity: 0.5; } 100% { opacity: 1; } }
+  ]]></b:skin>
+
+  <!-- Load Google Maps API via Google's secure JSAPI architecture -->
+  <!-- <script src='https://www.google.com/jsapi'/> -->
+  <!--  <script>
+    google.load(&quot;maps&quot;, &quot;3&quot;, { other_params: &quot;sensor=false&quot; });
+  </script>  -->
+</head>
+<body>
+  <b:section id='header-section' showaddelement='no'>
+    <b:widget id='Header1' locked='true' title='mg3994 (Header)' type='Header' version='2' visible='true'>
+      <b:widget-settings>
+        <b:widget-setting name='displayUrl'/>
+        <b:widget-setting name='displayHeight'>0</b:widget-setting>
+        <b:widget-setting name='sectionWidth'>-1</b:widget-setting>
+        <b:widget-setting name='useImage'>false</b:widget-setting>
+        <b:widget-setting name='shrinkToFit'>false</b:widget-setting>
+        <b:widget-setting name='imagePlacement'>BEHIND</b:widget-setting>
+        <b:widget-setting name='displayWidth'>0</b:widget-setting>
+      </b:widget-settings>
+      <b:includable id='main'>
+        <nav class='nav'>
+          <div class='nav-inner'>
+            <a class='brand' expr:href='data:blog.homepageUrl'><data:blog.title/></a>
+
+            <div class='header-center-search'>
+              <form class='search-form-v2' expr:action='data:blog.searchUrl' id='search-form' method='get'>
+                <b:attr cond='not data:view.isPreview' name='target' value='_top'/>
+
+                <!-- "What" Input -->
+                <div class='search-input-group' style='position: relative;'>
+                  <span class='search-icon-v2'>
+                    <svg viewBox='0 0 24 24' xmlns='http://www.w3.org/2000/svg'><path d='M9.452 16.137c-1.852 0-3.422-.643-4.708-1.929s-1.93-2.856-1.93-4.708c0-1.853.644-3.422 1.93-4.708C6.03 3.505 7.6 2.862 9.452 2.862c1.853 0 3.422.643 4.708 1.93 1.287 1.286 1.93 2.855 1.93 4.708a6.25 6.25 0 01-.338 2.078 5.93 5.93 0 01-.915 1.704l5.553 5.558c.21.215.316.481.316.799 0 .317-.107.581-.322.792a1.08 1.08 0 01-.796.317c-.32 0-.584-.106-.796-.317l-5.546-5.546a5.991 5.991 0 01-1.716.914 6.284 6.284 0 01-2.078.338zm0-2.275c1.214 0 2.245-.423 3.092-1.27s1.27-1.878 1.27-3.092c0-1.214-.423-2.245-1.27-3.092s-1.878-1.27-3.092-1.27c-1.214 0-2.245.423-3.092 1.27S5.09 8.286 5.09 9.5c0 1.214.423 2.245 1.27 3.092s1.878 1.27 3.092 1.27z'/></svg>
+                  </span>
+                  <input autocomplete='off' class='search-input-v2' id='search-q' name='q' placeholder='Service title, keywords, or company' type='text'/>
+                </div>
+
+                <div class='search-divider'/>
+
+                <!-- "Where" Input -->
+                <div class='search-input-group' onclick='window.LocationRenderer.showModal()'>
+                  <span class='search-icon-v2'>
+                    <svg viewBox='0 0 24 24' xmlns='http://www.w3.org/2000/svg'><path d='M12 19.188c2.005-1.834 3.495-3.49 4.468-4.964.974-1.476 1.46-2.825 1.46-4.048 0-1.789-.572-3.253-1.717-4.394-1.144-1.14-2.548-1.71-4.211-1.71-1.664 0-3.067.57-4.212 1.71-1.144 1.14-1.716 2.605-1.716 4.394 0 1.223.486 2.571 1.46 4.045.973 1.473 2.462 3.129 4.468 4.967zm-.002 2.304c-.248 0-.496-.043-.743-.13a1.963 1.963 0 01-.664-.394 40.642 40.642 0 01-2.935-2.949c-.849-.954-1.558-1.88-2.126-2.78-.568-.9-1-1.77-1.293-2.614-.294-.843-.44-1.66-.44-2.45 0-2.554.824-4.589 2.473-6.105C7.92 2.555 9.83 1.797 12 1.797c2.17 0 4.08.758 5.73 2.273 1.648 1.516 2.473 3.551 2.473 6.106 0 .79-.147 1.606-.44 2.45-.294.842-.725 1.713-1.293 2.613-.569.9-1.277 1.826-2.127 2.78a40.646 40.646 0 01-2.934 2.95 1.967 1.967 0 01-.666.392 2.234 2.234 0 01-.745.131zM12 12.06c.57 0 1.056-.201 1.457-.603.402-.401.603-.887.603-1.457 0-.57-.201-1.056-.603-1.457A1.984 1.984 0 0012 7.94c-.57 0-1.056.201-1.457.603A1.985 1.985 0 009.94 10c0 .57.201 1.056.603 1.457.401.402.887.603 1.457.603z'/></svg>
+                  </span>
+                  <input autocomplete='off' class='search-input-v2' id='loc-display-v2' placeholder='City, PIN code' readonly='readonly' type='text'/>
+                </div>
+
+                <button class='search-btn-v2' type='submit'>Find</button>
+              </form>
+            </div>
+
+            <button class='qty-btn' id='theme-toggle' style='border:none; background:none; font-size:1.4rem;'>&#9790;</button>
+          </div>
+        </nav>
+      </b:includable>
+      <b:includable id='behindImageStyle'>
+    <b:if cond='data:sourceUrl'>
+      <b:include cond='data:this.image' data='{                    image: data:this.image,                    selector: &quot;.header-widget&quot;                  }' name='responsiveImageStyle'/>
+      <style type='text/css'>
+        .header-widget {
+          background-position: <data:blog.locale.languageAlignment/>;
+          background-repeat: no-repeat;
+          background-size: cover;
+        }
+      </style>
+    </b:if>
+  </b:includable>
+      <b:includable id='description'>
+    <p>
+      <data:this.description/>
+    </p>
+  </b:includable>
+      <b:includable id='image'>
+    <a class='header-image-wrapper' expr:href='data:blog.homepageUrl'>
+      <b:include data='{                                                 image: data:image,                                                 altText: data:blog.title.escaped,                                                 originalWidth: data:width,                                                 originalHeight: data:height                                               }' name='responsiveImage'/>
+    </a>
+  </b:includable>
+      <b:includable id='title'>
+    <h1>
+      <b:tag cond='data:view.url != data:blog.homepageUrl' expr:href='data:blog.homepageUrl' name='a'>
+        <data:title/>
+      </b:tag>
+    </h1>
+  </b:includable>
+    </b:widget>
+  </b:section>
+
+  <b:section id='category-section' showaddelement='no'>
+    <b:widget id='Label1' locked='true' title='Categories' type='Label' version='2' visible='true'>
+      <b:widget-settings>
+        <b:widget-setting name='sorting'>ALPHA</b:widget-setting>
+        <b:widget-setting name='display'>LIST</b:widget-setting>
+        <b:widget-setting name='selectedLabelsList'/>
+        <b:widget-setting name='showType'>ALL</b:widget-setting>
+        <b:widget-setting name='showFreqNumbers'>false</b:widget-setting>
+      </b:widget-settings>
+      <b:includable id='main'>
+        <b:if cond='data:view.isMultipleItems'>
+          <div class='cat-bar'>
+            <div class='cat-inner'>
+              <a expr:class='data:view.isSearch and !data:view.search.label ? &quot;cat-link active&quot; : &quot;cat-link&quot;' expr:href='data:blog.homepageUrl + &quot;search&quot;'>ALL</a>
+              <b:loop values='data:labels' var='label'>
+                <a class='cat-link' expr:href='data:label.url'><data:label.name/></a>
+                <!-- <a expr:class='data:view.search.label == data:label.name ? &quot;cat-link active&quot; : &quot;cat-link&quot;' expr:href='data:label.url'><data:label.name/></a>  -->
+              </b:loop>
+            </div>
+          </div>
+        </b:if>
+      </b:includable>
+      <b:includable id='cloud'>
+  <b:loop values='data:labels' var='label'>
+    <span class='label-size'>
+      <b:class expr:name='&quot;label-size-&quot; + data:label.cssSize'/>
+      <a class='label-name' expr:href='data:label.url'>
+        <data:label.name/>
+        <b:if cond='data:this.showFreqNumbers'>
+          <span class='label-count'><data:label.count/></span>
+        </b:if>
+      </a>
+    </span>
+  </b:loop>
+</b:includable>
+      <b:includable id='content'>
+  <div class='widget-content'>
+    <b:class expr:name='data:this.display + &quot;-label-widget-content&quot;'/>
+    <b:include cond='data:this.display == &quot;list&quot;' name='list'/>
+    <b:include cond='data:this.display == &quot;cloud&quot;' name='cloud'/>
+  </div>
+</b:includable>
+      <b:includable id='list'>
+  <ul>
+    <b:loop values='data:labels' var='label'>
+      <li>
+        <a class='label-name' expr:href='data:label.url'>
+          <data:label.name/>
+          <b:if cond='data:this.showFreqNumbers'>
+            <span class='label-count'><data:label.count/></span>
+          </b:if>
+        </a>
+      </li>
+    </b:loop>
+  </ul>
+</b:includable>
+    </b:widget>
+  </b:section>
+
+  <div class='container'>
+    <b:section id='main-section' showaddelement='yes'>
+      <b:widget id='Blog1' locked='true' title='Blog Posts' type='Blog' version='2' visible='true'>
+        <b:widget-settings>
+          <b:widget-setting name='showDateHeader'>false</b:widget-setting>
+          <b:widget-setting name='style.textcolor'>#ffffff</b:widget-setting>
+          <b:widget-setting name='showShareButtons'>false</b:widget-setting>
+          <b:widget-setting name='showCommentLink'>true</b:widget-setting>
+          <b:widget-setting name='style.urlcolor'>#ffffff</b:widget-setting>
+          <b:widget-setting name='showAuthor'>true</b:widget-setting>
+          <b:widget-setting name='style.linkcolor'>#ffffff</b:widget-setting>
+          <b:widget-setting name='style.unittype'>TextAndImage</b:widget-setting>
+          <b:widget-setting name='style.bgcolor'>#ffffff</b:widget-setting>
+          <b:widget-setting name='reactionsLabel'/>
+          <b:widget-setting name='showAuthorProfile'>false</b:widget-setting>
+          <b:widget-setting name='style.layout'>1x1</b:widget-setting>
+          <b:widget-setting name='showLabels'>true</b:widget-setting>
+          <b:widget-setting name='showLocation'>true</b:widget-setting>
+          <b:widget-setting name='showTimestamp'>true</b:widget-setting>
+          <b:widget-setting name='postsPerAd'>1</b:widget-setting>
+          <b:widget-setting name='showBacklinks'>false</b:widget-setting>
+          <b:widget-setting name='style.bordercolor'>#ffffff</b:widget-setting>
+          <b:widget-setting name='showInlineAds'>false</b:widget-setting>
+          <b:widget-setting name='showReactions'>false</b:widget-setting>
+        </b:widget-settings>
+        <b:includable id='main' var='top'>
+          <b:if cond='data:view.isHomepage'><h2 class='section-title'>Latest Arrivals</h2></b:if>
+          <b:if cond='data:view.isMultipleItems'>
+            <div class='grid' id='app-grid'>
+              <b:loop values='data:posts' var='post'><b:include data='post' name='postCard'/></b:loop>
+            </div>
+          <b:else/>
+            <b:loop values='data:posts' var='post'>
+              <div id='app-item'>
+                 <div class='breadcrumb' style='margin-bottom:20px; font-size:0.9rem;'>
+                   <a expr:href='data:blog.homepageUrl'>Home</a> /
+                   <b:if cond='data:post.labels'>
+                     <b:loop index='i' values='data:post.labels' var='label'>
+                       <a expr:href='data:label.url'><data:label.name/></a>
+                       <b:if cond='data:i &lt; data:post.labels.size - 1'>, </b:if>
+                     </b:loop>
+                     /
+                   </b:if>
+                   <data:post.title/>
+                 </div>
+                 <div class='product-layout' id='main-renderer'>
+                    <div id='initializing-state' style='padding:40px; text-align:center; grid-column: 1 / -1;'>
+                       <div class='v-btn' style='display:inline-block; cursor:default; animation: pulse 1.5s infinite;'>Preparing Data Engine...</div>
+                    </div>
+                    <div class='carousel-container hidden' id='carousel-section'>
+                       <div class='carousel' id='main-carousel'>
+                          <div class='carousel-inner' id='carousel-inner'/>
+                          <button class='carousel-btn' onclick='window.prevSlide()' style='left:10px;'>&#10094;</button>
+                          <button class='carousel-btn' onclick='window.nextSlide()' style='right:10px;'>&#10095;</button>
+                       </div>
+                       <div class='h-scroll' id='thumbnail-row' style='margin-top:20px; gap:10px;'/>
+                    </div>
+                    <div class='details-container hidden' id='details-section'>
+                       <div id='p-sku' style='font-size:0.75rem; color:var(--text); opacity:0.6; font-weight:800; margin-bottom:5px;'/>
+                       <h1 id='p-name' style='margin-top:0;'/>
+                       <div id='p-brand' style='font-weight:700; color:#777; margin-bottom:15px;'/>
+                       <div style='display:flex; align-items:center; margin-bottom:25px;'>
+                         <div class='price' id='p-price'>--</div>
+                         <div id='stock-badge-container'/>
+                       </div>
+                       <p id='p-desc' style='opacity:0.8; line-height:1.7;'/>
+                       <div class='variants' id='p-variants'/>
+                       <div class='qty-controls'>
+                         <button class='qty-btn' id='qty-minus'>-</button>
+                         <span id='qty-val' style='font-weight:900; font-size:1.4rem; min-width:30px; text-align:center;'>1</span>
+                         <button class='qty-btn' id='qty-plus'>+</button>
+                       </div>
+                       <button class='v-btn active' id='add-to-cart-btn' style='width:100%; padding:20px; font-size:1.1rem; border-radius:15px; margin-top:25px;'>Add to Shopping Bag</button>
+                       <div class='seller-box' id='p-seller' style='display:none;'>
+                          <h4 style='margin:0 0 10px; opacity:0.6; text-transform:uppercase; font-size:0.75rem; letter-spacing:1px;'>Seller Details</h4>
+                          <div id='seller-info'/>
+                          <a class='geo-badge' id='maps-link' style='display:none;' target='_blank'>📍 Map Location</a>
+                       </div>
+                       <div id='p-specs' style='margin-top:40px; border-top:1px solid rgba(0,0,0,0.05); padding-top:25px; display:none;'>
+                          <h4 style='text-transform:uppercase; font-size:0.8rem; letter-spacing:1px; margin-bottom:15px;'>Specifications</h4>
+                          <div id='specs-list' style='font-size:0.95rem;'/>
+                       </div>
+                    </div>
+                 </div>
+                 <div id='other-services' style='margin-top:50px; display:none;'>
+                    <h2 class='section-title' style='margin-left:0; padding-left:0; border-left:none;'>Optional Product-Related Services</h2>
+                    <div class='h-scroll' id='other-services-list'/>
+                 </div>
+                 <div id='comments-section' style='margin-top:60px; padding-top:40px; border-top:1px solid #eee;'>
+                    <h2 class='section-title' style='margin-left:0; border-left:none; padding-left:0;'>Customer Reviews &amp; Community</h2>
+                    <b:include data='post' name='comments'/>
+                 </div>
+              </div>
+              <div class='hidden' id='post-body-raw'><data:post.body/></div>
+            </b:loop>
+          </b:if>
+        </b:includable>
+        <b:includable id='aboutPostAuthor'>
+  <div class='author-name'>
+    <a class='g-profile' expr:href='data:post.author.profileUrl' rel='author' title='author profile'>
+      <span>
+        <data:post.author.name/>
+      </span>
+    </a>
+  </div>
+  <div>
+    <span class='author-desc'>
+      <data:post.author.aboutMe/>
+    </span>
+  </div>
+</b:includable>
+        <b:includable id='addComments'>
+  <a expr:href='data:post.commentsUrl' expr:onclick='data:post.commentsUrlOnclick'>
+    <b:message name='messages.postAComment'/>
+  </a>
+</b:includable>
+        <b:includable id='blogThisShare'>
+  <b:with value='&quot;window.open(this.href, \&quot;_blank\&quot;, \&quot;height=270,width=475\&quot;); return false;&quot;' var='onclick'>
+    <b:include name='platformShare'/>
+  </b:with>
+</b:includable>
+        <b:includable id='bylineByName' var='byline'>
+  <b:switch var='data:byline.name'>
+  <b:case value='share'/>
+    <b:include cond='data:post.shareUrl' name='postShareButtons'/>
+  <b:case value='comments'/>
+    <b:include cond='data:post.allowComments' name='postCommentsLink'/>
+  <b:case value='location'/>
+    <b:include cond='data:post.location' name='postLocation'/>
+  <b:case value='timestamp'/>
+    <b:include cond='not data:view.isPage' name='postTimestamp'/>
+  <b:case value='author'/>
+    <b:include name='postAuthor'/>
+  <b:case value='labels'/>
+    <b:include cond='data:post.labels' name='postLabels'/>
+  <b:case value='icons'/>
+    <b:include cond='data:post.emailPostUrl' name='emailPostIcon'/>
+  </b:switch>
+</b:includable>
+        <b:includable id='bylineRegion' var='regionItems'>
+  <b:loop values='data:regionItems' var='byline'>
+    <b:include data='byline' name='bylineByName'/>
+  </b:loop>
+</b:includable>
+        <b:includable id='commentAuthorAvatar'>
+  <div class='avatar-image-container'>
+    <img class='author-avatar' expr:src='data:comment.authorAvatarSrc' height='35' width='35'/>
+  </div>
+</b:includable>
+        <b:includable id='commentDeleteIcon' var='comment'>
+  <span expr:class='&quot;item-control &quot; + data:comment.adminClass'>
+    <b:if cond='data:showCmtPopup'>
+      <div class='goog-toggle-button'>
+        <div class='goog-inline-block comment-action-icon'/>
+      </div>
+    <b:else/>
+      <a class='comment-delete' expr:href='data:comment.deleteUrl' expr:title='data:messages.deleteComment'>
+        <img src='https://resources.blogblog.com/img/icon_delete13.gif'/>
+      </a>
+    </b:if>
+  </span>
+</b:includable>
+        <b:includable id='commentForm' var='post'>
+  <div class='comment-form'>
+    <a name='comment-form'/>
+    <h4 id='comment-post-message'><data:messages.postAComment/></h4>
+    <b:if cond='data:this.messages.blogComment != &quot;&quot;'>
+      <p><data:this.messages.blogComment/></p>
+    </b:if>
+    <b:include data='post' name='commentFormIframeSrc'/>
+    <iframe allowtransparency='allowtransparency' class='blogger-iframe-colorize blogger-comment-from-post' expr:height='data:cmtIframeInitialHeight ?: &quot;90px&quot;' frameborder='0' id='comment-editor' name='comment-editor' src='' width='100%'/>
+    <data:post.cmtfpIframe/>
+    <script type='text/javascript'>
+      BLOG_CMT_createIframe(&#39;<data:post.appRpcRelayPath/>&#39;);
+    </script>
+  </div>
+</b:includable>
+        <b:includable id='commentFormIframeSrc' var='post'>
+  <a expr:href='data:post.commentFormIframeSrc' id='comment-editor-src'/>
+</b:includable>
+        <b:includable id='commentItem' var='comment'>
+  <div class='comment' expr:id='&quot;c&quot; + data:comment.id'>
+    <b:include cond='data:blog.enabledCommentProfileImages' name='commentAuthorAvatar'/>
+
+    <div class='comment-block'>
+      <div class='comment-author'>
+        <b:if cond='data:comment.authorUrl'>
+          <b:message name='messages.authorSaidWithLink'>
+            <b:param expr:value='data:comment.author' name='authorName'/>
+            <b:param expr:value='data:comment.authorUrl' name='authorUrl'/>
+          </b:message>
+        <b:else/>
+          <b:message name='messages.authorSaid'>
+            <b:param expr:value='data:comment.author' name='authorName'/>
+          </b:message>
+        </b:if>
+      </div>
+      <div expr:class='&quot;comment-body&quot; + (data:comment.isDeleted ? &quot; deleted&quot; : &quot;&quot;)'>
+        <data:comment.body/>
+      </div>
+      <div class='comment-footer'>
+        <span class='comment-timestamp'>
+          <a expr:href='data:comment.url' title='comment permalink'>
+            <data:comment.timestamp/>
+          </a>
+          <b:include data='comment' name='commentDeleteIcon'/>
+        </span>
+      </div>
+    </div>
+  </div>
+</b:includable>
+        <b:includable id='commentList' var='comments'>
+  <div id='comments-block'>
+    <b:loop values='data:comments' var='comment'>
+      <b:include data='comment' name='commentItem'/>
+    </b:loop>
+  </div>
+</b:includable>
+        <b:includable id='commentPicker' var='post'>
+  <b:if cond='data:post.showThreadedComments'>
+    <b:include data='post' name='threadedComments'/>
+  <b:else/>
+    <b:include data='post' name='comments'/>
+  </b:if>
+</b:includable>
+        <b:includable id='comments' var='post'>
+  <section expr:class='&quot;comments&quot; + (data:post.embedCommentForm ? &quot; embed&quot; : &quot;&quot;)' expr:data-num-comments='data:post.numberOfComments' id='comments'>
+    <a name='comments'/>
+    <b:if cond='data:post.allowComments'>
+
+      <b:include name='commentsTitle'/>
+
+      <div expr:id='data:widget.instanceId + &quot;_comments-block-wrapper&quot;'>
+        <b:include cond='data:post.comments' data='post.comments' name='commentList'/>
+      </div>
+
+      <b:if cond='data:post.commentPagingRequired'>
+        <div class='paging-control-container'>
+          <b:if cond='data:post.hasOlderLinks'>
+            <a expr:class='data:post.oldLinkClass' expr:href='data:post.oldestLinkUrl'>
+              <data:messages.oldest/>
+            </a>
+            <a expr:class='data:post.oldLinkClass' expr:href='data:post.olderLinkUrl'>
+              <data:messages.older/>
+            </a>
+          </b:if>
+
+          <span class='comment-range-text'>
+            <data:post.commentRangeText/>
+          </span>
+
+          <b:if cond='data:post.hasNewerLinks'>
+            <a expr:class='data:post.newLinkClass' expr:href='data:post.newerLinkUrl'>
+              <data:messages.newer/>
+            </a>
+            <a expr:class='data:post.newLinkClass' expr:href='data:post.newestLinkUrl'>
+              <data:messages.newest/>
+            </a>
+          </b:if>
+        </div>
+      </b:if>
+
+      <div class='footer'>
+        <b:if cond='data:post.embedCommentForm'>
+          <b:if cond='data:post.allowNewComments'>
+            <b:include data='post' name='commentForm'/>
+          <b:else/>
+            <data:post.noNewCommentsText/>
+          </b:if>
+        <b:else/>
+          <b:if cond='data:post.allowComments'>
+            <b:include data='post' name='addComments'/>
+          </b:if>
+        </b:if>
+      </div>
+    </b:if>
+    <b:if cond='data:showCmtPopup'>
+      <div id='comment-popup'>
+        <iframe allowtransparency='allowtransparency' frameborder='0' id='comment-actions' name='comment-actions' scrolling='no'>
+        </iframe>
+      </div>
+    </b:if>
+  </section>
+</b:includable>
+        <b:includable id='commentsLink'>
+  <a class='comment-link' expr:href='data:post.commentsUrl' expr:onclick='data:post.commentsUrlOnclick'>
+    <b:if cond='data:post.numberOfComments &gt; 0'>
+      <b:message name='messages.numberOfComments'>
+        <b:param expr:value='data:post.numberOfComments' name='numComments'/>
+      </b:message>
+    <b:else/>
+      <data:messages.postAComment/>
+    </b:if>
+  </a>
+</b:includable>
+        <b:includable id='commentsLinkIframe'>
+  <!-- G+ comments, no longer available. The includable is retained for backwards-compatibility. -->
+</b:includable>
+        <b:includable id='commentsTitle'>
+  <h3 class='title'><data:messages.comments/></h3>
+</b:includable>
+        <b:includable id='defaultAdUnit'>
+  <ins class='adsbygoogle' data-ad-format='auto' expr:data-ad-client='data:adClientId ?: data:blog.adsenseClientId' expr:data-ad-host='data:blog.adsenseHostId' expr:style='data:style ?: &quot;display: block;&quot;'>
+    <b:attr cond='not data:blog.analytics4' expr:value='data:blog.analyticsAccountNumber' name='data-analytics-uacct'/>
+  </ins>
+  <script>
+   (adsbygoogle = window.adsbygoogle || []).push({});
+  </script>
+</b:includable>
+        <b:includable id='emailPostIcon'>
+  <span class='byline post-icons'>
+    <!-- email post links -->
+    <span class='item-action'>
+      <a expr:href='data:post.emailPostUrl' expr:title='data:messages.emailPost'>
+        <b:include data='{ iconClass: &quot;touch-icon sharing-icon&quot; }' name='emailIcon'/>
+      </a>
+    </span>
+  </span>
+</b:includable>
+        <b:includable id='facebookShare'>
+  <b:with value='&quot;window.open(this.href, \&quot;_blank\&quot;, \&quot;height=430,width=640\&quot;); return false;&quot;' var='onclick'>
+    <b:include name='platformShare'/>
+  </b:with>
+</b:includable>
+        <b:includable id='feedLinks'>
+  <b:if cond='!data:view.isPost'> <!-- Blog feed links -->
+    <b:if cond='data:feedLinks'>
+      <div class='blog-feeds'>
+        <b:include data='feedLinks' name='feedLinksBody'/>
+      </div>
+    </b:if>
+  <b:else/> <!--Post feed links -->
+    <div class='post-feeds'>
+      <b:loop values='data:posts' var='post'>
+        <b:if cond='data:post.allowComments and data:post.feedLinks'>
+          <b:include data='post.feedLinks' name='feedLinksBody'/>
+        </b:if>
+      </b:loop>
+    </div>
+  </b:if>
+</b:includable>
+        <b:includable id='feedLinksBody' var='links'>
+  <div class='feed-links'>
+  <data:messages.subscribeTo/>
+  <b:loop values='data:links' var='f'>
+     <a class='feed-link' expr:href='data:f.url' expr:type='data:f.mimeType' target='_blank'><data:f.name/> (<data:f.feedType/>)</a>
+  </b:loop>
+  </div>
+</b:includable>
+        <b:includable id='footerBylines'>
+  <b:if cond='data:widgets.Blog.first.footerBylines'>
+    <b:loop index='i' values='data:widgets.Blog.first.footerBylines' var='region'>
+      <b:if cond='not data:region.items.empty'>
+        <div expr:class='&quot;post-footer-line post-footer-line-&quot; + (data:i + 1)'>
+          <b:with value='&quot;footer-&quot; + (data:i + 1)' var='regionName'>
+            <b:include data='region.items' name='bylineRegion'/>
+          </b:with>
+        </div>
+      </b:if>
+    </b:loop>
+  </b:if>
+</b:includable>
+        <b:includable id='googlePlusShare'>
+</b:includable>
+        <b:includable id='headerByline'>
+  <b:if cond='data:widgets.Blog.first.headerByline'>
+    <div class='post-header'>
+      <div class='post-header-line-1'>
+        <b:with value='&quot;header-1&quot;' var='regionName'>
+          <b:include data='data:widgets.Blog.first.headerByline.items' name='bylineRegion'/>
+        </b:with>
+      </div>
+    </div>
+  </b:if>
+</b:includable>
+        <b:includable id='homePageLink'>
+  <a class='home-link' expr:href='data:blog.homepageUrl'>
+    <data:messages.home/>
+  </a>
+</b:includable>
+        <b:includable id='iframeComments' var='post'>
+  <!-- G+ comments, no longer available. The includable is retained for backwards-compatibility. -->
+</b:includable>
+        <b:includable id='inlineAd' var='post'>
+  <b:if cond='!data:view.isPreview'>
+    <b:if cond='data:this.adCode or data:this.adClientId or data:blog.adsenseClientId'>
+      <!-- Ad -->
+      <div class='inline-ad'>
+        <b:if cond='data:this.adCode != &quot;&quot;'>
+          <data:this.adCode/>
+        <b:else/>
+          <b:include cond='data:this.adClientId or data:blog.adsenseClientId' name='defaultAdUnit'/>
+        </b:if>
+      </div>
+    </b:if>
+  <b:else/>
+    <div class='inline-ad'>
+      <div class='inline-ad-placeholder'>
+        <span><b:message name='messages.adsGoHere'/></span>
+      </div>
+    </div>
+  </b:if>
+</b:includable>
+        <b:includable id='linkShare'>
+  <b:with value='&quot;window.prompt(\&quot;Copy to clipboard: Ctrl+C, Enter\&quot;, \&quot;&quot; + data:originalUrl + &quot;\&quot;); return false;&quot;' var='onclick'>
+    <b:include name='platformShare'/>
+  </b:with>
+</b:includable>
+        <b:includable id='nextPageLink'>
+  <a class='blog-pager-older-link' expr:href='data:olderPageUrl' expr:id='data:widget.instanceId + &quot;_blog-pager-older-link&quot;' expr:title='data:messages.olderPosts'>
+    <data:messages.olderPosts/>
+  </a>
+</b:includable>
+        <b:includable id='otherSharingButton'>
+  <span class='sharing-platform-button sharing-element-other' expr:aria-label='data:messages.shareToOtherApps.escaped' expr:data-url='data:originalUrl' expr:title='data:messages.shareToOtherApps.escaped' role='menuitem' tabindex='-1'>
+    <b:with value='{key: &quot;sharingOther&quot;}' var='platform'>
+      <b:include name='sharingPlatformIcon'/>
+    </b:with>
+    <span class='platform-sharing-text'><data:messages.shareOtherApps.escaped/></span>
+  </span>
+</b:includable>
+        <b:includable id='platformShare'>
+  <a expr:class='&quot;goog-inline-block sharing-&quot; + data:platform.key' expr:data-url='data:originalUrl' expr:href='data:shareUrl + &quot;&amp;target=&quot; + data:platform.target' expr:onclick='data:onclick ? data:onclick : &quot;&quot;' expr:title='data:platform.shareMessage' target='_blank'>
+    <span class='share-button-link-text'>
+      <data:platform.shareMessage/>
+    </span>
+  </a>
+</b:includable>
+        <b:includable id='post' var='post'>
+  <div class='post'>
+    <b:include data='post' name='postMeta'/>
+    <b:include data='post' name='postTitle'/>
+    <b:include name='headerByline'/>
+    <b:if cond='data:view.isSingleItem'>
+      <b:include data='post' name='postBody'/>
+    <b:else/>
+      <b:include data='post' name='postBodySnippet'/>
+      <b:include data='post' name='postJumpLink'/>
+    </b:if>
+    <b:include data='post' name='postFooter'/>
+  </div>
+</b:includable>
+        <b:includable id='postAuthor'>
+  <span class='byline post-author vcard'>
+    <span class='post-author-label'>
+      <data:byline.label/>
+    </span>
+    <span class='fn'>
+      <b:if cond='data:post.author.profileUrl'>
+        <meta expr:content='data:post.author.profileUrl'/>
+        <a class='g-profile' expr:href='data:post.author.profileUrl' rel='author' title='author profile'>
+          <span><data:post.author.name/></span>
+        </a>
+      <b:else/>
+        <span><data:post.author.name/></span>
+      </b:if>
+    </span>
+  </span>
+</b:includable>
+        <b:includable id='postBody' var='post'>
+  <!-- If metaDescription is empty, use the post body as the schema.org description too, for G+/FB snippeting. -->
+  <div class='post-body entry-content float-container' expr:id='&quot;post-body-&quot; + data:post.id'>
+    <data:post.body/>
+  </div>
+</b:includable>
+        <b:includable id='postBodySnippet' var='post'>
+  <b:include data='post' name='postBody'/>
+</b:includable>
+        <b:includable id='postCard' var='post'>
+          <a class='card' expr:href='data:post.url' expr:id='&quot;card-&quot; + data:post.id'>
+            <div class='card-img-wrapper'>
+               <div class='card-img-scroll' onscroll='window.syncDots(this)'>
+                  <img class='card-img' expr:src='data:post.featuredImage ?: &quot;https://via.placeholder.com/400x300?text=Antinna&quot;' loading='lazy'/>
+               </div>
+               <div class='card-dots'/>
+            </div>
+            <div class='card-body'>
+              <div class='card-badge'>Loading...</div>
+              <h3 class='card-title'><data:post.title/></h3>
+              <div class='card-price'>--</div>
+            </div>
+            <div class='hidden grid-data'><data:post.body/></div>
+          </a>
+        </b:includable>
+        <b:includable id='postCommentsAndAd' var='post'>
+  <article class='post-outer-container'>
+    <!-- Post title and body -->
+    <div class='post-outer'>
+      <b:include data='post' name='post'/>
+    </div>
+
+    <!-- Comments -->
+    <b:include cond='data:view.isSingleItem' data='post' name='commentPicker'/>
+
+    <!-- Show ad inside post container, after comments, if single item. -->
+    <b:include cond='data:view.isSingleItem and data:post.includeAd' data='post' name='inlineAd'/>
+  </article>
+
+  <!-- Show ad outside post container (between posts) for feed pages. -->
+  <b:include cond='data:view.isMultipleItems and data:post.includeAd' data='post' name='inlineAd'/>
+</b:includable>
+        <b:includable id='postCommentsLink'>
+  <b:if cond='data:view.isMultipleItems'>
+    <span class='byline post-comment-link container'>
+      <b:include cond='data:post.commentSource != 1' name='commentsLink'/>
+    </span>
+  </b:if>
+</b:includable>
+        <b:includable id='postFooter' var='post'>
+  <div class='post-footer'>
+    <b:include name='footerBylines'/>
+    <b:include data='post' name='postFooterAuthorProfile'/>
+  </div>
+</b:includable>
+        <b:includable id='postFooterAuthorProfile' var='post'>
+  <b:if cond='data:post.author.aboutMe and data:view.isPost'>
+    <div class='author-profile'>
+      <b:if cond='data:post.author.authorPhoto.url'>
+        <img class='author-image' expr:src='data:post.author.authorPhoto.url' width='50px'/>
+        <div class='author-about'>
+          <b:include data='post' name='aboutPostAuthor'/>
+        </div>
+      <b:else/>
+        <b:include data='post' name='aboutPostAuthor'/>
+      </b:if>
+    </div>
+  </b:if>
+</b:includable>
+        <b:includable id='postHeader' var='post'>
+  <b:include name='headerByline'/>
+</b:includable>
+        <b:includable id='postJumpLink' var='post'>
+  <div class='jump-link flat-button'>
+    <a expr:href='data:post.url fragment &quot;more&quot;' expr:title='data:post.title'>
+      <b:eval expr='data:blog.jumpLinkMessage'/>
+    </a>
+  </div>
+</b:includable>
+        <b:includable id='postLabels'>
+  <span class='byline post-labels'>
+    <span class='byline-label'><data:byline.label/></span>
+    <b:loop index='i' values='data:post.labels' var='label'>
+      <a expr:href='data:label.url' rel='tag'>
+        <data:label.name/>
+      </a>
+    </b:loop>
+  </span>
+</b:includable>
+        <b:includable id='postLocation'>
+  <span class='byline post-location'>
+    <data:byline.label/>
+    <a expr:href='data:post.location.mapsUrl' target='_blank'><data:post.location.name/></a>
+  </span>
+</b:includable>
+        <b:includable id='postMeta' var='post'>
+  <b:include data='post' name='postMetadataJSON'/>
+</b:includable>
+        <b:includable id='postMetadataJSONImage'>
+  &quot;image&quot;: {
+    &quot;@type&quot;: &quot;ImageObject&quot;,
+    <b:if cond='data:post.featuredImage.isResizable'>
+    &quot;url&quot;: &quot;<b:eval expr='resizeImage(data:post.featuredImage, 1200, &quot;1200:630&quot;)'/>&quot;,
+    &quot;height&quot;: 630,
+    &quot;width&quot;: 1200
+    <b:else/>
+    &quot;url&quot;: &quot;https://blogger.googleusercontent.com/img/b/U2hvZWJveA/AVvXsEgfMvYAhAbdHksiBA24JKmb2Tav6K0GviwztID3Cq4VpV96HaJfy0viIu8z1SSw_G9n5FQHZWSRao61M3e58ImahqBtr7LiOUS6m_w59IvDYwjmMcbq3fKW4JSbacqkbxTo8B90dWp0Cese92xfLMPe_tg11g/w1200/&quot;,
+    &quot;height&quot;: 348,
+    &quot;width&quot;: 1200
+    </b:if>
+  },
+</b:includable>
+        <b:includable id='postMetadataJSONPublisher'>
+ &quot;publisher&quot;: {
+    &quot;@type&quot;: &quot;Organization&quot;,
+    &quot;name&quot;: &quot;Blogger&quot;,
+    &quot;logo&quot;: {
+      &quot;@type&quot;: &quot;ImageObject&quot;,
+      &quot;url&quot;: &quot;https://blogger.googleusercontent.com/img/b/U2hvZWJveA/AVvXsEgfMvYAhAbdHksiBA24JKmb2Tav6K0GviwztID3Cq4VpV96HaJfy0viIu8z1SSw_G9n5FQHZWSRao61M3e58ImahqBtr7LiOUS6m_w59IvDYwjmMcbq3fKW4JSbacqkbxTo8B90dWp0Cese92xfLMPe_tg11g/h60/&quot;,
+      &quot;width&quot;: 206,
+      &quot;height&quot;: 60
+    }
+  },
+</b:includable>
+        <b:includable id='postPagination'>
+  <div class='blog-pager container' id='blog-pager'>
+    <b:include cond='data:newerPageUrl' name='previousPageLink'/>
+    <b:include cond='data:olderPageUrl' name='nextPageLink'/>
+    <b:include cond='data:view.url != data:blog.homepageUrl' name='homePageLink'/>
+  </div>
+</b:includable>
+        <b:includable id='postReactions'>
+  <!-- Reaction feature no longer available. The includable is retained for backwards-compatibility. -->
+</b:includable>
+        <b:includable id='postShareButtons'>
+  <div class='byline post-share-buttons goog-inline-block'>
+    <b:with value='data:sharingId ?: ((data:widget.instanceId ?: &quot;sharing&quot;) + &quot;-&quot; + (data:regionName ?: &quot;byline&quot;) + &quot;-&quot; + data:post.id)' var='sharingId'>
+      <!-- Note: 'sharingButtons' includable is from the default Sharing widget markup. -->
+      <b:include data='{                                                sharingId: data:sharingId,                                                originalUrl: data:post.url,                                                platforms: data:this.sharing.platforms,                                                shareUrl: data:post.shareUrl,                                                shareTitle: data:post.title,                                              }' name='sharingButtons'/>
+    </b:with>
+  </div>
+</b:includable>
+        <b:includable id='postTimestamp'>
+  <span class='byline post-timestamp'>
+    <data:byline.label/>
+    <b:if cond='data:post.url'>
+      <meta expr:content='data:post.url.canonical'/>
+      <a class='timestamp-link' expr:href='data:post.url' rel='bookmark' title='permanent link'>
+        <time class='published' expr:datetime='data:post.date.iso8601' expr:title='data:post.date.iso8601'>
+          <data:post.date/>
+        </time>
+      </a>
+    </b:if>
+  </span>
+</b:includable>
+        <b:includable id='postTitle' var='post'>
+  <a expr:name='data:post.id'/>
+  <b:if cond='data:post.title != &quot;&quot;'>
+    <h3 class='post-title entry-title'>
+      <b:if cond='data:post.link or (data:post.url and data:view.url != data:post.url)'>
+        <a expr:href='data:post.link ?: data:post.url'><data:post.title/></a>
+      <b:else/>
+        <data:post.title/>
+      </b:if>
+    </h3>
+  </b:if>
+</b:includable>
+        <b:includable id='previousPageLink'>
+  <a class='blog-pager-newer-link' expr:href='data:newerPageUrl' expr:id='data:widget.instanceId + &quot;_blog-pager-newer-link&quot;' expr:title='data:messages.newerPosts'>
+    <data:messages.newerPosts/>
+  </a>
+</b:includable>
+        <b:includable id='sharingButton'>
+  <span expr:aria-label='data:platform.shareMessage' expr:class='&quot;sharing-platform-button sharing-element-&quot; + data:platform.key' expr:data-href='data:shareUrl + &quot;&amp;target=&quot; + data:platform.target' expr:data-url='data:originalUrl' expr:title='data:platform.shareMessage' role='menuitem' tabindex='-1'>
+    <b:include name='sharingPlatformIcon'/>
+    <span class='platform-sharing-text'><data:platform.name/></span>
+  </span>
+</b:includable>
+        <b:includable id='sharingButtonContent'>
+  <div class='flat-icon-button ripple'>
+    <b:include name='shareIcon'/>
+  </div>
+</b:includable>
+        <b:includable id='sharingButtons'>
+  <div class='sharing' expr:aria-owns='&quot;sharing-popup-&quot; + data:sharingId' expr:data-title='data:shareTitle'>
+    <button class='sharing-button touch-icon-button' expr:aria-controls='&quot;sharing-popup-&quot; + data:sharingId' expr:aria-label='data:messages.share.escaped' expr:id='&quot;sharing-button-&quot; + data:sharingId' role='button'>
+      <b:include name='sharingButtonContent'/>
+    </button>
+    <b:include name='sharingButtonsMenu'/>
+  </div>
+</b:includable>
+        <b:includable id='sharingButtonsMenu'>
+  <div class='share-buttons-container'>
+    <ul aria-hidden='true' class='share-buttons hidden' expr:aria-label='data:messages.share.escaped' expr:id='&quot;sharing-popup-&quot; + data:sharingId' role='menu'>
+      <b:loop values='(data:platforms ?: data:blog.sharing.platforms) filter (p =&gt; p.key not in {&quot;blogThis&quot;})' var='platform'>
+        <li>
+          <b:include name='sharingButton'/>
+        </li>
+      </b:loop>
+      <li aria-hidden='true' class='hidden'>
+        <b:include name='otherSharingButton'/>
+      </li>
+    </ul>
+  </div>
+</b:includable>
+        <b:includable id='sharingPlatformIcon'>
+  <b:include data='{ iconClass: (&quot;touch-icon sharing-&quot; + data:platform.key) }' expr:name='data:platform.key + &quot;Icon&quot;'/>
+</b:includable>
+        <b:includable id='threadedCommentForm' var='post'>
+  <div class='comment-form'>
+    <a name='comment-form'/>
+    <h4 id='comment-post-message'><data:messages.postAComment/></h4>
+    <b:if cond='data:this.messages.blogComment != &quot;&quot;'>
+      <p><data:this.messages.blogComment/></p>
+    </b:if>
+    <b:include data='post' name='commentFormIframeSrc'/>
+    <iframe allowtransparency='allowtransparency' class='blogger-iframe-colorize blogger-comment-from-post' expr:height='data:cmtIframeInitialHeight ?: &quot;90px&quot;' frameborder='0' id='comment-editor' name='comment-editor' src='' width='100%'/>
+    <data:post.cmtfpIframe/>
+    <script type='text/javascript'>
+      BLOG_CMT_createIframe(&#39;<data:post.appRpcRelayPath/>&#39;);
+    </script>
+  </div>
+</b:includable>
+        <b:includable id='threadedCommentJs' var='post'>
+  <script async='async' expr:src='data:post.commentSrc' type='text/javascript'/>
+  <b:template-script inline='true' name='threaded_comments'/>
+  <script type='text/javascript'>
+    blogger.widgets.blog.initThreadedComments(
+        <data:post.commentJso/>,
+        <data:post.commentMsgs/>,
+        <data:post.commentConfig/>);
+  </script>
+</b:includable>
+        <b:includable id='threadedComments' var='post'>
+  <section class='comments threaded' expr:data-embed='data:post.embedCommentForm' expr:data-num-comments='data:post.numberOfComments' id='comments'>
+    <a name='comments'/>
+
+    <b:include name='commentsTitle'/>
+
+    <div class='comments-content'>
+      <b:if cond='data:post.embedCommentForm'>
+        <b:include data='post' name='threadedCommentJs'/>
+      </b:if>
+      <div id='comment-holder'>
+         <data:post.commentHtml/>
+      </div>
+    </div>
+
+    <p class='comment-footer'>
+      <b:if cond='data:post.allowNewComments'>
+        <b:include data='post' name='threadedCommentForm'/>
+      <b:else/>
+        <data:post.noNewCommentsText/>
+      </b:if>
+      <b:if cond='data:post.showManageComments'>
+        <b:include data='post' name='manageComments'/>
+      </b:if>
+    </p>
+
+    <b:if cond='data:showCmtPopup'>
+      <div id='comment-popup'>
+        <iframe allowtransparency='allowtransparency' frameborder='0' id='comment-actions' name='comment-actions' scrolling='no'>
+        </iframe>
+      </div>
+    </b:if>
+  </section>
+</b:includable>
+        <b:includable id='tooltipCss'>
+  <!-- LINT.IfChange -->
+  <style>
+    .post-body a.b-tooltip-container {
+      position: relative;
+      display: inline-block;
+    }
+
+    .post-body a.b-tooltip-container .b-tooltip {
+      display: block !important;
+      position: absolute;
+      top: 100%;
+      left: 50%;
+      transform: translate(-20%, 1px);
+      visibility: hidden;
+      opacity: 0;
+      z-index: 1;
+      transition: opacity 0.2s ease-in-out;
+    }
+
+    .post-body a.b-tooltip-container .b-tooltip iframe {
+      width: 200px;
+      height: 198px;
+      max-width: none;
+      border: none;
+      border-radius: 20px;
+      box-shadow: 1px 1px 3px 1px rgba(0, 0, 0, 0.2);
+    }
+
+    @media (hover: hover) {
+      .post-body a.b-tooltip-container:hover .b-tooltip {
+        visibility: visible;
+        opacity: 1;
+      }
+    }
+  </style>
+  <!-- LINT.ThenChange(//depot/google3/java/com/google/blogger/b2/layouts/widgets/v2-style.css) -->
+</b:includable>
+      </b:widget>
+    </b:section>
+  </div>
+
+  <div class='cart-backdrop' id='cart-modal-backdrop' onclick='window.CartManager.hideModal()'/>
+  <div class='cart-drawer' id='cart-drawer'>
+      <div class='cart-header'><h3 style='margin:0;'>Shopping Bag</h3><button class='qty-btn' onclick='window.CartRenderer.hideModal()' style='border:none; font-size:1.5rem;'>&#215;</button></div>
+      <div class='cart-body' id='cart-items-list'/>
+      <div class='cart-footer'>
+        <div style='display:flex; justify-content:space-between; font-weight:900; font-size:1.2rem; margin-bottom:20px;'><span>Total</span><span id='cart-total-price'>--</span></div>
+        <button class='v-btn active' id='cart-confirm-btn' onclick='window.CartManager.placeOrder()' style='width:100%; padding:18px; font-size:1.1rem; border-radius:12px;'>Confirm Order</button>
+      </div>
+  </div>
+  <div id='cart-fab-container'/>
+
+  <!-- Awesome Location Modal -->
+  <div class='modal-backdrop' id='loc-modal-backdrop' onclick='if(event.target===this) window.LocationRenderer.hideModal()'>
+    <div class='modal-content'>
+      <div class='modal-header'>
+        <h3>Select Location</h3>
+        <p>This helps us show products and services available in your area.</p>
+      </div>
+      <button class='loc-btn' onclick='window.LocationRenderer.handleRequestLocation()'>
+        <span>🎯</span> Detect My Location
+      </button>
+
+      <div class='modal-divider'>
+        <span>OR</span>
+      </div>
+      <div class='pin-field'>
+        <input id='modal-pin-input' maxlength='6' placeholder='Enter PIN Code' type='text'/>
+        <button onclick='window.LocationRenderer.handleSetPin()'>Apply</button>
+      </div>
+    </div>
+  </div>
+  
+  
+ <script type='module'>//<![CDATA[
+import {
+  initializeApp,
+  getApps,
+} from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
+import {
+  getAuth,
+  signInWithPopup,
+  GoogleAuthProvider,
+  onAuthStateChanged,
+  signOut,
+  setPersistence,
+  browserLocalPersistence,
+  RecaptchaVerifier,
+  linkWithPhoneNumber,
+} from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
+import {
+  getMessaging,
+  getToken,
+  onMessage,
+} from "https://www.gstatic.com/firebasejs/11.6.1/firebase-messaging.js";
+
+// Dynamic environment fallback resolution parsing
+let firebaseConfig = {};
+try {
+  if (typeof __firebase_config !== "undefined") {
+    firebaseConfig = JSON.parse(__firebase_config);
+  } else {
+    firebaseConfig = {
+      apiKey: "AIzaSyDtRB-0S8VNgY-HoQYAAvkLX7iOAK-K-i0",
+      authDomain: "antinnamain.firebaseapp.com",
+      projectId: "antinnamain",
+      storageBucket: "antinnamain.appspot.com",
+      messagingSenderId: "907520801915",
+      appId: "1:907520801915:web:5a99962f7ce400da54b6de",
+    };
+  }
+} catch (e) {
+  console.error("Critical: Failed to resolve core Firebase configurations.", e);
+}
+
+// Initialize application nodes securely
+const app = !getApps().length ? initializeApp(firebaseConfig) : getApps()[0];
+const auth = getAuth(app);
+window.firebaseAuth = auth; // Expose for linking
+window.RecaptchaVerifier = RecaptchaVerifier;
+window.linkWithPhoneNumber = linkWithPhoneNumber;
+
+// Set persistence to LOCAL so session is remembered
+(async () => {
+  try {
+    await setPersistence(auth, browserLocalPersistence);
+  } catch (e) {
+    console.warn("Set persistence failed:", e);
+  }
+})();
+
+const provider = new GoogleAuthProvider();
+
+// Global Messaging Instantiation References
+let messaging = null;
+try {
+  messaging = getMessaging(app);
+} catch (e) {
+  console.warn(
+    "FCM Messaging initialization skipped or unsupported in this browser environment.",
+    e,
+  );
+}
+
+const APPS_SCRIPT_URL =
+  "https://script.google.com/macros/s/YOUR_DEPLOYED_WEB_APP_ID/exec"; //as there are multiple app scrpts files we have to add accordingly as here we need Sessions related DEPLOYED_WEB_APP_ID
+
+// Resolve persistent unique browser profile instance ID
+let browserClientId = localStorage.getItem("antinna_browser_client_id");
+if (!browserClientId) {
+  browserClientId =
+    "client-" +
+    Math.random().toString(36).substring(2, 15) +
+    "-" +
+    Date.now().toString(36);
+  localStorage.setItem("antinna_browser_client_id", browserClientId);
+}
+
+// Proactively backmount the service worker loop on execution start
+if ("serviceWorker" in navigator) {
+  window.addEventListener("load", () => {
+    navigator.serviceWorker.getRegistration("/").then((existing) => {
+      if (!existing) {
+        navigator.serviceWorker
+          .register("/firebase-messaging-sw.js")
+          .then((reg) =>
+            console.log("FCM Worker ready state bound with scope:", reg.scope),
+          )
+          .catch((err) =>
+            console.error("Worker registration structural failure:", err),
+          );
+      }
+    });
+  });
+}
+
+// Toast Notification utility
+function showToast(message, type = "info") {
+  let container = document.getElementById("toast-container");
+  if (!container) {
+    container = document.createElement("div");
+    container.id = "toast-container";
+    container.className = "toast-container";
+    document.body.appendChild(container);
+  }
+  const toast = document.createElement("div");
+  toast.className = `toast toast-${type}`;
+  toast.style.cssText = `
+            background: ${type === "success" ? "#10b981" : type === "error" ? "#ef4444" : "#1e293b"};
+            color: white;
+            padding: 12px 24px;
+            border-radius: 10px;
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-top: 10px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            animation: slideUp 0.3s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+            pointer-events: auto;
+            border: 1px solid var(--border-ui);
+        `;
+  toast.innerText = message;
+  container.appendChild(toast);
+  setTimeout(() => {
+    toast.style.animation = "fadeOut 0.3s forwards";
+    setTimeout(() => toast.remove(), 300);
+  }, 3000);
+}
+window.showToast = showToast;
+
+// Set globally accessible window authentication variables
+async function updateWindowAuthData(user, deviceToken = null) {
+  window.isLoggedIn = !!user;
+  window.firebaseUid = user ? user.uid : null;
+
+  let linkedPhoneNumber = null;
+  if (user) {
+    linkedPhoneNumber = user.phoneNumber;
+    if (!linkedPhoneNumber && user.providerData) {
+      const providerMatch = user.providerData.find((info) => info.phoneNumber);
+      if (providerMatch) linkedPhoneNumber = providerMatch.phoneNumber;
+    }
+    window.hasPhoneLinked = !!linkedPhoneNumber;
+
+    try {
+      window.firebaseAuthToken = await user.getIdToken();
+    } catch (e) {
+      console.error("Error getting Firebase ID Token for window:", e);
+      window.firebaseAuthToken = null;
+    }
+  } else {
+    window.firebaseAuthToken = null;
+    window.hasPhoneLinked = false;
+  }
+
+  if (deviceToken) {
+    window.firebaseRemoteDeviceToken = deviceToken;
+  } else if (!user) {
+    window.firebaseRemoteDeviceToken = null;
+  }
+  console.log("Updated global auth window variables:", {
+    isLoggedIn: window.isLoggedIn,
+    firebaseUid: window.firebaseUid,
+    hasPhoneLinked: window.hasPhoneLinked,
+    firebaseAuthToken: window.firebaseAuthToken ? "EXISTS" : null,
+    firebaseRemoteDeviceToken: window.firebaseRemoteDeviceToken,
+  });
+}
+
+/**
+ * REACTIVE CORE: Synchronizes latest tokens to backend database arrays
+ */
+async function autoSyncDeviceSession(currentUserInstance) {
+  if (!messaging) return;
+  if (Notification.permission === "denied") {
+    console.warn("Notification permissions blocked by browser configuration.");
+    return;
+  }
+
+  const userIdentifier = currentUserInstance
+    ? currentUserInstance.uid
+    : "guest";
+  const syncSessionKey = `antinna_sync_lock_${userIdentifier}`;
+
+  // Check lock state BEFORE requesting token promises
+  if (sessionStorage.getItem(syncSessionKey) === "active") {
+    console.log(
+      `[Sync Ignored] State lock for ${userIdentifier} already active.`,
+    );
+    try {
+      const activeRegistration = await navigator.serviceWorker.ready;
+      const registrationToken = await getToken(messaging, {
+        vapidKey:
+          "BA2CnO0uBsc7Ikc9LHyaY92oY1IGmTFLYemtw7uWSPrWHUP6SibSpMka0Hif5QibHqsHO7dbUPpto87m1fTEKr0",
+        serviceWorkerRegistration: activeRegistration,
+      });
+      if (registrationToken) {
+        await updateWindowAuthData(currentUserInstance, registrationToken);
+      }
+    } catch (err) {
+      console.error("Failed retrieving token for window object:", err);
+    }
+    return;
+  }
+  try {
+    const permission = await Notification.requestPermission();
+    if (permission !== "granted") return;
+
+    const activeRegistration = await navigator.serviceWorker.ready;
+    const registrationToken = await getToken(messaging, {
+      vapidKey:
+        "BA2CnO0uBsc7Ikc9LHyaY92oY1IGmTFLYemtw7uWSPrWHUP6SibSpMka0Hif5QibHqsHO7dbUPpto87m1fTEKr0",
+      serviceWorkerRegistration: activeRegistration,
+    });
+
+    if (registrationToken) {
+      await updateWindowAuthData(currentUserInstance, registrationToken);
+      let detectedClient = "Web Browser";
+      if (navigator.userAgent.indexOf("Chrome") > -1) detectedClient = "Chrome";
+      else if (navigator.userAgent.indexOf("Safari") > -1)
+        detectedClient = "Safari";
+      else if (navigator.userAgent.indexOf("Firefox") > -1)
+        detectedClient = "Firefox";
+      if (navigator.userAgent.indexOf("Mobile") > -1)
+        detectedClient += " (Mobile)";
+
+      if (currentUserInstance) {
+        try {
+          const idToken = await currentUserInstance.getIdToken();
+          dispatchSyncPayload({
+            action: "SYNC_DEVICE",
+            clientId: browserClientId,
+            idToken: idToken,
+            deviceToken: registrationToken,
+            clientName: detectedClient,
+          });
+          sessionStorage.setItem(syncSessionKey, "active");
+        } catch (err) {
+          console.error("Failed fetching secure token proof:", err);
+        }
+      } else {
+        dispatchSyncPayload({
+          action: "SYNC_DEVICE",
+          clientId: browserClientId,
+          idToken: "guest_session",
+          deviceToken: registrationToken,
+          clientName: detectedClient,
+        });
+        sessionStorage.setItem(syncSessionKey, "active");
+      }
+    }
+  } catch (err) {
+    console.error("Central synchronization sequence blocked:", err);
+  }
+}
+
+function dispatchSyncPayload(payload) {
+  fetch(APPS_SCRIPT_URL, {
+    method: "POST",
+    mode: "no-cors",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(payload),
+  }).catch((err) => console.error("Database tracking relay failure:", err));
+}
+
+if (messaging) {
+  onMessage(messaging, (payload) => {
+    console.log("Foreground tracking alert frame:", payload);
+    if (payload.notification) {
+      showToast(
+        `${payload.notification.title}: ${payload.notification.body}`,
+        "info",
+      );
+    }
+  });
+}
+
+/**
+ * Executes authentication pop-up lifecycle sequence
+ */
+async function handleLogin() {
+  try {
+    const loginBtn = document.getElementById("google-login-btn-sidebar");
+    if (loginBtn) {
+      loginBtn.disabled = true;
+      loginBtn.style.opacity = "0.7";
+    }
+    await signInWithPopup(auth, provider);
+    showToast("Secure login established successfully!", "success");
+  } catch (error) {
+    console.error("Authentication Error Matrix:", error);
+    if (error.code === "auth/popup-closed-by-user") {
+      showToast("Sign-in context aborted by user.", "error");
+    } else {
+      showToast("Failed to establish validation session.", "error");
+    }
+  } finally {
+    const loginBtn = document.getElementById("google-login-btn-sidebar");
+    if (loginBtn) {
+      loginBtn.disabled = false;
+      loginBtn.style.opacity = "1";
+    }
+  }
+}
+window.handleLogin = handleLogin;
+
+/**
+ * Terminate active validation container context
+ */
+async function handleLogout() {
+  try {
+    const currentUserInstance = auth.currentUser;
+    const userIdentifier = currentUserInstance
+      ? currentUserInstance.uid
+      : "guest";
+
+    dispatchSyncPayload({
+      action: "LOGOUT_DEVICE",
+      clientId: browserClientId,
+    });
+
+    sessionStorage.removeItem(`antinna_sync_lock_${userIdentifier}`);
+    sessionStorage.removeItem("antinna_sync_lock_guest");
+    await signOut(auth);
+    showToast("Session signed out cleanly.", "info");
+  } catch (error) {
+    console.error("SignOut pipeline exception execution:", error);
+    showToast("Failed to safely terminate session data flow.", "error");
+  }
+}
+window.handleLogout = handleLogout;
+
+/**
+ * Copy User Unique ID context string buffer to clipboard securely
+ */
+async function copyUserUID(uid) {
+  try {
+    await navigator.clipboard.writeText(uid);
+    showToast("UID parsed and copied to clipboard!", "success");
+  } catch (err) {
+    console.error("Failed writing explicit buffer strings to clipboard", err);
+  }
+}
+
+window.openSettingsModal = function () {
+  const modalBackdrop = document.getElementById(
+    "account-settings-modal-backdrop",
+  );
+  if (modalBackdrop) {
+    modalBackdrop.classList.add("active");
+  }
+};
+
+window.closeSettingsModal = function () {
+  const modalBackdrop = document.getElementById(
+    "account-settings-modal-backdrop",
+  );
+  if (modalBackdrop) {
+    modalBackdrop.classList.remove("active");
+  }
+};
+
+// Close settings modal when clicking outside settings container
+document.addEventListener("click", (e) => {
+  const modalBackdrop = document.getElementById(
+    "account-settings-modal-backdrop",
+  );
+  if (modalBackdrop && modalBackdrop.classList.contains("active")) {
+    if (e.target === modalBackdrop) {
+      window.closeSettingsModal();
+    }
+  }
+});
+
+/**
+ * High Performance Interface Painter updating targets reactive to authentication state
+ */
+function renderAuthState(user) {
+  const footerRow = document.querySelector(".avatar-footer-row");
+  if (!footerRow) return;
+
+  // 1. ANCHOR STATE: User is Unauthenticated (Render initial clean Sign-In template node)
+  if (!user) {
+    footerRow.innerHTML = `
+          <button class="btn-google-login" id="google-login-btn-sidebar">
+            <svg viewBox="0 0 24 24">
+              <path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/>
+              <path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/>
+              <path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.06H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.94l2.85-2.22.81-.63z"/>
+              <path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.06l3.66 2.84c.87-2.6 3.3-4.52 6.16-4.52z"/>
+            </svg>
+            <span>Continue with Google</span>
+          </button>
+        `;
+
+    const initialBtn = document.getElementById("google-login-btn-sidebar");
+    if (initialBtn) {
+      initialBtn.addEventListener("click", handleLogin);
+    }
+    return;
+  }
+
+  // 2. ACTIVE STATE: User Profile Loaded
+  const userAvatar =
+    user.photoURL ||
+    "https://www.gravatar.com/avatar/00000000000000000000000000000000";
+  const userEmail = user.email || "anonymous@antinna.in";
+  const userName = user.displayName || "Antinna Member";
+
+  // Resolve phone number if explicitly bound to the social auth account profile
+  let linkedPhoneNumber = user.phoneNumber || null;
+  if (!linkedPhoneNumber) {
+    if (user.providerData) {
+      const providerMatch = user.providerData.find((info) => info.phoneNumber);
+      if (providerMatch) {
+        linkedPhoneNumber = providerMatch.phoneNumber;
+      }
+    }
+  }
+
+  footerRow.innerHTML = `
+        <div class="avatar-left-info">
+          <div class="user-avatar-circle" style="background: none;">
+            <img src="${userAvatar}" alt="${userName}" style="width: 100%; height: 100%; border-radius: 50%; object-fit: cover;" />
+          </div>
+          <div class="user-meta-strings">
+            <span class="user-display-name">${userName}</span>
+            <span class="user-display-role" title="${userEmail}">${userEmail}</span>
+          </div>
+        </div>
+        <button aria-label="Settings" class="btn-settings-gear" id="btn-settings-gear-trigger">⚙</button>
+      `;
+
+  // Settings gear listener
+  const settingsTrigger = document.getElementById("btn-settings-gear-trigger");
+  if (settingsTrigger) {
+    settingsTrigger.addEventListener("click", (e) => {
+      e.stopPropagation();
+      window.openSettingsModal();
+    });
+  }
+
+  // Populate Settings Modal elements
+  const modalAvatar = document.getElementById("modal-user-avatar");
+  const modalName = document.getElementById("modal-user-name");
+  const modalEmail = document.getElementById("modal-user-email");
+  const modalPhoneContainer = document.getElementById(
+    "modal-user-phone-container",
+  );
+  const modalPhone = document.getElementById("modal-user-phone");
+  const modalUid = document.getElementById("modal-user-uid");
+
+  const modalUnlinkContainer = document.getElementById(
+    "modal-user-unlink-container",
+  );
+
+  if (modalAvatar) modalAvatar.src = userAvatar;
+  if (modalName) modalName.textContent = userName;
+  if (modalEmail) modalEmail.textContent = userEmail;
+  if (modalUid) modalUid.textContent = user.uid;
+
+  if (linkedPhoneNumber) {
+    if (modalPhone) modalPhone.textContent = linkedPhoneNumber;
+    if (modalPhoneContainer) modalPhoneContainer.classList.remove("ui-hidden");
+
+    // Dynamically append an unlinking management interface state if configured
+    if (modalUnlinkContainer) {
+      modalUnlinkContainer.classList.remove("ui-hidden");
+      modalUnlinkContainer.innerHTML = `
+            <div class="unlink-action-row" style="display: flex; justify-content: space-between; align-items: center; margin-top: 12px; padding-top: 12px; border-top: 1px dashed var(--border-ui);">
+              <span style="font-size: 0.85rem; color: var(--text-muted);">Phone Authentication Active</span>
+              <button class="btn-unlink-phone" id="modal-unlink-phone-btn" style="background: transparent; color: #ef4444; border: 1px solid #ef4444; padding: 4px 10px; border-radius: 6px; font-size: 0.8rem; cursor: pointer; font-weight: 600; display: flex; align-items: center; gap: 6px; transition: all 0.2s ease;">
+                Unlink Phone
+              </button>
+            </div>
+          `;
+
+      const unlinkBtn = document.getElementById("modal-unlink-phone-btn");
+
+      unlinkBtn?.addEventListener("click", async () => {
+        if (
+          confirm(
+            "Are you sure you want to remove phone authentication from this profile?",
+          )
+        ) {
+          try {
+            // Set Loading State
+            unlinkBtn.disabled = true;
+            unlinkBtn.style.opacity = "0.6";
+            unlinkBtn.style.cursor = "not-allowed";
+            unlinkBtn.innerHTML = `
+                  <svg class="animate-spin" viewBox="0 0 24 24" width="12" height="12" stroke="currentColor" stroke-width="3" fill="none" style="animation: spin 1s linear infinite;">
+                    <circle cx="12" cy="12" r="10"></circle>
+                    <path d="M12 2a10 10 0 0 1 10 10" stroke-linecap="round"></path>
+                  </svg>
+                  <span>Unlinking...</span>
+                `;
+
+            const { unlink } =
+              await import("https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js");
+            await unlink(user, "phone");
+
+            window.showToast(
+              "Phone number association removed successfully.",
+              "success",
+            );
+
+            // Instantly clean up UI variants without breaking modal visibility context
+            if (modalPhoneContainer)
+              modalPhoneContainer.classList.add("ui-hidden");
+            if (modalUnlinkContainer) {
+              modalUnlinkContainer.classList.add("ui-hidden");
+              modalUnlinkContainer.innerHTML = "";
+            }
+
+            // Update global tracking context indicators
+            window.hasPhoneLinked = false;
+          } catch (err) {
+            console.error("Provider mutation failed:", err);
+            window.showToast("Failed to unlink credential provider.", "error");
+
+            // Reset Loading State on Failure
+            unlinkBtn.disabled = false;
+            unlinkBtn.style.opacity = "1";
+            unlinkBtn.style.cursor = "pointer";
+            unlinkBtn.innerHTML = "Unlink Phone";
+          }
+        }
+      });
+    }
+  } else {
+    if (modalPhoneContainer) modalPhoneContainer.classList.add("ui-hidden");
+    if (modalUnlinkContainer) {
+      modalUnlinkContainer.classList.add("ui-hidden");
+      modalUnlinkContainer.innerHTML = "";
+    }
+  }
+}
+
+// Modal Copy UID button binding
+const modalCopyBtn = document.getElementById("modal-copy-uid-btn");
+if (modalCopyBtn) {
+  modalCopyBtn.addEventListener("click", () => {
+    if (auth.currentUser) {
+      copyUserUID(auth.currentUser.uid);
+    }
+  });
+}
+
+// Modal Signout button binding
+const modalLogoutBtn = document.getElementById("modal-signout-btn");
+if (modalLogoutBtn) {
+  modalLogoutBtn.addEventListener("click", () => {
+    window.closeSettingsModal();
+    handleLogout();
+  });
+}
+
+// Reactive Master Pipeline Controller Hook
+onAuthStateChanged(auth, async (user) => {
+  renderAuthState(user);
+  await updateWindowAuthData(user);
+  autoSyncDeviceSession(user);
+});
+ 
+//]]></script>
+  
+  
+  <!-- SCF-->
+
+  <script type='module'>//<![CDATA[
+// AntinnaEngine IIFE code here
+//]]></script>
+</body>
+</html>
