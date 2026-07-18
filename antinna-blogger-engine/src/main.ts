@@ -1,5 +1,6 @@
 import { AppState } from './types/app';
 import { SchemaExtractor } from './core/SchemaExtractor';
+import { SchemaResolver } from './core/SchemaResolver';
 import { CartManager } from './core/CartManager';
 import { LocationManager } from './core/LocationManager';
 import { BloggerDataService } from './infrastructure/BloggerDataService';
@@ -32,9 +33,10 @@ export class App {
   private displaySearchQuery: string = '';
   private searchKeywordsOnly: string = '';
 
+  public BloggerDataService = new BloggerDataService();
+  public SchemaResolver = new SchemaResolver(this.BloggerDataService);
   public CartManager = new CartManager();
   public LocationManager = new LocationManager();
-  public BloggerDataService = new BloggerDataService();
   public GooglePayService = new GooglePayService();
 
   public ProductRenderer = new ProductRenderer();
@@ -263,12 +265,15 @@ export class App {
     }
   }
 
-  private loadProductData(): void {
-    setTimeout(() => {
+  private async loadProductData(): Promise<void> {
+    // Small delay to ensure any dynamic rendering is settled
+    await new Promise(resolve => setTimeout(resolve, 100));
+    try {
       const rawBody = UIManager.el("post-body-raw");
       if (rawBody) {
-        const data = SchemaExtractor.extractJsonLd<any>(rawBody.textContent || "");
+        let data = SchemaExtractor.extractJsonLd<any>(rawBody.textContent || "");
         if (data) {
+          data = await this.SchemaResolver.resolve(data);
           this.state.product = data;
           this.ProductRenderer.render(data, this.state, (attr, val) => {
             this.state.selectedVariants[attr] = val;
@@ -280,10 +285,13 @@ export class App {
           }
         }
       }
+    } catch (e) {
+      console.error("Error in loadProductData:", e);
+    } finally {
       UIManager.toggleClass("#initializing-state", "hidden", true);
       UIManager.toggleClass("#carousel-section", "hidden", false);
       UIManager.toggleClass("#details-section", "hidden", false);
-    }, 100);
+    }
   }
 
   private async loadGridData(): Promise<void> {

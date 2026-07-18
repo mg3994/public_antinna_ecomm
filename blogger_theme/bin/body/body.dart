@@ -3,6 +3,7 @@ import 'sidebar/sidebar.dart';
 import 'app_container/container.dart';
 import 'scripts/scripts.dart';
 import 'account_settings_modal_backdrop/account_settings_modal_backdrop.dart';
+import 'interactive_modals.dart';
 
 class BloggerBody implements Component {
   @override
@@ -12,6 +13,12 @@ class BloggerBody implements Component {
       app_container,
       // Modal pop up
       account_settings_modal_backdrop,
+
+      // Interactive Shopping Bag and Location modals
+      cart_modal_backdrop,
+      cart_drawer,
+      cart_fab_container,
+      loc_modal_backdrop,
 
       //js scripts
       theme_mode_sync_script,
