@@ -1077,6 +1077,18 @@ html.dark .antinna-country-item { border-bottom-color: #334155; }
 }
 .btn-clear-loc:hover { background: rgba(255, 59, 48, 0.2); }
 
+/* --- Cart FAB & Spinner --- */
+.cart-fab { position: fixed; bottom: 30px; right: 30px; z-index: 1000; transition: transform 0.3s; cursor: pointer; display: flex; align-items: center; justify-content: center; }
+.cart-fab.loading { pointer-events: none; opacity: 0.8; }
+.cart-spinner {
+    display: none; width: 24px; height: 24px; border: 3px solid rgba(255,255,255,.3);
+    border-radius: 50%; border-top-color: #fff; animation: cart-spin 1s ease-in-out infinite;
+}
+.cart-fab.loading .cart-spinner { display: block; }
+.cart-fab.loading .cart-icon { display: none; }
+.cart-fab.loading .cart-count { display: none; }
+@keyframes cart-spin { to { transform: rotate(360deg); } }
+
 .condition-badge { display: inline-block; padding: 4px 12px; border-radius: 6px; font-size: 0.7rem; font-weight: 900; background: #f1f5f9; color: #64748b; text-transform: uppercase; border: 1px solid #e2e8f0; margin-left: 10px; vertical-align: middle; letter-spacing: 0.5px; }
 .condition-badge.cond-new { background: #e0f2fe; color: #0369a1; border-color: #bae6fd; }
 .condition-badge.cond-refurbished { background: #fef3c7; color: #92400e; border-color: #fde68a; }
@@ -1851,18 +1863,7 @@ var AntinnaEngineLib=function(k){"use strict";var ie=Object.defineProperty;var s
                     onclick="CartManager.addAddOn('${s}', ${S}); CartRenderer.updateUI(); showToast('Addon Added', 'success');">
                     ${d?"Add Addon":"Add Base Product First"}
                 </button>
-            </div>`}).join("")}}class K{constructor(e){this.cartManager=e}renderFab(){const e=l.el("cart-fab-container");if(!e)return;let t=l.el("cart-fab");if(!t){t=document.createElement("div"),t.id="cart-fab",t.className="cart-fab",t.onclick=()=>window.AntinnaEngine.refreshCartData();const n=document.createElement("style");n.textContent=`
-        .cart-fab { position: fixed; bottom: 30px; right: 30px; z-index: 1000; transition: transform 0.3s; cursor: pointer; display: flex; align-items: center; justify-content: center; }
-        .cart-fab.loading { pointer-events: none; opacity: 0.8; }
-        .cart-spinner {
-            display: none; width: 24px; height: 24px; border: 3px solid rgba(255,255,255,.3);
-            border-radius: 50%; border-top-color: #fff; animation: cart-spin 1s ease-in-out infinite;
-        }
-        .cart-fab.loading .cart-spinner { display: block; }
-        .cart-fab.loading .cart-icon { display: none; }
-        .cart-fab.loading .cart-count { display: none; }
-        @keyframes cart-spin { to { transform: rotate(360deg); } }
-      `,document.head.appendChild(n),t.innerHTML='<span class="cart-icon">🛒</span><span class="cart-spinner"></span><span class="cart-count">0</span>',e.appendChild(t)}this.updateUI()}setLoading(e){const t=l.el("cart-fab");t&&t.classList.toggle("loading",e)}updateUI(){const e=this.cartManager.getTotalQuantity(),t=l.el("cart-fab");if(t){const r=t.querySelector(".cart-count");r&&(r.textContent=String(e)),t.style.transform=e>0?"scale(1)":"scale(0)"}const n=l.el("cart-proceed-btn");if(n){const r=this.cartManager.isCartValid();n.disabled=e===0||!r,n.style.opacity=n.disabled?"0.5":"1"}}showModal(){const e=l.el("cart-modal-backdrop"),t=l.el("cart-drawer"),n=l.el("cart-items-list");if(!n)return;const r=l.query(".cart-footer");r&&!l.el("cart-proceed-btn")&&(r.innerHTML=`
+            </div>`}).join("")}}class K{constructor(e){this.cartManager=e}renderFab(){const e=l.el("cart-fab-container");if(!e)return;let t=l.el("cart-fab");t||(t=document.createElement("div"),t.id="cart-fab",t.className="cart-fab",t.onclick=()=>window.AntinnaEngine.refreshCartData(),t.innerHTML='<span class="cart-icon">🛒</span><span class="cart-spinner"></span><span class="cart-count">0</span>',e.appendChild(t)),this.updateUI()}setLoading(e){const t=l.el("cart-fab");t&&t.classList.toggle("loading",e)}updateUI(){const e=this.cartManager.getTotalQuantity(),t=l.el("cart-fab");if(t){const r=t.querySelector(".cart-count");r&&(r.textContent=String(e)),t.style.transform=e>0?"scale(1)":"scale(0)"}const n=l.el("cart-proceed-btn");if(n){const r=this.cartManager.isCartValid();n.disabled=e===0||!r,n.style.opacity=n.disabled?"0.5":"1"}}showModal(){const e=l.el("cart-modal-backdrop"),t=l.el("cart-drawer"),n=l.el("cart-items-list");if(!n)return;const r=l.query(".cart-footer");r&&!l.el("cart-proceed-btn")&&(r.innerHTML=`
             <div style="display:flex; justify-content:space-between; font-weight:900; font-size:1.2rem; margin-bottom:20px;"><span>Total</span><span id="cart-total-price">--</span></div>
             <button class="v-btn active" id="cart-proceed-btn" onclick="AntinnaEngine.startCheckout()" style="width:100%; padding:18px; font-size:1.1rem; border-radius:12px;">Proceed</button>
         `);const i=this.cartManager.getOrder(),a=o.getArray(i.orderedItem);n.innerHTML=a.map((s,d)=>{var S,L,A,$,E,T;const u=s.isUnavailable,g=o.extractAvailability((S=s.orderedItem)==null?void 0:S.offers),h=g==="https://schema.org/OutOfStock"||g==="https://schema.org/SoldOut",m=!u&&!h,p=this.cartManager.isItemQuantityValid(s),y=m&&p?"1":"0.5";let v="";u?v='<div style="color:red; font-size:0.7rem; font-weight:800;">Currently Unavailable</div>':h?v='<div style="color:orange; font-size:0.7rem; font-weight:800;">Out of Stock</div>':p||(v=`<div style="color:#ef4444; font-size:0.7rem; font-weight:800;">Minimum ${(L=s._constraints)==null?void 0:L.minValue} required</div>`);const{price:b,currency:x}=o.extractPrice((A=s.orderedItem)==null?void 0:A.offers),w=o.extractAdvanceBookingRequirement(($=s.orderedItem)==null?void 0:$.offers),I=o.getArray(s.addOns).map((M,N)=>{var j,z;const{price:ee,currency:te}=o.extractPrice((j=M.orderedItem)==null?void 0:j.offers),V=this.cartManager.getAddOnLimits(s,M),ne=V.minValue===null?M.orderQuantity>1:M.orderQuantity>V.minValue,re=V.maxValue===null||M.orderQuantity<V.maxValue;return`
