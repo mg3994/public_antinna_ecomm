@@ -1,0 +1,35 @@
+name: blogger_theme
+description: A lightweight standalone Dart library to design Blogger themes with Jaspr-like syntax.
+version: 3.0.0
+documentation: https://bloggerquickstart.blogspot.com/
+# -----------------------------------------------------------------------------
+# Metadata for pub.dev
+# -----------------------------------------------------------------------------
+homepage: https://github.com/antinna/blogger_theme
+repository: https://github.com/antinna/blogger_theme
+issue_tracker: https://github.com/antinna/blogger_theme/issues
+
+topics:
+  - html-generation
+  - web
+  - templates
+  - blogger
+
+keywords:
+  - blogger
+  - blogger-theme
+  - xml-template
+  - jaspr-like-syntax
+  - html-builder
+
+funding:
+  - https://github.com/sponsors/manishmg3994
+
+environment:
+  sdk: ^3.12.1
+
+dependencies:
+  path:
+  web:
+dev_dependencies:
+  lints:

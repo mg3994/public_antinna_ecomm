@@ -1,0 +1,17 @@
+{
+	"compilerOptions": {
+		"target": "ESNext",
+
+		"outDir": "dist",
+		"rootDir": "src",
+
+		"strict": true,
+		"esModuleInterop": true,
+		"skipLibCheck": true,
+		"resolveJsonModule": true,
+		"experimentalDecorators": true, //useless
+		"emitDecoratorMetadata": true, //useless
+		"types": ["google-apps-script"]
+	},
+	"include": ["src/**/*.ts"]
+}

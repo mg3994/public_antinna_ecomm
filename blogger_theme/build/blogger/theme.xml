@@ -1,0 +1,2126 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<html b:css="false" b:defaultwidgetversion="2" b:layoutsversion="3" b:responsive="true" expr:dir="data:blog.languageDirection" expr:lang="data:blog.locale" xmlns="http://www.w3.org/1999/xhtml" xmlns:b="http://www.google.com/2005/gml/b" xmlns:data="http://www.google.com/2005/gml/data" xmlns:expr="http://www.google.com/2005/gml/expr"><head><script type="text/javascript">(function() {
+  var cachedTheme = localStorage.getItem(&apos;antinna-theme&apos;);
+  var systemPrefersDark = window.matchMedia(&apos;(prefers-color-scheme: dark)&apos;).matches;
+
+  if (cachedTheme === &apos;dark&apos; || (!cachedTheme &amp;&amp; systemPrefersDark)) {
+    document.documentElement.classList.add(&apos;dark&apos;);
+  } else {
+    document.documentElement.classList.remove(&apos;dark&apos;);
+  }
+})();
+</script><script>
+  cookieOptions = {
+ close:&quot; Got it! &quot;,
+learn: &quot;Privacy Policy&quot;,
+link: &quot;https://policies.google.com/technologies/cookies&quot;
+  };
+</script><meta content="width=device-width, initial-scale=1.0" name="viewport"/><b:include name="all-head-content" data="blog"/><meta property="og:type" content="website"/><meta name="geo.region" content="IN-HR"/><meta name="contact.phone" content="+918607573994"/><link expr:href="data:blog.homepageUrl.canonical" expr:title="data:messages.home" rel="home"/><link expr:href="data:blog.homepageUrl.canonical path &quot;search&quot;" expr:title="data:messages.search" rel="search"/><b:if cond="!data:blog.adultContent"><meta name="rating" content="general"/></b:if><b:if cond="data:blog.adultContent"><meta name="rating" content="adult"/></b:if><b:tag name="link" expr:href="data:view.url params {m: 1}" media="only screen and (max-width: 640px)" rel="alternate" cond="!data:blog.isMobileRequest and data:view.url ==  data:view.url.canonical"/><b:tag name="link" expr:href="data:widgets.Blog.first.posts[0].featuredImage resizeImage 1600" rel="image_src" cond="data:view.isMultipleItems and data:widgets.Blog.first.posts[0].featuredImage"/><b:tag name="link" expr:href="data:view.featuredImage resizeImage 1600" rel="image_src" cond="data:view.isSingleItem and data:view.featuredImage"/><b:if cond="data:blog.analyticsAccountNumber"><b:include name="google-analytics" data="blog"/></b:if><b:if cond="data:view.isHomepage"><script type="application/ld+json">
+{
+  &quot;@context&quot;: &quot;http://schema.org&quot;,
+  &quot;@type&quot;: &quot;WebSite&quot;,
+  &quot;name&quot;: &quot;<data:blog.title/>&quot;,
+  &quot;description&quot;: &quot;<data:view.description.escaped/>&quot;,
+  &quot;url&quot;: &quot;<data:blog.canonicalHomepageUrl/>&quot;,
+  &quot;potentialAction&quot;: {
+    &quot;@type&quot;: &quot;SearchAction&quot;,
+    &quot;target&quot;: &quot;<data:blog.canonicalHomepageUrl/>search?q={search_term_string}&quot;,
+    &quot;query-input&quot;: &quot;required name=search_term_string&quot;
+  }
+}
+</script></b:if><script type="application/ld+json">
+{
+  &quot;@context&quot;: &quot;http://schema.org&quot;,
+  &quot;@type&quot;: &quot;BreadcrumbList&quot;,
+  &quot;@id&quot;: &quot;<data:blog.canonicalHomepageUrl/>&quot;,
+  &quot;name&quot;: &quot;<data:blog.title/>&quot;,
+  &quot;itemListElement&quot;: [
+    {
+      &quot;@type&quot;: &quot;ListItem&quot;,
+      &quot;position&quot;: 1,
+      &quot;name&quot;: &quot;Home&quot;,
+      &quot;item&quot;: &quot;<data:blog.canonicalHomepageUrl/>&quot;
+    },
+    {
+      &quot;@type&quot;: &quot;ListItem&quot;,
+      &quot;position&quot;: 2,
+      &quot;name&quot;: &quot;About&quot;,
+      &quot;item&quot;: &quot;<data:blog.canonicalHomepageUrl/>#about&quot;
+    },
+    {
+      &quot;@type&quot;: &quot;ListItem&quot;,
+      &quot;position&quot;: 3,
+      &quot;name&quot;: &quot;Contact Us&quot;,
+      &quot;item&quot;: &quot;<data:blog.canonicalHomepageUrl/>#contact&quot;
+    }
+  ]
+}
+</script><script type="application/ld+json">
+{
+  &quot;@context&quot;: &quot;https://schema.org&quot;,
+  &quot;@type&quot;: &quot;LocalBusiness&quot;,
+  &quot;name&quot;: &quot;<data:blog.title/>&quot;,
+  &quot;url&quot;: &quot;<data:blog.canonicalHomepageUrl/>&quot;,
+  &quot;logo&quot;: &quot;<data:blog.blogspotFaviconUrl/>&quot;,
+  &quot;image&quot;: &quot;<data:blog.blogspotFaviconUrl/>&quot;,
+  &quot;sameAs&quot;: [
+    &quot;https://www.facebook.com/profile.php?id=100082961891641&quot;,
+    &quot;https://www.youtube.com/@Antinna&quot;,
+    &quot;https://www.instagram.com/antinna.yt&quot;,
+    &quot;https://github.com/antinna&quot;,
+    &quot;https://play.google.com/store/apps/dev?id=7417258411166270372&quot;
+  ],
+  &quot;contactPoint&quot;: {
+    &quot;@type&quot;: &quot;ContactPoint&quot;,
+    &quot;telephone&quot;: &quot;+918607573994&quot;,
+    &quot;contactType&quot;: &quot;customer service&quot;,
+    &quot;email&quot;: &quot;contact@antinna.in&quot;,
+    &quot;availableLanguage&quot;: [&quot;en&quot;, &quot;hi&quot;]
+  }
+}
+</script><script type="application/ld+json">
+{
+  &quot;@context&quot;: &quot;https://schema.org&quot;,
+  &quot;@type&quot;: &quot;ProfessionalService&quot;,
+  &quot;name&quot;: &quot;<data:blog.title/>&quot;,
+  &quot;image&quot;: &quot;<data:blog.blogspotFaviconUrl/>&quot;,
+  &quot;@id&quot;: &quot;<data:blog.canonicalHomepageUrl/>&quot;,
+  &quot;url&quot;: &quot;<data:blog.canonicalHomepageUrl/>&quot;,
+  &quot;telephone&quot;: &quot;+918607573994&quot;,
+  &quot;priceRange&quot;: &quot;$$&quot;,
+  &quot;address&quot;: {
+    &quot;@type&quot;: &quot;PostalAddress&quot;,
+    &quot;streetAddress&quot;: &quot;H.No. 42, Village:- Todi&quot;,
+    &quot;addressLocality&quot;: &quot;Charkhi Dadri&quot;,
+    &quot;addressRegion&quot;: &quot;Haryana&quot;,
+    &quot;postalCode&quot;: &quot;127310&quot;,
+    &quot;addressCountry&quot;: &quot;IN&quot;
+  },
+  &quot;geo&quot;: {
+    &quot;@type&quot;: &quot;GeoCoordinates&quot;,
+    &quot;latitude&quot;: 28.527867,
+    &quot;longitude&quot;: 76.083600
+  },
+  &quot;openingHoursSpecification&quot;: {
+    &quot;@type&quot;: &quot;OpeningHoursSpecification&quot;,
+    &quot;dayOfWeek&quot;: [&quot;Monday&quot;, &quot;Tuesday&quot;, &quot;Wednesday&quot;, &quot;Thursday&quot;, &quot;Friday&quot;, &quot;Saturday&quot;, &quot;Sunday&quot;],
+    &quot;opens&quot;: &quot;00:00&quot;,
+    &quot;closes&quot;: &quot;23:59&quot;
+  },
+  &quot;sameAs&quot;: [
+    &quot;https://www.facebook.com/profile.php?id=100082961891641&quot;,
+    &quot;https://www.instagram.com/antinna.yt/&quot;,
+    &quot;https://youtube.com/antinna&quot;,
+    &quot;https://github.com/antinna&quot;,
+    &quot;https://play.google.com/store/apps/dev?id=7417258411166270372&quot;,
+    &quot;<data:blog.canonicalHomepageUrl/>&quot;
+  ]
+}
+</script><script type="application/ld+json">
+{
+  &quot;@context&quot;: &quot;https://schema.org&quot;,
+  &quot;@type&quot;: &quot;Project&quot;,
+  &quot;name&quot;: &quot;<data:blog.title/>&quot;,
+  &quot;url&quot;: &quot;<data:blog.canonicalHomepageUrl/>&quot;,
+  &quot;logo&quot;: &quot;<data:blog.blogspotFaviconUrl/>&quot;,
+  &quot;contactPoint&quot;: [
+    {
+      &quot;@type&quot;: &quot;ContactPoint&quot;,
+      &quot;telephone&quot;: &quot;+918607573994&quot;,
+      &quot;contactType&quot;: &quot;Technical Support&quot;,
+      &quot;areaServed&quot;: [&quot;US&quot;,&quot;GB&quot;,&quot;CA&quot;,&quot;AF&quot;,&quot;155&quot;,&quot;039&quot;,&quot;154&quot;,&quot;151&quot;,&quot;150&quot;,&quot;145&quot;,&quot;034&quot;,&quot;035&quot;,&quot;030&quot;,&quot;143&quot;,&quot;142&quot;,&quot;419&quot;,&quot;015&quot;,&quot;002&quot;,&quot;ZM&quot;,&quot;YE&quot;,&quot;EH&quot;,&quot;ZW&quot;,&quot;WF&quot;,&quot;VN&quot;,&quot;VE&quot;,&quot;AX&quot;,&quot;AL&quot;,&quot;DZ&quot;,&quot;AS&quot;,&quot;AD&quot;,&quot;AO&quot;,&quot;AQ&quot;,&quot;AI&quot;,&quot;AG&quot;,&quot;AW&quot;,&quot;AM&quot;,&quot;AR&quot;,&quot;AT&quot;,&quot;AU&quot;,&quot;AZ&quot;,&quot;BS&quot;,&quot;BH&quot;,&quot;BD&quot;,&quot;BB&quot;,&quot;BY&quot;,&quot;BE&quot;,&quot;BZ&quot;,&quot;BJ&quot;,&quot;BM&quot;,&quot;BT&quot;,&quot;BO&quot;,&quot;BQ&quot;,&quot;BA&quot;,&quot;BW&quot;,&quot;VA&quot;,&quot;VU&quot;,&quot;UZ&quot;,&quot;UY&quot;,&quot;UM&quot;,&quot;AE&quot;,&quot;UA&quot;,&quot;TV&quot;,&quot;VI&quot;,&quot;UG&quot;,&quot;TC&quot;,&quot;TT&quot;,&quot;TN&quot;,&quot;TR&quot;,&quot;TM&quot;,&quot;TG&quot;,&quot;TK&quot;,&quot;TO&quot;,&quot;TH&quot;,&quot;TZ&quot;,&quot;TJ&quot;,&quot;TW&quot;,&quot;CH&quot;,&quot;SY&quot;,&quot;SE&quot;,&quot;BR&quot;,&quot;BV&quot;,&quot;IO&quot;,&quot;VG&quot;,&quot;BN&quot;,&quot;BG&quot;,&quot;BF&quot;,&quot;BI&quot;,&quot;KH&quot;,&quot;CM&quot;,&quot;CV&quot;,&quot;KY&quot;,&quot;CF&quot;,&quot;TD&quot;,&quot;CL&quot;,&quot;CX&quot;,&quot;CN&quot;,&quot;CC&quot;,&quot;CO&quot;,&quot;KM&quot;,&quot;CK&quot;,&quot;HR&quot;,&quot;CR&quot;,&quot;CU&quot;,&quot;CW&quot;,&quot;CY&quot;,&quot;CZ&quot;,&quot;CD&quot;,&quot;DK&quot;,&quot;DJ&quot;,&quot;DM&quot;,&quot;DO&quot;,&quot;TL&quot;,&quot;EG&quot;,&quot;SV&quot;,&quot;EC&quot;,&quot;GQ&quot;,&quot;EE&quot;,&quot;ER&quot;,&quot;ET&quot;,&quot;FK&quot;,&quot;FO&quot;,&quot;FJ&quot;,&quot;FI&quot;,&quot;GF&quot;,&quot;FR&quot;,&quot;PF&quot;,&quot;TF&quot;,&quot;GA&quot;,&quot;GM&quot;,&quot;SZ&quot;,&quot;SR&quot;,&quot;SJ&quot;,&quot;SD&quot;,&quot;SS&quot;,&quot;ES&quot;,&quot;LK&quot;,&quot;KR&quot;,&quot;GS&quot;,&quot;ZA&quot;,&quot;SO&quot;,&quot;SB&quot;,&quot;SI&quot;,&quot;SK&quot;,&quot;SG&quot;,&quot;SX&quot;,&quot;SL&quot;,&quot;SC&quot;,&quot;SN&quot;,&quot;SA&quot;,&quot;RS&quot;,&quot;PM&quot;,&quot;VC&quot;,&quot;SM&quot;,&quot;WS&quot;,&quot;ST&quot;,&quot;GE&quot;,&quot;DE&quot;,&quot;GH&quot;,&quot;GI&quot;,&quot;GR&quot;,&quot;GL&quot;,&quot;GD&quot;,&quot;GP&quot;,&quot;GT&quot;,&quot;MF&quot;,&quot;LC&quot;,&quot;BL&quot;,&quot;SH&quot;,&quot;KN&quot;,&quot;RW&quot;,&quot;RO&quot;,&quot;RU&quot;,&quot;RE&quot;,&quot;CG&quot;,&quot;PT&quot;,&quot;PL&quot;,&quot;PR&quot;,&quot;QA&quot;,&quot;PH&quot;,&quot;PN&quot;,&quot;GN&quot;,&quot;GG&quot;,&quot;GU&quot;,&quot;GW&quot;,&quot;GY&quot;,&quot;HT&quot;,&quot;HM&quot;,&quot;HN&quot;,&quot;HK&quot;,&quot;HU&quot;,&quot;IS&quot;,&quot;ID&quot;,&quot;IN&quot;,&quot;IR&quot;,&quot;IQ&quot;,&quot;IE&quot;,&quot;IM&quot;,&quot;IT&quot;,&quot;IL&quot;,&quot;JP&quot;,&quot;JO&quot;,&quot;JM&quot;,&quot;JE&quot;,&quot;CI&quot;,&quot;KW&quot;,&quot;KG&quot;,&quot;LA&quot;,&quot;XK&quot;,&quot;KI&quot;,&quot;KE&quot;,&quot;KZ&quot;,&quot;LV&quot;,&quot;LB&quot;,&quot;LS&quot;,&quot;LY&quot;,&quot;LR&quot;,&quot;LT&quot;,&quot;LU&quot;,&quot;LI&quot;,&quot;PY&quot;,&quot;PE&quot;,&quot;PG&quot;,&quot;PA&quot;,&quot;PW&quot;,&quot;PS&quot;,&quot;PK&quot;,&quot;NO&quot;,&quot;OM&quot;,&quot;MP&quot;,&quot;KP&quot;,&quot;NI&quot;,&quot;NE&quot;,&quot;NG&quot;,&quot;NU&quot;,&quot;NF&quot;,&quot;NZ&quot;,&quot;NA&quot;,&quot;NP&quot;,&quot;NL&quot;,&quot;NR&quot;,&quot;NC&quot;,&quot;MM&quot;,&quot;MZ&quot;,&quot;MS&quot;,&quot;MN&quot;,&quot;ME&quot;,&quot;MA&quot;,&quot;MD&quot;,&quot;MC&quot;,&quot;FM&quot;,&quot;MX&quot;,&quot;MR&quot;,&quot;MU&quot;,&quot;YT&quot;,&quot;MQ&quot;,&quot;MH&quot;,&quot;MV&quot;,&quot;ML&quot;,&quot;MT&quot;,&quot;MW&quot;,&quot;MG&quot;,&quot;MY&quot;,&quot;MO&quot;,&quot;MK&quot;],
+      &quot;availableLanguage&quot;: [&quot;en&quot;,&quot;Gujarati&quot;,&quot;Hindi&quot;,&quot;Tamil&quot;,&quot;Telugu&quot;,&quot;Urdu&quot;,&quot;Panjabi&quot;]
+    },
+    {
+      &quot;@type&quot;: &quot;ContactPoint&quot;,
+      &quot;telephone&quot;: &quot;+918607573994&quot;,
+      &quot;contactType&quot;: &quot;customer service&quot;,
+      &quot;areaServed&quot;: [&quot;US&quot;,&quot;GB&quot;,&quot;CA&quot;,&quot;AF&quot;,&quot;155&quot;,&quot;039&quot;,&quot;154&quot;,&quot;151&quot;,&quot;150&quot;,&quot;145&quot;,&quot;034&quot;,&quot;035&quot;,&quot;030&quot;,&quot;143&quot;,&quot;142&quot;,&quot;419&quot;,&quot;015&quot;,&quot;002&quot;,&quot;ZM&quot;,&quot;YE&quot;,&quot;EH&quot;,&quot;ZW&quot;,&quot;WF&quot;,&quot;VN&quot;,&quot;VE&quot;,&quot;AX&quot;,&quot;AL&quot;,&quot;DZ&quot;,&quot;AS&quot;,&quot;AD&quot;,&quot;AO&quot;,&quot;AQ&quot;,&quot;AI&quot;,&quot;AG&quot;,&quot;AW&quot;,&quot;AM&quot;,&quot;AR&quot;,&quot;AT&quot;,&quot;AU&quot;,&quot;AZ&quot;,&quot;BS&quot;,&quot;BH&quot;,&quot;BD&quot;,&quot;BB&quot;,&quot;BY&quot;,&quot;BE&quot;,&quot;BZ&quot;,&quot;BJ&quot;,&quot;BM&quot;,&quot;BT&quot;,&quot;BO&quot;,&quot;BQ&quot;,&quot;BA&quot;,&quot;BW&quot;,&quot;VA&quot;,&quot;VU&quot;,&quot;UZ&quot;,&quot;UY&quot;,&quot;UM&quot;,&quot;AE&quot;,&quot;UA&quot;,&quot;TV&quot;,&quot;VI&quot;,&quot;UG&quot;,&quot;TC&quot;,&quot;TT&quot;,&quot;TN&quot;,&quot;TR&quot;,&quot;TM&quot;,&quot;TG&quot;,&quot;TK&quot;,&quot;TO&quot;,&quot;TH&quot;,&quot;TZ&quot;,&quot;TJ&quot;,&quot;TW&quot;,&quot;CH&quot;,&quot;SY&quot;,&quot;SE&quot;,&quot;BR&quot;,&quot;BV&quot;,&quot;IO&quot;,&quot;VG&quot;,&quot;BN&quot;,&quot;BG&quot;,&quot;BF&quot;,&quot;BI&quot;,&quot;KH&quot;,&quot;CM&quot;,&quot;CV&quot;,&quot;KY&quot;,&quot;CF&quot;,&quot;TD&quot;,&quot;CL&quot;,&quot;CX&quot;,&quot;CN&quot;,&quot;CC&quot;,&quot;CO&quot;,&quot;KM&quot;,&quot;CK&quot;,&quot;HR&quot;,&quot;CR&quot;,&quot;CU&quot;,&quot;CW&quot;,&quot;CY&quot;,&quot;CZ&quot;,&quot;CD&quot;,&quot;DK&quot;,&quot;DJ&quot;,&quot;DM&quot;,&quot;DO&quot;,&quot;TL&quot;,&quot;EG&quot;,&quot;SV&quot;,&quot;EC&quot;,&quot;GQ&quot;,&quot;EE&quot;,&quot;ER&quot;,&quot;ET&quot;,&quot;FK&quot;,&quot;FO&quot;,&quot;FJ&quot;,&quot;FI&quot;,&quot;GF&quot;,&quot;FR&quot;,&quot;PF&quot;,&quot;TF&quot;,&quot;GA&quot;,&quot;GM&quot;,&quot;SZ&quot;,&quot;SR&quot;,&quot;SJ&quot;,&quot;SD&quot;,&quot;SS&quot;,&quot;ES&quot;,&quot;LK&quot;,&quot;KR&quot;,&quot;GS&quot;,&quot;ZA&quot;,&quot;SO&quot;,&quot;SB&quot;,&quot;SI&quot;,&quot;SK&quot;,&quot;SG&quot;,&quot;SX&quot;,&quot;SL&quot;,&quot;SC&quot;,&quot;SN&quot;,&quot;SA&quot;,&quot;RS&quot;,&quot;PM&quot;,&quot;VC&quot;,&quot;SM&quot;,&quot;WS&quot;,&quot;ST&quot;,&quot;GE&quot;,&quot;DE&quot;,&quot;GH&quot;,&quot;GI&quot;,&quot;GR&quot;,&quot;GL&quot;,&quot;GD&quot;,&quot;GP&quot;,&quot;GT&quot;,&quot;MF&quot;,&quot;LC&quot;,&quot;BL&quot;,&quot;SH&quot;,&quot;KN&quot;,&quot;RW&quot;,&quot;RO&quot;,&quot;RU&quot;,&quot;RE&quot;,&quot;CG&quot;,&quot;PT&quot;,&quot;PL&quot;,&quot;PR&quot;,&quot;QA&quot;,&quot;PH&quot;,&quot;PN&quot;,&quot;GN&quot;,&quot;GG&quot;,&quot;GU&quot;,&quot;GW&quot;,&quot;GY&quot;,&quot;HT&quot;,&quot;HM&quot;,&quot;HN&quot;,&quot;HK&quot;,&quot;HU&quot;,&quot;IS&quot;,&quot;ID&quot;,&quot;IN&quot;,&quot;IR&quot;,&quot;IQ&quot;,&quot;IE&quot;,&quot;IM&quot;,&quot;IT&quot;,&quot;IL&quot;,&quot;JP&quot;,&quot;JO&quot;,&quot;JM&quot;,&quot;JE&quot;,&quot;CI&quot;,&quot;KW&quot;,&quot;KG&quot;,&quot;LA&quot;,&quot;XK&quot;,&quot;KI&quot;,&quot;KE&quot;,&quot;KZ&quot;,&quot;LV&quot;,&quot;LB&quot;,&quot;LS&quot;,&quot;LY&quot;,&quot;LR&quot;,&quot;LT&quot;,&quot;LU&quot;,&quot;LI&quot;,&quot;PY&quot;,&quot;PE&quot;,&quot;PG&quot;,&quot;PA&quot;,&quot;PW&quot;,&quot;PS&quot;,&quot;PK&quot;,&quot;NO&quot;,&quot;OM&quot;,&quot;MP&quot;,&quot;KP&quot;,&quot;NI&quot;,&quot;NE&quot;,&quot;NG&quot;,&quot;NU&quot;,&quot;NF&quot;,&quot;NZ&quot;,&quot;NA&quot;,&quot;NP&quot;,&quot;NL&quot;,&quot;NR&quot;,&quot;NC&quot;,&quot;MM&quot;,&quot;MZ&quot;,&quot;MS&quot;,&quot;MN&quot;,&quot;ME&quot;,&quot;MA&quot;,&quot;MD&quot;,&quot;MC&quot;,&quot;FM&quot;,&quot;MX&quot;,&quot;MR&quot;,&quot;MU&quot;,&quot;YT&quot;,&quot;MQ&quot;,&quot;MH&quot;,&quot;MV&quot;,&quot;ML&quot;,&quot;MT&quot;,&quot;MW&quot;,&quot;MG&quot;,&quot;MY&quot;,&quot;MO&quot;,&quot;MK&quot;],
+      &quot;availableLanguage&quot;: [&quot;en&quot;,&quot;Gujarati&quot;,&quot;Hindi&quot;,&quot;Tamil&quot;,&quot;Telugu&quot;,&quot;Urdu&quot;,&quot;Panjabi&quot;]
+    }
+  ],
+  &quot;sameAs&quot;: [
+    &quot;https://www.facebook.com/profile.php?id=100082961891641&quot;,
+    &quot;https://www.instagram.com/antinna.yt/&quot;,
+    &quot;https://youtube.com/antinna&quot;,
+    &quot;https://github.com/antinna&quot;,
+    &quot;https://play.google.com/store/apps/dev?id=7417258411166270372&quot;,
+    &quot;<data:blog.canonicalHomepageUrl/>&quot;
+  ]
+}
+</script><meta name="subject" expr:content="(data:view.isMultipleItems ? data:blog.pageTitle : data:view.title).escaped"/><b:if cond="data:blog.metaDescription"><meta name="description" expr:content="data:blog.metaDescription"/></b:if><title><data:blog.title.escaped/><b:if cond="data:view.isArchive">:<data:blog.pageName/>(<data:messages.archive/>)<b:elseif cond="data:view.isLabelSearch"/>:<data:blog.pageName/>(<data:messages.labels/>)<b:elseif cond="data:view.isSearch"/>:<data:messages.search/></b:if></title><!-- prettier-ignore --><b:skin><![CDATA[
+/*
+ * Variable definitions:
+ <Variable name="bgcolor" description="Page Background Color" type="color" default="#fff"/>
+ */
+/* ==========================================================================
+   DESIGN TOKENS & SYSTEM THEME VARIABLES
+   ========================================================================== */
+:root {
+    --bg-app: #ffffff;
+    --bg-surface: #f8f9fa;
+    --bg-panel: #1e293b;
+    --border-ui: #e2e8f0;
+    --text-main: #0f172a;
+    --text-muted: #64748b;
+    --text-light: #ffffff;
+    --color-accent: #2563eb;
+    --header-height: 64px;
+    --sidebar-width: 280px;
+}
+
+html.dark {
+    --bg-app: #0f172a;
+    --bg-surface: #1e293b;
+    --bg-panel: #0f172a;
+    --border-ui: #334155;
+    --text-main: #f8fafc;
+    --text-muted: #94a3b8;
+    --color-accent: #3b82f6;
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    background-color: var(--bg-app);
+    color: var(--text-main);
+    overflow: hidden;
+    height: 100vh;
+}
+
+.ui-hidden { display: none !important; }
+
+.app-container {
+    display: flex;
+    width: 100vw;
+    height: 100vh;
+    position: relative;
+}
+
+/* ==========================================================================
+   DESKTOP SIDEBAR PANEL STYLES & INTERIOR VIEWS SCROLL LAYER
+   ========================================================================== */
+#sidebar-drawer {
+    width: var(--sidebar-width);
+    min-width: var(--sidebar-width);
+    background-color: var(--bg-panel);
+    color: var(--text-light);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: 100vh;
+    border-right: 1px solid var(--border-ui);
+    z-index: 100;
+    overflow: hidden;
+}
+
+.sidebar-header {
+    height: var(--header-height);
+    padding: 0 1.25rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.brand-logo { display: flex; align-items: center; gap: 0.75rem; }
+/* .brand-icon {
+    background-color: var(--color-accent); color: #ffffff; font-weight: 800;
+    width: 32px; height: 32px; display: flex; align-items: center; justify-content: center; border-radius: 6px;
+} */
+
+.brand-icon {
+    width: 32px;
+    height: 32px;
+    border-radius: 6px;
+    object-fit: cover;
+    display: block;
+}
+
+
+.brand-text { font-size: 1.15rem; font-weight: 700; }
+.btn-close-sidebar { display: none; background: transparent; border: none; color: white; font-size: 1.5rem; cursor: pointer; }
+
+.sidebar-scroll-content {
+    flex: 1;
+    overflow-y: auto;
+    overflow-x: hidden;
+    padding-bottom: 1.5rem;
+    scrollbar-width: thin;
+    scrollbar-color: rgba(255, 255, 255, 0.15) transparent;
+}
+ /* This targets only the first character of the element */
+  .nav-route-link::first-letter {
+    text-transform: uppercase;
+  }
+.sidebar-scroll-content::-webkit-scrollbar { width: 5px; }
+.sidebar-scroll-content::-webkit-scrollbar-thumb { background-color: rgba(255, 255, 255, 0.15); border-radius: 10px; }
+
+.desktop-nav-fallback { padding: 1.5rem 1.25rem 0.75rem 1.25rem; }
+.sidebar-static-links { list-style: none; display: flex; flex-direction: column; gap: 0.5rem; }
+.sidebar-static-links li a {
+    display: block; color: rgba(255, 255, 255, 0.65); text-decoration: none;
+    padding: 0.65rem 0.85rem; border-radius: 8px; font-size: 0.95rem; font-weight: 500; transition: all 0.2s ease;
+}
+.sidebar-static-links li a:hover { background-color: rgba(255, 255, 255, 0.08); color: #ffffff; }
+.sidebar-static-links li a.active { background-color: var(--color-accent); color: #ffffff !important; font-weight: 600; }
+
+.sidebar-modules-area { padding: 0.5rem 1.25rem; }
+.sidebar-modules-section { padding: 0 !important; }
+.sidebar-legal-area { padding: 0.5rem 1.25rem; }
+.sidebar-legal-section { padding: 0 !important; }
+
+.module-wrapper { width: 100%; }
+.module-trigger {
+    width: 100%; background: transparent; border: none; color: white;
+    display: flex; align-items: center; justify-content: space-between;
+    font-size: 0.9rem; font-weight: 600; cursor: pointer; padding: 0.65rem 0.85rem;
+    border-radius: 8px; transition: background 0.2s;
+}
+.module-trigger:hover { background-color: rgba(255, 255, 255, 0.04); }
+
+.arrow-indicator { 
+    font-size: 0.85rem; 
+    display: inline-block; 
+    transform: rotate(-90deg);
+    transition: transform 0.25s cubic-bezier(0.4, 0, 0.2, 1); 
+}
+.arrow-indicator.initial-open { transform: rotate(0deg); }
+
+.module-dropdown-list {
+    list-style: none; margin-top: 0.25rem; padding-left: 0.75rem; overflow: hidden;
+    transition: max-height 0.25s ease-out; max-height: 250px;
+}
+.module-dropdown-list.ui-hidden { max-height: 0 !important; margin-top: 0; }
+.module-dropdown-list li a { display: block; color: rgba(255, 255, 255, 0.6); text-decoration: none; font-size: 0.875rem; padding: 0.5rem 0.85rem; border-radius: 6px; }
+.module-dropdown-list li a:hover { color: white; background-color: rgba(255, 255, 255, 0.04); }
+.module-dropdown-list li a.active { color: #ffffff !important; font-weight: 600; background-color: rgba(255, 255, 255, 0.1); }
+
+.sidebar-social-wrapper {
+  /*   display: flex; 
+    align-items: center; 
+    justify-content: space-between;  */
+    width: 100%; /* Ensure the container takes full width of the parent */
+    padding: 1.5rem 1.25rem 0.5rem 1.25rem; 
+    margin-top: 0.5rem; 
+    border-top: 1px solid rgba(255, 255, 255, 0.08);
+}
+/* Ensure the widget inner container inherits the flex properties */
+.sidebar-social-wrapper .widget {
+  /*  display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    */
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.75rem;
+    width: 100%;
+}
+/* Optional styling to match standard system sidebar labels */
+.sidebar-social-wrapper h4 {
+    font-size: 0.75rem;
+    font-weight: 700;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+/* Dedicated horizontal row for links */
+.social-icons-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+}
+.social-icon-link { 
+ 
+ display: inline-block;
+ width: 24px;  /* Increased size */
+ height: 24px;
+ background-color: currentColor; /* Inherits color from text */
+ -webkit-mask-repeat: no-repeat;
+    mask-repeat: no-repeat;
+    -webkit-mask-size: contain;
+    mask-size: contain;
+    -webkit-mask-position: center;
+    mask-position: center;
+ color: rgba(255, 255, 255, 0.5);
+ transition: color 0.2s, 
+ transform 0.2s; 
+}
+.social-icon-link:hover { 
+color: var(--color-accent); 
+transform: translateY(-2px); 
+}
+
+/* ==========================================================================
+   FIXED USER PROFILE ELEMENT ROW 
+   ========================================================================== */
+.avatar-footer-row {
+    min-height: 68px; height: 68px; background-color: rgba(15, 23, 42, 0.4);
+    border-top: 1px solid rgba(255, 255, 255, 0.08); padding: 0 1.15rem;
+    display: flex; align-items: center; justify-content: space-between; gap: 0.75rem;
+    position: relative; z-index: 10;
+}
+html.dark .avatar-footer-row { background-color: rgba(0, 0, 0, 0.2); }
+
+.avatar-left-info { display: flex; align-items: center; gap: 0.75rem; overflow: hidden; }
+.user-avatar-circle {
+    width: 36px; min-width: 36px; height: 36px; border-radius: 50%;
+    background-color: var(--color-accent); display: flex; align-items: center;
+    justify-content: center; color: #ffffff; font-weight: 700; font-size: 0.95rem;
+}
+.user-meta-strings { display: flex; flex-direction: column; overflow: hidden; }
+.user-display-name { font-size: 0.875rem; font-weight: 600; color: #ffffff; white-space: nowrap; text-overflow: ellipsis; overflow: hidden; }
+.user-display-role { font-size: 0.75rem; color: rgba(255, 255, 255, 0.45); white-space: nowrap; text-overflow: ellipsis; overflow: hidden; }
+
+.btn-settings-gear {
+    background: transparent; border: none; color: rgba(255, 255, 255, 0.5);
+    font-size: 1.35rem; cursor: pointer; display: flex; align-items: center;
+    justify-content: center; width: 32px; height: 32px; border-radius: 50%; transition: all 0.2s ease;
+}
+.btn-settings-gear:hover { color: #ffffff; background-color: rgba(255, 255, 255, 0.08); transform: rotate(30deg); }
+
+/* ==========================================================================
+   MAIN VIEWPORT STYLES & INTERACTIVE SEARCH HEADERS
+   ========================================================================== */
+.main-view-wrapper { flex: 1; display: flex; flex-direction: column; height: 100vh; background-color: var(--bg-surface); overflow: hidden; position: relative; }
+.top-navbar-header {
+    height: var(--header-height); 
+    min-height: var(--header-height); 
+    background-color: var(--bg-app);
+    border-bottom: 1px solid var(--border-ui); 
+    padding: 0 1.5rem; 
+    display: grid; 
+    grid-template-columns: 1fr auto 1fr;
+    align-items: center; 
+    gap: 1rem;
+}
+.header-left, .header-right { display: flex; align-items: center; height: 100%; }
+
+.btn-hamburger {
+    background: transparent; border: none; color: var(--text-main); font-size: 1.4rem;
+    cursor: pointer; display: none; height: 40px; width: 40px; align-items: center; justify-content: center;
+}
+
+.header-center-search { 
+display: flex; 
+align-items: center; 
+justify-content: center; 
+}
+.search-container { position: relative; width: 100%; max-width: 20rem; }
+.search-form {
+    position: relative;
+    width: 100%;
+}
+.search-icon {
+pointer-events: none;
+opacity: .7;
+ position: absolute;
+    top: 50%;
+    left: 0.75rem;
+    transform: translateY(-50%);
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    width: 24px;
+    height: 24px;
+
+    appearance: none;
+    -webkit-appearance: none;
+
+    background: transparent;
+    border: none;
+    outline: none;
+    box-shadow: none;
+
+    padding: 0;
+    margin: 0;
+
+    color: var(--text-muted);
+    cursor: pointer;
+
+    transition: color .2s ease;
+}
+
+.search-icon:focus, .search-icon:active {
+
+    background: transparent;
+    border: none;
+    outline: none;
+    box-shadow: none;
+}
+
+.search-form:focus-within .search-icon {
+    opacity: 1;
+    pointer-events: auto;
+    color: var(--color-accent);
+}
+.search-icon svg { width: 1.25rem; height: 1.25rem; }
+.search-input {
+    width: 100%; background-color: var(--bg-surface); border: 2px solid transparent;
+    border-radius: 0.5rem; padding: 0.5rem 0.75rem 0.5rem 2.5rem; font-size: 0.875rem; color: var(--text-main); transition: all 0.2s; outline: none;
+}
+html.dark .search-input { background-color: var(--bg-panel); }
+.search-input:focus { background-color: #ffffff; border-color: var(--color-accent); box-shadow: 0 0 0 4px rgba(37, 99, 235, 0.1); }
+html.dark .search-input:focus { background-color: #0f172a; border-color: var(--color-accent); }
+/* TODO: fix  background-color: var(--bg-surface); */
+.btn-theme-toggle { background-color: var(--bg-surface); border: none; color: var(--text-main); font-size: 1.25rem; cursor: pointer; width: 40px; height: 40px; display: flex; align-items: center; justify-content: center; border-radius: 50%; }
+.btn-theme-toggle:hover { background-color: var(--bg-surface); }
+.scrollable-main-content { flex: 1; overflow-y: auto; padding: 1.5rem; }
+
+/* ==========================================================================
+   RESPONSIVE OVERRIDES & SHARED WIDGET STYLES
+   ========================================================================== */
+.mobile-bottom-navigation-bar { display: none; }
+
+@media (max-width: 992px) {
+    /* Hide the desktop list, but allow the mobile nav wrapped inside it to render */
+    .desktop-nav-fallback { padding: 0 !important; }
+    .sidebar-static-links { display: none !important; }
+    
+    .btn-hamburger { display: flex; }
+    .btn-close-sidebar { display: inline-block; }
+
+    /* FIXED MOBILE SIDEBAR LAYOUT (Left positioning avoids breaking position:fixed children) */
+    #sidebar-drawer {
+        position: fixed; 
+        left: calc(var(--sidebar-width) * -1); 
+        width: var(--sidebar-width);
+        top: 0; 
+        height: 100vh;
+        height: -webkit-fill-available;
+        display: flex !important;
+        flex-direction: column !important;
+        justify-content: flex-start !important;
+        transition: left 0.3s cubic-bezier(0.4, 0, 0.2, 1), box-shadow 0.3s ease;
+        box-shadow: none;
+    }
+    #sidebar-drawer.drawer-open { left: 0; box-shadow: 4px 0 20px rgba(0,0,0,0.2); }
+
+    .sidebar-scroll-content {
+        flex: 1 1 auto !important;
+        overflow-y: auto !important;
+    }
+
+    /* FIXED AVATAR MOBILE POSITION */
+    #sidebar-drawer .avatar-footer-row {
+        flex-shrink: 0 !important;
+        margin-bottom: calc(64px + env(safe-area-inset-bottom, 0px)) !important;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+        background-color: #111827 !important;
+    }
+
+    #sidebar-backdrop.backdrop-active {
+        position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
+        background-color: rgba(0, 0, 0, 0.4); backdrop-filter: blur(3px); z-index: 90;
+    }
+
+    .scrollable-main-content { 
+        padding-bottom: calc(80px + env(safe-area-inset-bottom, 0px)); 
+    }
+
+    /* HARDWARE NAVIGATION CHIN ENVIRONMENT TRACKING ENGINE PLACEMENT */
+    .mobile-bottom-navigation-bar {
+        display: block !important;
+        position: fixed; 
+        bottom: 0; 
+        left: 0; 
+        width: 100vw; 
+        height: calc(64px + env(safe-area-inset-bottom, 0px));
+        background-color: var(--bg-app); 
+        border-top: 1px solid var(--border-ui);
+        z-index: 200 !important; 
+        box-shadow: 0 -2px 10px rgba(0,0,0,0.05);
+        padding-bottom: env(safe-area-inset-bottom, 0px);
+    }
+
+    .bottom-nav-list {
+        list-style: none !important; 
+        display: flex !important; 
+        width: 100% !important;
+        height: 64px !important; 
+        margin: 0 !important; 
+        padding: 0 !important;
+        align-items: center !important; 
+        justify-content: space-around !important;
+    }
+
+    .bottom-nav-item { flex: 1 !important; height: 100% !important; display: flex !important; align-items: center !important; justify-content: center !important; }
+
+    .bottom-nav-item a {
+        display: flex !important; 
+        flex-direction: column !important;
+        align-items: center !important; 
+        justify-content: center !important;
+        width: 100% !important; 
+        height: 100% !important; 
+        gap: 4px !important;
+        text-decoration: none !important; 
+        color: var(--text-muted) !important; 
+        transition: all 0.2s ease;
+    }
+    .bottom-nav-item a.active { color: var(--color-accent) !important; }
+
+
+/* Base Icon Wrapper */
+.bottom-nav-icon-dot {
+    display: inline-block;
+    width: 22px;
+    height: 22px;
+    /* This color is the default state */
+    background-color: var(--text-muted); 
+    
+    /* This creates the icon shape using the dynamic --icon-url from the style attribute */
+    -webkit-mask-image: var(--icon-url);
+    mask-image: var(--icon-url);
+    -webkit-mask-repeat: no-repeat;
+    mask-repeat: no-repeat;
+    -webkit-mask-size: contain;
+    mask-size: contain;
+    
+    transition: background-color 0.2s ease;
+}
+
+/* Active State: When the link has .active, 
+   we change the background-color of the mask, 
+   not the icon itself. This is perfectly reliable.
+*/
+.bottom-nav-item a.active .bottom-nav-icon-dot {
+    background-color: var(--color-accent);
+}
+
+/* Dark Mode adjustment if needed */
+html.dark .bottom-nav-item a:not(.active) .bottom-nav-icon-dot {
+    background-color: var(--text-muted); /* Dark mode muted color */
+}
+
+
+
+    .bottom-nav-text {
+        font-size: 0.75rem !important; 
+        font-weight: 600 !important; 
+        line-height: 12px !important; 
+        margin: 0 !important; 
+        padding: 0 !important; 
+        text-align: center !important; 
+        display: block !important;
+    }
+    /* This targets only the first character of the element */
+    .bottom-nav-text::first-letter {
+        text-transform: uppercase;
+      }
+
+
+   
+}
+
+/* ==========================================================================
+   GOOGLE LOGIN & PROFILE SETTINGS MODAL
+   ========================================================================== */
+.btn-google-login {
+  background: #ffffff;
+  color: #0f172a;
+  border: 1.5px solid #e2e8f0;
+  padding: 8px 16px;
+  border-radius: 10px;
+  font-weight: 700;
+  font-size: 0.85rem;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  transition: all 0.2s ease;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.02);
+  width: 100%;
+  justify-content: center;
+}
+.btn-google-login:hover {
+  background: #f8fafc;
+  border-color: #cbd5e1;
+  transform: translateY(-1px);
+}
+.btn-google-login svg {
+  width: 18px;
+  height: 18px;
+  flex-shrink: 0;
+}
+
+/* Settings Modal styles */
+.settings-modal-backdrop {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(15, 23, 42, 0.6);
+  backdrop-filter: blur(4px);
+  z-index: 2000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s ease;
+}
+.settings-modal-backdrop.active {
+  opacity: 1;
+  pointer-events: auto;
+}
+.settings-modal {
+  background-color: var(--bg-app);
+  color: var(--text-main);
+  border: 1px solid var(--border-ui);
+  width: 95%;
+  max-width: 420px;
+  border-radius: 16px;
+  box-shadow:
+    0 20px 25px -5px rgba(0, 0, 0, 0.1),
+    0 10px 10px -5px rgba(0, 0, 0, 0.04);
+  transform: scale(0.95);
+  transition: transform 0.3s ease;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+.settings-modal-backdrop.active .settings-modal {
+  transform: scale(1);
+}
+.settings-modal-header {
+  padding: 1.25rem;
+  border-bottom: 1px solid var(--border-ui);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.settings-modal-title {
+  font-size: 1.1rem;
+  font-weight: 700;
+}
+.settings-modal-close {
+  background: transparent;
+  border: none;
+  color: var(--text-muted);
+  font-size: 1.5rem;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  transition: all 0.2s ease;
+}
+.settings-modal-close:hover {
+  background-color: var(--bg-surface);
+  color: var(--text-main);
+}
+.settings-modal-body {
+  padding: 1.25rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+.settings-user-info {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 0.5rem;
+}
+.settings-avatar {
+  width: 64px;
+  height: 64px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 2px solid var(--color-accent);
+}
+.settings-name {
+  font-weight: 700;
+  font-size: 1.1rem;
+}
+.settings-email {
+  font-size: 0.85rem;
+  color: var(--text-muted);
+  word-break: break-all;
+}
+.settings-phone {
+  font-size: 0.85rem;
+  color: var(--text-muted);
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  background-color: var(--bg-surface);
+  padding: 6px 12px;
+  border-radius: 8px;
+  border: 1px solid var(--border-ui);
+}
+.settings-detail-section {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+.settings-detail-label {
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+.settings-uid-box {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background-color: var(--bg-surface);
+  border: 1px solid var(--border-ui);
+  padding: 8px 12px;
+  border-radius: 10px;
+  gap: 8px;
+}
+.settings-uid-value {
+  font-family: monospace;
+  font-size: 0.8rem;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.btn-copy-settings-uid {
+  background: transparent;
+  border: none;
+  color: var(--text-muted);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  transition: color 0.2s ease;
+}
+.btn-copy-settings-uid:hover {
+  color: var(--color-accent);
+}
+.settings-modal-footer {
+  padding: 1.25rem;
+  border-top: 1px solid var(--border-ui);
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+.btn-modal-logout {
+  width: 100%;
+  background-color: #ef4444;
+  color: #ffffff;
+  border: none;
+  padding: 10px;
+  border-radius: 10px;
+  font-weight: 700;
+  font-size: 0.9rem;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
+.btn-modal-logout:hover {
+  background-color: #dc2626;
+}
+
+/* Toast Notification Styles */
+.toast-container {
+  position: fixed;
+  bottom: 24px;
+  right: 24px;
+  z-index: 2500;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  pointer-events: none;
+}
+.toast {
+  color: white;
+  padding: 12px 24px;
+  border-radius: 10px;
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-top: 10px;
+  font-size: 0.9rem;
+  font-weight: 600;
+  animation: slideUp 0.3s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+}
+@keyframes slideUp {
+  from {
+    transform: translateY(100px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+@keyframes fadeOut {
+  to {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+}
+
+
+/* ==========================================================================
+               Cookie Choices
+   ========================================================================== */
+
+/* --- Compact Centered Box --- */
+.cookie-choices-info {
+    position: fixed !important;
+    top: 0 !important;
+    bottom: 0 !important;
+    left: 0 !important;
+    right: 0 !important;
+    margin: auto !important; /* Perfect centering */
+    width: calc(100% - 32px) !important; 
+    max-width: 380px !important; 
+    height: fit-content !important; 
+    background-color: var(--bg-surface) !important; 
+    border: 1px solid var(--border-ui) !important; 
+    border-radius: 16px !important; 
+    padding: 20px !important;
+    z-index: 999999 !important;
+    box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.2), 0 10px 10px -5px rgba(0, 0, 0, 0.1) !important;
+    box-sizing: border-box !important;
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif !important;
+}
+
+/* --- Full Screen Backdrop Blur Overlay (Lightened) --- */
+.cookie-choices-info::before {
+    content: "" !important;
+    position: fixed !important;
+    top: 0 !important;
+    left: 0 !important;
+    width: 100vw !important;
+    height: 100vh !important;
+    background: rgba(0, 0, 0, 0.15) !important; /* Slightly lighter tint */
+    backdrop-filter: blur(3px) !important; /* Reduced from 8px to a subtle 3px */
+    -webkit-backdrop-filter: blur(3px) !important; /* Safari compatibility */
+    z-index: -1 !important; 
+    pointer-events: none !important; 
+}
+
+/* --- Inner Layout Wrapper --- */
+.cookie-choices-info .cookie-choices-inner {
+    position: relative !important;
+    width: 100% !important;
+    margin: 0 !important;
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 16px !important; 
+}
+
+/* --- Content Text --- */
+.cookie-choices-info .cookie-choices-text {
+    display: block !important;
+    font-size: 13.5px !important;
+    line-height: 1.5 !important;
+    margin: 0 !important;
+    color: var(--text-main) !important; 
+    text-align: center !important; 
+}
+
+/* --- Flexible Button Container --- */
+.cookie-choices-info .cookie-choices-buttons {
+    display: flex !important;
+    flex-direction: row !important; 
+    gap: 10px !important;
+    width: 100% !important;
+}
+
+/* --- Base Button Styling --- */
+.cookie-choices-info .cookie-choices-button {
+    flex: 1 !important; 
+    text-align: center !important;
+    padding: 10px 16px !important;
+    font-size: 13px !important;
+    font-weight: 600 !important;
+    text-decoration: none !important;
+    border-radius: 8px !important;
+    transition: background-color 0.2s, opacity 0.2s !important;
+    display: inline-block !important;
+    box-sizing: border-box !important;
+}
+
+/* --- Secondary Button: Privacy Policy --- */
+.cookie-choices-info .cookie-choices-button:first-child {
+    background-color: transparent !important;
+    color: var(--text-muted) !important;
+    border: 1px solid var(--border-ui) !important;
+}
+
+.cookie-choices-info .cookie-choices-button:first-child:hover {
+    background-color: var(--bg-app) !important;
+    color: var(--text-main) !important;
+}
+
+/* --- Primary Button: Got it! --- */
+#cookieChoiceDismiss {
+    background-color: var(--color-accent) !important; 
+    color: var(--text-light) !important;
+    border: 1px solid var(--color-accent) !important;
+}
+
+#cookieChoiceDismiss:hover {
+    opacity: 0.9 !important;
+    cursor: pointer !important;
+}
+
+/* --- Mobile Fixes (For ultra-small screens) --- */
+@media (max-width: 360px) {
+    .cookie-choices-info {
+        padding: 16px !important;
+    }
+    .cookie-choices-info .cookie-choices-buttons {
+        flex-direction: column !important; 
+    }
+}
+
+
+
+]]></b:skin></head><body><div id="sidebar-backdrop" onclick="toggleSidebarDrawer()"/><div class="app-container"><aside id="sidebar-drawer"><div class="sidebar-header"><div class="brand-logo"><img class="brand-icon" alt="Antinna" expr:src="data:blog.blogspotFaviconUrl"/><span class="brand-text"><b:eval expr="data:blog.title"/></span></div><div class="header-right"><button class="btn-theme-toggle" id="theme-mode-switcher"><span class="mode-icon icon-moon">☾</span><span class="mode-icon icon-sun ui-hidden">☼</span></button></div><button class="btn-close-sidebar" onclick="toggleSidebarDrawer()">×</button></div><div class="sidebar-scroll-content"><div class="desktop-nav-fallback"><b:section id="sidebar-primary-links" class="sidebar-shared-nav-section" maxwidgets="1" showaddelement="yes"><b:widget id="LinkList1" type="LinkList" title="Navigation Menu" locked="false" version="2"><b:widget-settings><b:widget-setting name="text-0">house</b:widget-setting><b:widget-setting name="link-0">/</b:widget-setting><b:widget-setting name="text-1">shop</b:widget-setting><b:widget-setting name="link-1">/search/</b:widget-setting><b:widget-setting name="text-2">fix</b:widget-setting><b:widget-setting name="link-2">/search/label/Services</b:widget-setting><b:widget-setting name="text-3">Profile</b:widget-setting><b:widget-setting name="link-3">/p/profile.html</b:widget-setting></b:widget-settings><b:includable id="main"><ul class="sidebar-static-links"><b:loop values="data:links" var="link"><li><a class="nav-route-link" expr:href="data:link.target"><data:link.name/></a></li></b:loop></ul><div class="mobile-bottom-navigation-bar"><ul class="bottom-nav-list"><b:loop values="data:links" var="link"><li class="bottom-nav-item"><a class="nav-route-link" expr:href="data:link.target"><b:if cond="data:link.name != &quot; &quot;"><span class="bottom-nav-icon-dot" expr:style="&quot;--icon-url: url(https://api.iconify.design/picon/&quot; + data:link.name + &quot;.svg)&quot;"/><span class="bottom-nav-text"><data:link.name/></span><b:else/><span class="bottom-nav-icon-dot">•</span><span class="bottom-nav-text"><data:link.name/></span></b:if></a></li></b:loop></ul></div></b:includable></b:widget></b:section></div><div class="sidebar-modules-area"><b:section id="sidebar-workspace-links" class="sidebar-modules-section" maxwidgets="1" showaddelement="yes"><b:widget id="LinkList3" type="LinkList" title="Workspace Menu" locked="false" version="2"><b:widget-settings><b:widget-setting name="text-0">Nearby Helpers</b:widget-setting><b:widget-setting name="link-0">#</b:widget-setting><b:widget-setting name="text-1">Active Bookings</b:widget-setting><b:widget-setting name="link-1">#</b:widget-setting><b:widget-setting name="text-2">Customer Reviews</b:widget-setting><b:widget-setting name="link-2">#</b:widget-setting></b:widget-settings><b:includable id="main"><div class="module-wrapper"><button class="module-trigger" onclick="toggleModuleDropdown(&quot;workspace-module&quot;)"><span><b:eval expr="data:title != &quot;&quot; and data:title != &quot; &quot; ? data:title : &quot;&quot;"/></span><span class="arrow-indicator initial-open" id="workspace-module-arrow">▾</span></button><ul class="module-dropdown-list" id="workspace-module"><b:loop values="data:links" var="link"><li><a class="nav-route-link" expr:href="data:link.target"><data:link.name/></a></li></b:loop></ul></div></b:includable></b:widget></b:section></div><div class="sidebar-legal-area"><b:section id="sidebar-legal-links" class="sidebar-legal-section" maxwidgets="1" showaddelement="yes"><b:widget id="LinkList2" type="LinkList" title="Policies &amp; Legal" locked="false" version="2"><b:widget-settings><b:widget-setting name="text-0">Privacy Policy</b:widget-setting><b:widget-setting name="link-0">/p/privacy-policy.html</b:widget-setting><b:widget-setting name="text-1">Terms &amp; Conditions</b:widget-setting><b:widget-setting name="link-1">/p/terms-conditions.html</b:widget-setting><b:widget-setting name="text-2">Refund Policy</b:widget-setting><b:widget-setting name="link-2">/p/refund-cancellation.html</b:widget-setting><b:widget-setting name="text-3">Disclaimer</b:widget-setting><b:widget-setting name="link-3">/p/disclaimer.html</b:widget-setting></b:widget-settings><b:includable id="main"><div class="module-wrapper"><button class="module-trigger" onclick="toggleModuleDropdown(&quot;legal-policy-module&quot;)"><span><b:eval expr="data:title != &quot;&quot; and data:title != &quot; &quot; ? data:title : &quot;&quot;"/></span><span class="arrow-indicator" id="legal-policy-module-arrow">▾</span></button><ul class="module-dropdown-list ui-hidden" id="legal-policy-module"><b:loop values="data:links" var="link"><li><a class="nav-route-link" expr:href="data:link.target"><data:link.name/></a></li></b:loop></ul></div></b:includable></b:widget></b:section></div><b:section id="social-icon-links" class="sidebar-social-wrapper" maxwidgets="1" showaddelement="yes"><b:widget id="LinkList4" type="LinkList" title="Connect with us" locked="false" version="2"><b:widget-settings><b:widget-setting name="text-0">https://api.iconify.design/mdi/youtube.svg</b:widget-setting><b:widget-setting name="link-0">https://www.youtube.com/@Antinna</b:widget-setting><b:widget-setting name="text-1">https://api.iconify.design/mdi/instagram.svg</b:widget-setting><b:widget-setting name="link-1">https://www.instagram.com/antinna.yt</b:widget-setting><b:widget-setting name="text-2">https://api.iconify.design/mdi/facebook.svg</b:widget-setting><b:widget-setting name="link-2">https://www.facebook.com/profile.php?id=100082961891641</b:widget-setting><b:widget-setting name="text-3">https://api.iconify.design/mdi/google-play.svg</b:widget-setting><b:widget-setting name="link-3">https://play.google.com/store/apps/dev?id=7417258411166270372l</b:widget-setting><b:widget-setting name="text-4">https://api.iconify.design/mdi/whatsapp.svg</b:widget-setting><b:widget-setting name="link-4">https://wa.me/+919729323674</b:widget-setting></b:widget-settings><b:includable id="main"><h4><b:eval expr="data:title != &quot;&quot; and data:title != &quot; &quot; ? data:title : &quot;&quot;"/></h4><div class="social-icons-row"><b:loop values="data:links" var="link"><a class="social-icon-link" expr:href="data:link.target" target="_blank" expr:style="&quot;-webkit-mask-image: url(&quot; + data:link.name + &quot;); mask-image: url(&quot; + data:link.name + &quot;);&quot;"/></b:loop></div></b:includable></b:widget></b:section></div><div class="avatar-footer-row"><div class="avatar-left-info"><div class="user-avatar-circle"><span>U</span></div><div class="user-meta-strings"><span class="user-display-name">Guest User</span><span class="user-display-role">Workspace Client</span></div></div><button aria-label="Settings" class="btn-settings-gear" onclick="alert(&quot;Settings panel active!&quot;)">⚙</button></div></aside><div class="main-view-wrapper"><header class="top-navbar-header"><div class="header-left"><button class="btn-hamburger" onclick="toggleSidebarDrawer()">☰</button></div><b:section id="header-search" maxwidgets="1" showaddelement="yes"><b:widget id="BlogSearch1" type="BlogSearch" title="Search items &amp; services" locked="false"><b:includable id="main"><div class="header-center-search"><div class="search-container"><form expr:action="data:blog.searchUrl" method="get" class="search-form"><b:attr name="target" value="_top" cond="not data:view.isPreview"/><button class="search-icon" type="submit" aria-label="Search"><svg fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"/></svg></button><input class="search-input" name="q" type="search" autocomplete="off" expr:value="data:view.isSearch ? data:view.search.query.escaped : &quot;&quot;" expr:placeholder="data:title != &quot;&quot; and data:title != &quot; &quot; ? data:title + &quot;...&quot; : &quot;Search...&quot;"/></form></div></div></b:includable></b:widget></b:section></header><main class="scrollable-main-content"><b:section id="main-feed-stream" class="main-feed-section" showaddelement="yes"/></main></div></div><div class="settings-modal-backdrop" id="account-settings-modal-backdrop"><div class="settings-modal"><div class="settings-modal-header"><span class="settings-modal-title">Session Settings</span><button class="settings-modal-close" onclick="closeSettingsModal()" aria-label="Close settings">×</button></div><div class="settings-modal-body"><div class="settings-user-info"><img class="settings-avatar" id="modal-user-avatar" src="https://www.gravatar.com/avatar/00000000000000000000000000000000" alt="User Avatar"/><span class="settings-name" id="modal-user-name">Guest User</span><span class="settings-email" id="modal-user-email">email address</span><div class="settings-phone ui-hidden" id="modal-user-phone-container"><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg><span id="modal-user-phone"/></div><div id="modal-user-unlink-container" class="ui-hidden" style="width: 100%;"/></div><div class="settings-detail-section"><span class="settings-detail-label">Account USER ID</span><div class="settings-uid-box"><span class="settings-uid-value" id="modal-user-uid">N/A</span><button class="btn-copy-settings-uid" id="modal-copy-uid-btn" title="Copy UID"><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg></button></div></div></div><div class="settings-modal-footer"><button class="btn-modal-logout" id="modal-signout-btn"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg><span>Logout Session</span></button></div></div></div><script>//<![CDATA[
+           /**
+         * Toggles responsive state for the mobile drawer container panel.
+         */
+        function toggleSidebarDrawer() {
+            const sidebar = document.getElementById('sidebar-drawer');
+            const backdrop = document.getElementById('sidebar-backdrop');
+            
+            if (sidebar && backdrop) {
+                sidebar.classList.toggle('drawer-open');
+                backdrop.classList.toggle('backdrop-active');
+            }
+        }
+
+        /**
+         * Handles module option dropdown panel expansion and triggers smooth arrow transforms dynamically.
+         * @param {string} moduleId - Target DOM container node identifier token string.
+         */
+        function toggleModuleDropdown(moduleId) {
+            const targetModule = document.getElementById(moduleId);
+            const arrowIndicator = document.getElementById(moduleId + '-arrow');
+            
+            if (targetModule) {
+                const isCurrentlyHidden = targetModule.classList.contains('ui-hidden');
+                
+                if (isCurrentlyHidden) {
+                    targetModule.classList.remove('ui-hidden');
+                    if (arrowIndicator) {
+                        arrowIndicator.style.transform = 'rotate(0deg)';
+                    }
+                } else {
+                    targetModule.classList.add('ui-hidden');
+                    if (arrowIndicator) {
+                        arrowIndicator.style.transform = 'rotate(-90deg)';
+                    }
+                }
+            }
+        }
+
+        /**
+         * Global Routing Logic Engine: Automatically scans, parses, and assigns 
+         * active highlight states based on browser route path locations.
+         */
+        function highlightActivePathsByRoute() {
+            const currentSystemPathname = window.location.pathname;
+            const structuralNavLinks = document.querySelectorAll('.nav-route-link');
+            
+            structuralNavLinks.forEach(linkElement => {
+                const assignedTargetHref = linkElement.getAttribute('href');
+                
+                if (assignedTargetHref) {
+                    // Remove parameters and hashes to cleanly match endpoints
+                    const standardizedHref = assignedTargetHref.trim().split('?')[0].split('#')[0];
+                    
+                    if (currentSystemPathname === standardizedHref) {
+                        linkElement.classList.add('active');
+                    } else {
+                        linkElement.classList.remove('active');
+                    }
+                }
+            });
+        }
+
+        /**
+         * Global Workspace Listeners Initializer Pipeline.
+         */
+        document.addEventListener('DOMContentLoaded', () => {
+            const themeBtn = document.getElementById('theme-mode-switcher');
+            const htmlEl = document.documentElement;
+            // 1. Resolve Initial Theme State if LocalStorage is empty
+            const savedTheme = localStorage.getItem('antinna-theme');
+            if (savedTheme === 'dark') {
+                htmlEl.classList.add('dark');
+            } else if (savedTheme === 'light') {
+                htmlEl.classList.remove('dark');
+            } else {
+                // Fallback: Check if user's operating system/browser prefers dark mode
+                if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+                    htmlEl.classList.add('dark');
+                } else {
+                    // If your application defaults to light mode when empty, keep it removed
+                    htmlEl.classList.remove('dark');
+                }
+            }
+
+            // 2. Run icon synchronization immediately on startup
+            syncThemeIconDisplays();
+            
+            // Automatically match, map, and highlight routes across navigation groups
+            highlightActivePathsByRoute();
+
+            if (themeBtn) {
+                themeBtn.addEventListener('click', () => {
+                    const isDark = htmlEl.classList.contains('dark');
+                    if (isDark) {
+                        htmlEl.classList.remove('dark');
+                        localStorage.setItem('antinna-theme', 'light');
+                    } else {
+                        htmlEl.classList.add('dark');
+                        localStorage.setItem('antinna-theme', 'dark');
+                    }
+                    syncThemeIconDisplays();
+                });
+            }
+
+            function syncThemeIconDisplays() {
+                const moonIcon = document.querySelector('.icon-moon');
+                const sunIcon = document.querySelector('.icon-sun');
+                
+                if (moonIcon && sunIcon) {
+                    if (htmlEl.classList.contains('dark')) {
+                        moonIcon.classList.add('ui-hidden');
+                        sunIcon.classList.remove('ui-hidden');
+                    } else {
+                        moonIcon.classList.remove('ui-hidden');
+                        sunIcon.classList.add('ui-hidden');
+                    }
+                }
+            }
+        });
+      
+//]]></script><script type="module">//<![CDATA[
+ import {
+      initializeApp,
+      getApps,
+    } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
+    import {
+      getAuth,
+      signInWithPopup,
+      GoogleAuthProvider,
+      onAuthStateChanged,
+      signOut,
+      setPersistence,
+      browserLocalPersistence,
+      RecaptchaVerifier,
+      linkWithPhoneNumber,
+    } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
+    import {
+      getMessaging,
+      getToken,
+      onMessage,
+    } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-messaging.js";
+
+    // Dynamic environment fallback resolution parsing
+    let firebaseConfig = {};
+    try {
+      if (typeof __firebase_config !== "undefined") {
+        firebaseConfig = JSON.parse(__firebase_config);
+      } else {
+        firebaseConfig = {
+          apiKey: "AIzaSyDtRB-0S8VNgY-HoQYAAvkLX7iOAK-K-i0",
+          authDomain: "antinnamain.firebaseapp.com",
+          projectId: "antinnamain",
+          storageBucket: "antinnamain.appspot.com",
+          messagingSenderId: "907520801915",
+          appId: "1:907520801915:web:5a99962f7ce400da54b6de",
+        };
+      }
+    } catch (e) {
+      console.error(
+        "Critical: Failed to resolve core Firebase configurations.",
+        e,
+      );
+    }
+
+    // Initialize application nodes securely
+    const app = !getApps().length
+      ? initializeApp(firebaseConfig)
+      : getApps()[0];
+    const auth = getAuth(app);
+
+    window.firebaseAuth = auth; // Expose for linking
+    window.RecaptchaVerifier = RecaptchaVerifier;
+    window.linkWithPhoneNumber = linkWithPhoneNumber;
+    
+    // Set persistence to LOCAL so session is remembered
+    (async () => {
+        try {
+          await setPersistence(auth, browserLocalPersistence);
+        } catch (e) {
+          console.warn("Set persistence failed:", e);
+        }
+    })();
+    
+    const provider = new GoogleAuthProvider();
+
+    // Global Messaging Instantiation References
+    let messaging = null;
+    try {
+      messaging = getMessaging(app);
+    } catch (e) {
+      console.warn("FCM Messaging initialization skipped or unsupported in this browser environment.", e);
+    }
+
+    const APPS_SCRIPT_URL =
+      "https://script.google.com/macros/s/YOUR_DEPLOYED_WEB_APP_ID/exec";
+
+    // Resolve persistent unique browser profile instance ID
+    let browserClientId = localStorage.getItem("antinna_browser_client_id");
+    if (!browserClientId) {
+      browserClientId =
+        "client-" +
+        Math.random().toString(36).substring(2, 15) +
+        "-" +
+        Date.now().toString(36);
+      localStorage.setItem("antinna_browser_client_id", browserClientId);
+    }
+    
+    // Proactively backmount the service worker loop on execution start
+    if ("serviceWorker" in navigator) {
+      window.addEventListener("load", () => {
+        navigator.serviceWorker.getRegistration("/").then((existing) => {
+          if (!existing) {
+            navigator.serviceWorker
+              .register("/firebase-messaging-sw.js")
+              .then((reg) =>
+                console.log(
+                  "FCM Worker ready state bound with scope:",
+                  reg.scope,
+                ),
+              )
+              .catch((err) =>
+                console.error("Worker registration structural failure:", err),
+              );
+          }
+        });
+      });
+    }
+
+    // Toast Notification utility
+    function showToast(message, type = 'info') {
+        let container = document.getElementById('toast-container');
+        if (!container) {
+            container = document.createElement('div');
+            container.id = 'toast-container';
+            container.className = 'toast-container';
+            document.body.appendChild(container);
+        }
+        const toast = document.createElement('div');
+        toast.className = `toast toast-${type}`;
+        toast.style.cssText = `
+            background: ${type === 'success' ? '#10b981' : type === 'error' ? '#ef4444' : '#1e293b'};
+            color: white;
+            padding: 12px 24px;
+            border-radius: 10px;
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-top: 10px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            animation: slideUp 0.3s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+            pointer-events: auto;
+            border: 1px solid var(--border-ui);
+        `;
+        toast.innerText = message;
+        container.appendChild(toast);
+        setTimeout(() => {
+            toast.style.animation = 'fadeOut 0.3s forwards';
+            setTimeout(() => toast.remove(), 300);
+        }, 3000);
+    }
+    window.showToast = showToast;
+
+    // Set globally accessible window authentication variables
+    async function updateWindowAuthData(user, deviceToken = null) {
+      window.isLoggedIn = !!user;
+      window.firebaseUid = user ? user.uid : null;
+      let linkedPhoneNumber = null;
+      if (user) {
+          linkedPhoneNumber = user.phoneNumber;
+          if (!linkedPhoneNumber && user.providerData) {
+            const providerMatch = user.providerData.find(info => info.phoneNumber);
+            if (providerMatch) linkedPhoneNumber = providerMatch.phoneNumber;
+          }
+          window.hasPhoneLinked = !!linkedPhoneNumber;
+
+        try {
+          window.firebaseAuthToken = await user.getIdToken();
+        } catch (e) {
+          console.error("Error getting Firebase ID Token for window:", e);
+          window.firebaseAuthToken = null;
+        }
+      } else {
+        window.firebaseAuthToken = null;
+        window.hasPhoneLinked = false;
+      }
+
+      if (deviceToken) {
+        window.firebaseRemoteDeviceToken = deviceToken;
+      } else if (!user) {
+        window.firebaseRemoteDeviceToken = null;
+      }
+      console.log("Updated global auth window variables:", {
+        isLoggedIn: window.isLoggedIn,
+        firebaseUid: window.firebaseUid,
+        hasPhoneLinked: window.hasPhoneLinked,
+        firebaseAuthToken: window.firebaseAuthToken ? "EXISTS" : null,
+        firebaseRemoteDeviceToken: window.firebaseRemoteDeviceToken
+      });
+    }
+
+    /**
+     * REACTIVE CORE: Synchronizes latest tokens to backend database arrays
+     */
+    async function autoSyncDeviceSession(currentUserInstance) {
+      if (!messaging) return;
+      if (Notification.permission === "denied") {
+        console.warn(
+          "Notification permissions blocked by browser configuration.",
+        );
+        return;
+      }
+
+      const userIdentifier = currentUserInstance
+        ? currentUserInstance.uid
+        : "guest";
+      const syncSessionKey = `antinna_sync_lock_${userIdentifier}`;
+
+      // Check lock state BEFORE requesting token promises
+      if (sessionStorage.getItem(syncSessionKey) === "active") {
+        console.log(
+          `[Sync Ignored] State lock for ${userIdentifier} already active.`,
+        );
+        try {
+          const activeRegistration = await navigator.serviceWorker.ready;
+          const registrationToken = await getToken(messaging, {
+            vapidKey:
+              "BA2CnO0uBsc7Ikc9LHyaY92oY1IGmTFLYemtw7uWSPrWHUP6SibSpMka0Hif5QibHqsHO7dbUPpto87m1fTEKr0",
+            serviceWorkerRegistration: activeRegistration,
+          });
+          if (registrationToken) {
+            await updateWindowAuthData(currentUserInstance, registrationToken);
+          }
+        } catch (err) {
+          console.error("Failed retrieving token for window object:", err);
+        }
+        return;
+      }
+      try {
+        const permission = await Notification.requestPermission();
+        if (permission !== "granted") return;
+
+        const activeRegistration = await navigator.serviceWorker.ready;
+        const registrationToken = await getToken(messaging, {
+          vapidKey:
+            "BA2CnO0uBsc7Ikc9LHyaY92oY1IGmTFLYemtw7uWSPrWHUP6SibSpMka0Hif5QibHqsHO7dbUPpto87m1fTEKr0",
+          serviceWorkerRegistration: activeRegistration,
+        });
+
+        if (registrationToken) {
+          await updateWindowAuthData(currentUserInstance, registrationToken);
+          let detectedClient = "Web Browser";
+          if (navigator.userAgent.indexOf("Chrome") > -1)
+            detectedClient = "Chrome";
+          else if (navigator.userAgent.indexOf("Safari") > -1)
+            detectedClient = "Safari";
+          else if (navigator.userAgent.indexOf("Firefox") > -1)
+            detectedClient = "Firefox";
+          if (navigator.userAgent.indexOf("Mobile") > -1)
+            detectedClient += " (Mobile)";
+
+          if (currentUserInstance) {
+            try {
+              const idToken = await currentUserInstance.getIdToken();
+              dispatchSyncPayload({
+                action: "SYNC_DEVICE",
+                clientId: browserClientId,
+                idToken: idToken,
+                deviceToken: registrationToken,
+                clientName: detectedClient,
+              });
+              sessionStorage.setItem(syncSessionKey, "active");
+            } catch (err) {
+              console.error("Failed fetching secure token proof:", err);
+            }
+          } else {
+            dispatchSyncPayload({
+              action: "SYNC_DEVICE",
+              clientId: browserClientId,
+              idToken: "guest_session",
+              deviceToken: registrationToken,
+              clientName: detectedClient,
+            });
+            sessionStorage.setItem(syncSessionKey, "active");
+          }
+        }
+      } catch (err) {
+        console.error("Central synchronization sequence blocked:", err);
+      }
+    }
+
+    function dispatchSyncPayload(payload) {
+      fetch(APPS_SCRIPT_URL, {
+        method: "POST",
+        mode: "no-cors",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(payload),
+      }).catch((err) => console.error("Database tracking relay failure:", err));
+    }
+
+    if (messaging) {
+      onMessage(messaging, (payload) => {
+        console.log("Foreground tracking alert frame:", payload);
+        if (payload.notification) {
+          showToast(
+            `${payload.notification.title}: ${payload.notification.body}`,
+            "info",
+          );
+        }
+      });
+    }
+
+    /**
+     * Executes authentication pop-up lifecycle sequence
+     */
+    async function handleLogin() {
+      try {
+        const loginBtn = document.getElementById("google-login-btn-sidebar");
+        if (loginBtn) {
+          loginBtn.disabled = true;
+          loginBtn.style.opacity = "0.7";
+        }
+        await signInWithPopup(auth, provider);
+        showToast("Secure login established successfully!", "success");
+      } catch (error) {
+        console.error("Authentication Error Matrix:", error);
+        if (error.code === "auth/popup-closed-by-user") {
+          showToast("Sign-in context aborted by user.", "error");
+        } else {
+          showToast("Failed to establish validation session.", "error");
+        }
+      } finally {
+        const loginBtn = document.getElementById("google-login-btn-sidebar");
+        if (loginBtn) {
+          loginBtn.disabled = false;
+          loginBtn.style.opacity = "1";
+        }
+      }
+    }
+    window.handleLogin = handleLogin;
+
+    /**
+     * Terminate active validation container context
+     */
+    async function handleLogout() {
+      try {
+        const currentUserInstance = auth.currentUser;
+        const userIdentifier = currentUserInstance
+          ? currentUserInstance.uid
+          : "guest";
+        
+        dispatchSyncPayload({
+          action: "LOGOUT_DEVICE",
+          clientId: browserClientId,
+        });
+        
+        sessionStorage.removeItem(`antinna_sync_lock_${userIdentifier}`);
+        sessionStorage.removeItem("antinna_sync_lock_guest");
+        await signOut(auth);
+        showToast("Session signed out cleanly.", "info");
+      } catch (error) {
+        console.error("SignOut pipeline exception execution:", error);
+        showToast("Failed to safely terminate session data flow.", "error");
+      }
+    }
+      window.handleLogout = handleLogout;
+    /**
+     * Copy User Unique ID context string buffer to clipboard securely
+     */
+    async function copyUserUID(uid) {
+      try {
+        await navigator.clipboard.writeText(uid);
+        showToast("UID parsed and copied to clipboard!", "success");
+      } catch (err) {
+        console.error(
+          "Failed writing explicit buffer strings to clipboard",
+          err,
+        );
+      }
+    }
+
+    window.openSettingsModal = function() {
+      const modalBackdrop = document.getElementById('account-settings-modal-backdrop');
+      if (modalBackdrop) {
+        modalBackdrop.classList.add('active');
+      }
+    };
+
+    window.closeSettingsModal = function() {
+      const modalBackdrop = document.getElementById('account-settings-modal-backdrop');
+      if (modalBackdrop) {
+        modalBackdrop.classList.remove('active');
+      }
+    };
+
+    // Close settings modal when clicking outside settings container
+    document.addEventListener('click', (e) => {
+      const modalBackdrop = document.getElementById('account-settings-modal-backdrop');
+      if (modalBackdrop && modalBackdrop.classList.contains('active')) {
+        if (e.target === modalBackdrop) {
+          window.closeSettingsModal();
+        }
+      }
+    });
+
+    /**
+     * High Performance Interface Painter updating targets reactive to authentication state
+     */
+    function renderAuthState(user) {
+      const footerRow = document.querySelector('.avatar-footer-row');
+      if (!footerRow) return;
+
+      // 1. ANCHOR STATE: User is Unauthenticated (Render initial clean Sign-In template node)
+      if (!user) {
+        footerRow.innerHTML = `
+          <button class="btn-google-login" id="google-login-btn-sidebar">
+            <svg viewBox="0 0 24 24">
+              <path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/>
+              <path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/>
+              <path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.06H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.94l2.85-2.22.81-.63z"/>
+              <path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.06l3.66 2.84c.87-2.6 3.3-4.52 6.16-4.52z"/>
+            </svg>
+            <span>Continue with Google</span>
+          </button>
+        `;
+
+        const initialBtn = document.getElementById("google-login-btn-sidebar");
+        if (initialBtn) {
+          initialBtn.addEventListener("click", handleLogin);
+        }
+        return;
+      }
+
+      // 2. ACTIVE STATE: User Profile Loaded
+      const userAvatar =
+        user.photoURL ||
+        "https://www.gravatar.com/avatar/00000000000000000000000000000000";
+      const userEmail = user.email || "anonymous@antinna.in";
+      const userName = user.displayName || "Antinna Member";
+
+      // Resolve phone number if explicitly bound to the social auth account profile
+      let linkedPhoneNumber = user.phoneNumber || null;
+      if (!linkedPhoneNumber) {
+        if (user.providerData) {
+          const providerMatch = user.providerData.find(
+            (info) => info.phoneNumber,
+          );
+          if (providerMatch) {
+            linkedPhoneNumber = providerMatch.phoneNumber;
+          }
+        }
+      }
+
+      footerRow.innerHTML = `
+        <div class="avatar-left-info">
+          <div class="user-avatar-circle" style="background: none;">
+            <img src="${userAvatar}" alt="${userName}" style="width: 100%; height: 100%; border-radius: 50%; object-fit: cover;" />
+          </div>
+          <div class="user-meta-strings">
+            <span class="user-display-name">${userName}</span>
+            <span class="user-display-role" title="${userEmail}">${userEmail}</span>
+          </div>
+        </div>
+        <button aria-label="Settings" class="btn-settings-gear" id="btn-settings-gear-trigger">⚙</button>
+      `;
+
+      // Settings gear listener
+      const settingsTrigger = document.getElementById("btn-settings-gear-trigger");
+      if (settingsTrigger) {
+        settingsTrigger.addEventListener("click", (e) => {
+          e.stopPropagation();
+          window.openSettingsModal();
+        });
+      }
+
+      // Populate Settings Modal elements
+      const modalAvatar = document.getElementById('modal-user-avatar');
+      const modalName = document.getElementById('modal-user-name');
+      const modalEmail = document.getElementById('modal-user-email');
+      const modalPhoneContainer = document.getElementById('modal-user-phone-container');
+      const modalPhone = document.getElementById('modal-user-phone');
+      const modalUid = document.getElementById('modal-user-uid');
+
+      const modalUnlinkContainer = document.getElementById('modal-user-unlink-container');
+
+      if (modalAvatar) modalAvatar.src = userAvatar;
+      if (modalName) modalName.textContent = userName;
+      if (modalEmail) modalEmail.textContent = userEmail;
+      if (modalUid) modalUid.textContent = user.uid;
+
+      if (linkedPhoneNumber) {
+        if (modalPhone) modalPhone.textContent = linkedPhoneNumber;
+        if (modalPhoneContainer) modalPhoneContainer.classList.remove('ui-hidden');
+      
+
+       // Dynamically append an unlinking management interface state if configured
+        if (modalUnlinkContainer) {
+          modalUnlinkContainer.classList.remove('ui-hidden');
+          modalUnlinkContainer.innerHTML = `
+            <div class="unlink-action-row" style="display: flex; justify-content: space-between; align-items: center; margin-top: 12px; padding-top: 12px; border-top: 1px dashed var(--border-ui);">
+              <span style="font-size: 0.85rem; color: var(--text-muted);">Phone Authentication Active</span>
+              <button class="btn-unlink-phone" id="modal-unlink-phone-btn" style="background: transparent; color: #ef4444; border: 1px solid #ef4444; padding: 4px 10px; border-radius: 6px; font-size: 0.8rem; cursor: pointer; font-weight: 600; display: flex; align-items: center; gap: 6px; transition: all 0.2s ease;">
+                Unlink Phone
+              </button>
+            </div>
+          `;
+          
+          const unlinkBtn = document.getElementById('modal-unlink-phone-btn');
+          
+          unlinkBtn?.addEventListener('click', async () => {
+            if (confirm("Are you sure you want to remove phone authentication from this profile?")) {
+              try {
+                // Set Loading State
+                unlinkBtn.disabled = true;
+                unlinkBtn.style.opacity = "0.6";
+                unlinkBtn.style.cursor = "not-allowed";
+                unlinkBtn.innerHTML = `
+                  <svg class="animate-spin" viewBox="0 0 24 24" width="12" height="12" stroke="currentColor" stroke-width="3" fill="none" style="animation: spin 1s linear infinite;">
+                    <circle cx="12" cy="12" r="10"></circle>
+                    <path d="M12 2a10 10 0 0 1 10 10" stroke-linecap="round"></path>
+                  </svg>
+                  <span>Unlinking...</span>
+                `;
+
+                const { unlink } = await import("https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js");
+                await unlink(user, 'phone');
+                
+                window.showToast("Phone number association removed successfully.", "success");
+                
+                // Instantly clean up UI variants without breaking modal visibility context
+                if (modalPhoneContainer) modalPhoneContainer.classList.add('ui-hidden');
+                if (modalUnlinkContainer) {
+                  modalUnlinkContainer.classList.add('ui-hidden');
+                  modalUnlinkContainer.innerHTML = '';
+                }
+                
+                // Update global tracking context indicators
+                window.hasPhoneLinked = false;
+
+              } catch (err) {
+                console.error("Provider mutation failed:", err);
+                window.showToast("Failed to unlink credential provider.", "error");
+                
+                // Reset Loading State on Failure
+                unlinkBtn.disabled = false;
+                unlinkBtn.style.opacity = "1";
+                unlinkBtn.style.cursor = "pointer";
+                unlinkBtn.innerHTML = 'Unlink Phone';
+              }
+            }
+          });
+        }
+      } else {
+        if (modalPhoneContainer) modalPhoneContainer.classList.add('ui-hidden');
+        if (modalUnlinkContainer) {
+          modalUnlinkContainer.classList.add('ui-hidden');
+          modalUnlinkContainer.innerHTML = '';
+        }
+      }
+
+
+
+
+      
+
+      
+    }
+
+    // Modal Copy UID button binding
+    const modalCopyBtn = document.getElementById('modal-copy-uid-btn');
+    if (modalCopyBtn) {
+      modalCopyBtn.addEventListener("click", () => {
+        if (auth.currentUser) {
+          copyUserUID(auth.currentUser.uid);
+        }
+      });
+    }
+
+    // Modal Signout button binding
+    const modalLogoutBtn = document.getElementById('modal-signout-btn');
+    if (modalLogoutBtn) {
+      modalLogoutBtn.addEventListener("click", () => {
+        window.closeSettingsModal();
+        handleLogout();
+      });
+    }
+
+    // Reactive Master Pipeline Controller Hook
+    onAuthStateChanged(auth, async (user) => {
+      renderAuthState(user);
+      await updateWindowAuthData(user);
+      autoSyncDeviceSession(user);
+    });  
+//]]></script><script type="text/javascript">//<![CDATA[
+var AntinnaEngineLib=function(M){"use strict";var re=Object.defineProperty;var ie=(M,s,F)=>s in M?re(M,s,{enumerable:!0,configurable:!0,writable:!0,value:F}):M[s]=F;var b=(M,s,F)=>(ie(M,typeof s!="symbol"?s+"":s,F),F);class s{static getFirst(e){return Array.isArray(e)?e[0]:e}static getArray(e){return e==null?[]:Array.isArray(e)?e:[e]}static decodeEntities(e){if(!e)return"";const t=document.createElement("textarea");t.innerHTML=e;let n=t.value;return n.includes("&quot;")&&(t.innerHTML=n,n=t.value),n}static extractJsonLd(e){if(!e)return null;try{const t=e.match(/<script[^>]*type=["']application\/ld\+json["'][^>]*>([\s\S]*?)<\/script>/i);let n=t?t[1]:e;const i=this.decodeEntities(n).replace(/\/\*[\s\S]*?\*\/|([^\\:]|^)\/\/.*$/gm,"$1").trim();try{return JSON.parse(i)}catch{const c=i.match(/\{[\s\S]*\}/);if(c)try{return JSON.parse(c[0])}catch{}return null}}catch(t){return console.error("Failed to extract JSON-LD",t),null}}static findMatchingVariant(e,t,n=null){if(!e)return null;const r=this.getArray(e.hasVariant).length>0?this.getArray(e.hasVariant):[e];let i=r.find(o=>Object.entries(t).every(([c,a])=>String(this.getFirst(o[c]))===String(a)));return!i&&n&&(i=r.find(o=>String(this.getFirst(o[n]))===String(t[n]))),i||r[0]}static normalizeName(e){return(e||"").toLowerCase().trim().replace(/\s+/g," ")}static findMatchingServicePackage(e,t){const n=this.getArray(e==null?void 0:e.hasOfferCatalog);if(n.length===0)return null;const r=this.normalizeName(t);for(const i of n){const c=this.getArray(i.itemListElement).find(a=>{const d=a.itemOffered||a,u=this.getFirst(d.name)||this.getFirst(a.name);return this.normalizeName(u)===r});if(c)return c}return null}static findAllServices(e){const t=[],n=[e],r=new Set;for(;n.length>0;){const i=n.pop();if(!(!i||typeof i!="object"||r.has(i)))if(r.add(i),i.hasOfferCatalog&&this.getArray(i.hasOfferCatalog).forEach(c=>{const a=this.getArray(c.itemListElement);t.push(...a),n.push(c)}),i.addOn&&t.push(...this.getArray(i.addOn)),Array.isArray(i))n.push(...i);else for(const[o,c]of Object.entries(i))o!=="hasOfferCatalog"&&o!=="addOn"&&c&&typeof c=="object"&&n.push(c)}return t}static extractPrice(e){var i,o,c,a,d,u;const t=Array.isArray(e)?e[0]:e;if(!t)return{price:"0",currency:"INR"};const n=this.getFirst(t.price)||this.getFirst((o=(i=this.getArray(t.itemOffered)[0])==null?void 0:i.offers)==null?void 0:o.price)||this.getFirst((c=this.getArray(t.offers)[0])==null?void 0:c.price)||"0",r=this.getFirst(t.priceCurrency)||this.getFirst((d=(a=this.getArray(t.itemOffered)[0])==null?void 0:a.offers)==null?void 0:d.priceCurrency)||this.getFirst((u=this.getArray(t.offers)[0])==null?void 0:u.priceCurrency)||"INR";return{price:String(n),currency:String(r)}}static extractAvailability(e){var r,i,o;const t=Array.isArray(e)?e[0]:e;if(!t)return"https://schema.org/InStock";const n=this.getFirst(t.availability)||this.getFirst((i=(r=this.getArray(t.itemOffered)[0])==null?void 0:r.offers)==null?void 0:i.availability)||this.getFirst((o=this.getArray(t.offers)[0])==null?void 0:o.availability)||"https://schema.org/InStock";return(n==null?void 0:n["@id"])||String(n)}static extractEligibleQuantity(e){var o,c,a,d,u,g;const t=Array.isArray(e)?e[0]:e;if(!t)return{minValue:null,maxValue:null};const n=this.getFirst(t.eligibleQuantity)||this.getFirst((c=(o=this.getArray(t.itemOffered)[0])==null?void 0:o.offers)==null?void 0:c.eligibleQuantity)||this.getFirst((a=this.getArray(t.itemOffered)[0])==null?void 0:a.eligibleQuantity)||this.getFirst((d=this.getArray(t.offers)[0])==null?void 0:d.eligibleQuantity)||this.getFirst((g=(u=this.getArray(t.offers)[0])==null?void 0:u.itemOffered)==null?void 0:g.eligibleQuantity);if(!n)return{minValue:null,maxValue:null};const r=this.getFirst(n.minValue),i=this.getFirst(n.maxValue);return{minValue:r!=null?Number(r):null,maxValue:i!=null?Number(i):null}}static extractInventoryLevel(e){var i,o,c,a,d,u;const t=Array.isArray(e)?e[0]:e;if(!t)return null;const n=this.getFirst(t.inventoryLevel)||this.getFirst((o=(i=this.getArray(t.itemOffered)[0])==null?void 0:i.offers)==null?void 0:o.inventoryLevel)||this.getFirst((c=this.getArray(t.itemOffered)[0])==null?void 0:c.inventoryLevel)||this.getFirst((a=this.getArray(t.offers)[0])==null?void 0:a.inventoryLevel)||this.getFirst((u=(d=this.getArray(t.offers)[0])==null?void 0:d.itemOffered)==null?void 0:u.inventoryLevel);if(!n)return null;const r=typeof n=="object"?this.getFirst(n.value):n;return r!=null?Number(r):null}static extractDimensions(e){const t=Array.isArray(e)?e[0]:e;if(!t)return{weight:null,height:null,width:null,depth:null};const n=r=>r==null?null:typeof r=="object"?Number(this.getFirst(r.value))||null:Number(r)||null;return{weight:n(t.weight),height:n(t.height),width:n(t.width),depth:n(t.depth)}}static extractAdvanceBookingRequirement(e){const t=Array.isArray(e)?e[0]:e;if(!t)return null;const n=this.getFirst(t.advanceBookingRequirement);if(!n)return null;if(typeof n=="string")return n;const r=this.getFirst(n.value),i=this.getFirst(n.unitCode)||this.getFirst(n.unitText)||"";if(r===void 0)return null;let o=i;return i==="HUR"?o="Hours":i==="DAY"&&(o="Days"),`${r} ${o}`.trim()}static getCurrencySymbol(e){return{INR:"₹",USD:"$",EUR:"€",GBP:"£",JPY:"¥"}[e.toUpperCase()]||e}static extractCondition(e){var i,o,c,a,d,u;const t=Array.isArray(e)?e[0]:e;if(!t)return null;const n=this.getFirst(t.itemCondition)||this.getFirst((o=(i=this.getArray(t.itemOffered)[0])==null?void 0:i.offers)==null?void 0:o.itemCondition)||this.getFirst((c=this.getArray(t.itemOffered)[0])==null?void 0:c.itemCondition)||this.getFirst((a=this.getArray(t.offers)[0])==null?void 0:a.itemCondition)||this.getFirst((u=(d=this.getArray(t.offers)[0])==null?void 0:d.itemOffered)==null?void 0:u.itemCondition);if(!n)return null;const r=String(n).toLowerCase();return r.includes("newcondition")?"New":r.includes("refurbishedcondition")?"Refurbished":r.includes("usedcondition")?"Used":r.includes("damagedcondition")?"Damaged":r.split("/").pop()||r}static extractAreaServed(e){const t=[],n=[e],r=new Set;for(;n.length>0;){const i=n.pop();if(!i||typeof i!="object"||r.has(i))continue;r.add(i);const o=this.getArray(i.areaServed||i.eligibleRegion);o.length>0&&t.push(...o),i.itemOffered&&n.push(i.itemOffered),i.offers&&n.push(...this.getArray(i.offers)),i.hasVariant&&n.push(...this.getArray(i.hasVariant)),i.hasOfferCatalog&&n.push(...this.getArray(i.hasOfferCatalog)),i.itemListElement&&n.push(...this.getArray(i.itemListElement))}return t}static isBusinessOpen(e){const t=Array.isArray(e)?e[0]:e;if(!t)return{isOpen:!0,message:null};const n=new Date,r=n.toISOString().split("T")[0],i=n.getHours().toString().padStart(2,"0")+":"+n.getMinutes().toString().padStart(2,"0"),c=["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"][n.getDay()],a=this.getArray(t.specialOpeningHoursSpecification);for(const h of a){const f=this.getFirst(h.validFrom),y=this.getFirst(h.validThrough);if(f&&y&&r>=String(f)&&r<=String(y)){const v=String(this.getFirst(h.opens)||"00:00"),w=String(this.getFirst(h.closes)||"00:00");if(v==="00:00"&&w==="00:00")return{isOpen:!1,message:"Closed for Holiday/Event"};const x=i>=v&&i<=w;return{isOpen:x,message:x?null:`Closed (Special Hours: ${v}-${w})`}}}const d=this.getArray(t.openingHoursSpecification);if(d.length===0)return{isOpen:!0,message:null};const u=d.find(h=>this.getArray(h.dayOfWeek).map(y=>String(y).replace("https://schema.org/","")).includes(c));if(!u)return{isOpen:!1,message:`Closed on ${c}`};const g=String(this.getFirst(u.opens)||"00:00"),p=String(this.getFirst(u.closes)||"23:59"),m=i>=g&&i<=p;return{isOpen:m,message:m?null:`Closed (Opens at ${g})`}}static extract3DModel(e){const t=Array.isArray(e)?e[0]:e;if(!t)return null;const r=this.getArray(t.subjectOf).find(o=>this.getFirst(o["@type"])==="3DModel");if(!r)return null;const i=this.getFirst(r.encoding);return this.getFirst(i==null?void 0:i.contentUrl)||null}static extractLeadTime(e){var o,c,a,d,u,g;const t=Array.isArray(e)?e[0]:e;if(!t)return 0;const n=this.getFirst(t.deliveryLeadTime)||this.getFirst((c=(o=this.getArray(t.itemOffered)[0])==null?void 0:o.offers)==null?void 0:c.deliveryLeadTime)||this.getFirst((a=this.getArray(t.itemOffered)[0])==null?void 0:a.deliveryLeadTime)||this.getFirst((d=this.getArray(t.offers)[0])==null?void 0:d.deliveryLeadTime)||this.getFirst((g=(u=this.getArray(t.offers)[0])==null?void 0:u.itemOffered)==null?void 0:g.deliveryLeadTime);if(!n)return 0;if(typeof n=="object"){const p=Number(this.getFirst(n.value))||0,m=this.getFirst(n.unitCode)||this.getFirst(n.unitText)||"MIN";return m==="HUR"||m==="hour"||m==="hours"?p*60:m==="DAY"||m==="day"||m==="days"?p*24*60:p}const r=String(n).toLowerCase(),i=parseInt(r)||0;return r.includes("hour")?i*60:r.includes("day")?i*24*60:i}static isLocationInArea(e,t,n,r){if(!r)return!0;const i=this.getFirst(r["@type"]),o=this.normalizeName(this.getFirst(r.name)||""),c=this.getFirst(r.postalCode);if(i==="GeoCircle"){if(e===null||t===null)return!1;const a=r.geoMidpoint;if(!a)return!1;const d=Number(this.getFirst(a.latitude)),u=Number(this.getFirst(a.longitude)),g=Number(this.getFirst(r.geoRadius))||0;return this.calculateDistance(e,t,d,u)<=g}if(i==="City"||i==="AdministrativeArea"||i==="State"||i==="Country"){const a=this.normalizeName((n==null?void 0:n.addressLocality)||""),d=this.normalizeName((n==null?void 0:n.addressRegion)||""),u=this.normalizeName((n==null?void 0:n.addressCountry)||"");if(o===a||o===d||o===u)return!0}if(i==="PostalAddress"||c){const a=String((n==null?void 0:n.postalCode)||""),d=String(c||this.getFirst(r.postalCode)||"");if(a===d&&a!=="")return!0;const u=this.normalizeName((n==null?void 0:n.addressLocality)||""),g=this.normalizeName(this.getFirst(r.addressLocality)||"");if(u===g&&u!=="")return!0}return!1}static calculateDistance(e,t,n,r){const o=e*Math.PI/180,c=n*Math.PI/180,a=(n-e)*Math.PI/180,d=(r-t)*Math.PI/180,u=Math.sin(a/2)*Math.sin(a/2)+Math.cos(o)*Math.cos(c)*Math.sin(d/2)*Math.sin(d/2);return 6371e3*(2*Math.atan2(Math.sqrt(u),Math.sqrt(1-u)))}}class F{constructor(){b(this,"order");b(this,"storageKey","antinna_cart_order");this.order=this.loadFromStorage()||{"@type":"Order",orderedItem:[],totalPrice:0,priceCurrency:"INR"},this.deduplicate()}loadFromStorage(){const e=localStorage.getItem(this.storageKey);if(!e)return null;try{return JSON.parse(e)}catch{return null}}saveToStorage(){this.calculateTotal(),localStorage.setItem(this.storageKey,JSON.stringify(this.order))}deduplicate(){const e={},t=[];s.getArray(this.order.orderedItem).forEach(r=>{const i=r.itemKey||this.generateItemKey(r.orderedItem,r._selectedVariants);e[i]?e[i].orderQuantity+=r.orderQuantity:(r.itemKey=i,e[i]=r,t.push(r))}),this.order.orderedItem=t,this.calculateTotal()}calculateTotal(){const e=s.getArray(this.order.orderedItem);this.order.totalPrice=e.reduce((t,n)=>{if(!this.isItemOrderable(n))return t;const{price:r}=s.extractPrice(n.orderedItem.offers);let i=parseFloat(r)*(n.orderQuantity||1);return s.getArray(n.addOns).forEach(c=>{const{price:a}=s.extractPrice(c.orderedItem.offers);i+=parseFloat(a)*(c.orderQuantity||0)}),t+i},0)}isItemOrderable(e){var n;if(e.isUnavailable)return!1;const t=s.extractAvailability((n=e.orderedItem)==null?void 0:n.offers);return!(t==="https://schema.org/OutOfStock"||t==="https://schema.org/SoldOut")}isItemQuantityValid(e){var n;const t=(n=e._constraints)==null?void 0:n.minValue;return!(t!=null&&(e.orderQuantity||1)<t)}isCartValid(){const e=s.getArray(this.order.orderedItem);return e.length===0?!1:e.every(t=>this.isItemOrderable(t)&&this.isItemQuantityValid(t))}addItem(e,t,n,r=1){if(s.extractAvailability(e.offers)==="https://schema.org/OutOfStock")return null;s.getFirst(e.url)||(e.url=window.location.href.split("?")[0].split("#")[0]);const o=this.generateItemKey(e,n),c=s.getArray(this.order.orderedItem),a=c.find(h=>h.itemKey===o),{minValue:d,maxValue:u}=s.extractEligibleQuantity(e),g=s.extractInventoryLevel(e.offers||e),p=u!==null&&g!==null?Math.min(u,g):u||g,m=Math.max(Number(r),d||1);if(a){const f=Number(a.orderQuantity||0)+Number(r);if(p!==null&&f>p){const y=window.UIManager;y&&y.showToast(`Maximum limit of ${p} reached for this item`,"error"),a.orderQuantity=p}else a.orderQuantity=f;return this.saveToStorage(),o}else{const h=JSON.parse(JSON.stringify(e)),f=p!==null?Math.min(m,p):m;return c.push({"@type":"OrderItem",orderedItem:{...h,url:e.url,_selectedVariants:n?{...n}:void 0},orderQuantity:f,seller:t?JSON.parse(JSON.stringify(t)):void 0,itemKey:o,_constraints:{minValue:d,maxValue:u,inventoryLevel:g},addOns:[]}),this.order.orderedItem=c,this.saveToStorage(),o}}addAddOn(e,t,n=1){const i=s.getArray(this.order.orderedItem).find(a=>a.itemKey===e);if(!i){const a=window.UIManager;a&&a.showToast("Please add the main product first","error");return}i.addOns||(i.addOns=[]);const o=this.generateItemKey(t),c=i.addOns.find(a=>a.itemKey===o);if(c){const a=this.getAddOnLimits(i,c),d=(c.orderQuantity||0)+n;a.maxValue!==null&&d>a.maxValue?c.orderQuantity=a.maxValue:c.orderQuantity=d}else{const{minValue:a,maxValue:d}=s.extractEligibleQuantity(t),u=s.extractInventoryLevel(t.offers||t),g={orderedItem:JSON.parse(JSON.stringify(t)),_constraints:{minValue:a,maxValue:d,inventoryLevel:u}},p=this.getAddOnLimits(i,g);i.addOns.push({orderedItem:g.orderedItem,orderQuantity:Math.max(n,p.minValue||1),itemKey:o,_constraints:{minValue:a,maxValue:d,inventoryLevel:u}})}this.saveToStorage()}getAddOnLimits(e,t){var d,u,g;const n=e.orderQuantity||1,r=(d=t._constraints)==null?void 0:d.minValue,i=(u=t._constraints)==null?void 0:u.maxValue,o=(g=t._constraints)==null?void 0:g.inventoryLevel,c=i!=null?i*n:null,a=c!==null&&o!==null?Math.min(c,o):c||o;return{minValue:r!=null?r*n:null,maxValue:a}}generateItemKey(e,t){let n=s.getFirst(e.url)||"";n.includes("?")&&(n=n.split("?")[0]),n.includes("#")&&(n=n.split("#")[0]),n=n.toLowerCase().replace(/\/$/,"");const r=s.getFirst(e["@type"])||"Product",i=s.getFirst(e.name)||"",o=s.getFirst(e.sku)||"";let c="";return t&&(c=Object.keys(t).sort().map(d=>`${d}:${t[d]}`).join("|")),`${n}::${r}::${o}::${i}::${c}`}removeItem(e){const t=s.getArray(this.order.orderedItem);e<0||e>=t.length||(t.splice(e,1),this.order.orderedItem=t,this.saveToStorage())}updateQty(e,t){const r=s.getArray(this.order.orderedItem)[e];if(!r)return;const i=r.orderQuantity||0,o=i+t,{maxValue:c,inventoryLevel:a}=r._constraints||{},d=c!==null&&a!==null?Math.min(c,a):c||a;if(t>0&&d!==null&&d!==void 0&&o>d){const u=window.UIManager;u&&u.showToast(`Maximum limit of ${d} reached`,"error");return}if(r.orderQuantity=o,r.addOns){const u=i||1,g=o;r.addOns.forEach(p=>{const m=(p.orderQuantity||0)/u;p.orderQuantity=Math.round(m*g);const h=this.getAddOnLimits(r,p);h.maxValue!==null&&p.orderQuantity>h.maxValue&&(p.orderQuantity=h.maxValue),h.minValue!==null&&p.orderQuantity<h.minValue&&(p.orderQuantity=h.minValue)})}r.orderQuantity<=0?this.removeItem(e):this.saveToStorage()}updateAddOnQty(e,t,n){const i=s.getArray(this.order.orderedItem)[e];if(!i||!i.addOns)return;const o=i.addOns[t];if(!o)return;const c=(o.orderQuantity||0)+n,a=this.getAddOnLimits(i,o);if(n>0&&a.maxValue!==null&&c>a.maxValue){const d=window.UIManager;d&&d.showToast(`Maximum limit of ${a.maxValue} reached`,"error");return}if(n<0&&a.minValue!==null&&c<a.minValue){const d=window.UIManager;d&&d.showToast(`Minimum of ${a.minValue} required`,"error");return}o.orderQuantity=c,o.orderQuantity<=0&&i.addOns.splice(t,1),this.saveToStorage()}removeAddOn(e,t){const r=s.getArray(this.order.orderedItem)[e];!r||!r.addOns||(r.addOns.splice(t,1),this.saveToStorage())}updateItemDetails(e,t){const r=s.getArray(this.order.orderedItem)[e];if(r){if(!t)r.isUnavailable=!0;else{let i=null;const o=r.orderedItem,c=Array.isArray(t)?t:[t],a=s.normalizeName(o.name);for(const d of c){const u=s.findAllServices(d);for(const m of u){const h=m.itemOffered||m,f=s.getFirst(h.name)||s.getFirst(m.name);if(s.normalizeName(f)===a){i=m;break}}if(i)break;if(o["@type"]==="Product"&&d.hasVariant){const m=s.findMatchingVariant(d,o._selectedVariants||{});if(m){i=m;break}}const g=s.getFirst(d.sku)||s.getFirst(d.identifier)||s.getFirst(d.name),p=s.getFirst(o.sku)||s.getFirst(o.identifier)||s.getFirst(o.name);if(s.getFirst(d["@type"])===s.getFirst(o["@type"])&&g===p){i=d;break}}if(i){r.isUnavailable=!1;const{price:d,currency:u}=s.extractPrice(i),g=s.extractAvailability(i),{minValue:p,maxValue:m}=s.extractEligibleQuantity(i),h=s.extractInventoryLevel(i.offers||i);r._constraints={minValue:p,maxValue:m,inventoryLevel:h},r.orderedItem.offers={"@type":"Offer",price:d,priceCurrency:u,availability:g,eligibleQuantity:p!==null||m!==null?{"@type":"QuantitativeValue",minValue:p,maxValue:m}:void 0};const f=i.itemOffered||i;r.orderedItem.image=f.image||r.orderedItem.image,r.orderedItem.name=f.name||r.orderedItem.name,r.orderedItem.description=f.description||r.orderedItem.description,r.addOns&&r.addOns.forEach(y=>{let v=null;const w=s.normalizeName(y.orderedItem.name);for(const x of c){const A=s.findAllServices(x);for(const S of A){const I=S.itemOffered||S,k=s.getFirst(I.name)||s.getFirst(S.name);if(s.normalizeName(k)===w){v=S;break}}if(v)break}if(v){const{price:x,currency:A}=s.extractPrice(v),S=s.extractAvailability(v),{minValue:I,maxValue:k}=s.extractEligibleQuantity(v),O=s.extractInventoryLevel(v.offers||v);y._constraints={minValue:I,maxValue:k,inventoryLevel:O},y.orderedItem.offers={"@type":"Offer",price:x,priceCurrency:A,availability:S,eligibleQuantity:I!==null||k!==null?{"@type":"QuantitativeValue",minValue:I,maxValue:k}:void 0,inventoryLevel:O!==null?{"@type":"QuantitativeValue",value:O}:void 0}}})}else r.isUnavailable=!0}this.saveToStorage()}}getOrder(){return this.order}getTotalQuantity(){return s.getArray(this.order.orderedItem).reduce((t,n)=>t+Number(n.orderQuantity||0),0)}getServiceabilityErrors(e){const t=s.getArray(this.order.orderedItem),n=[];return t.forEach(r=>{const i=r.orderedItem,o=s.extractAreaServed(i);o.length>0&&(o.some(d=>s.isLocationInArea(e==null?void 0:e.lat,(e==null?void 0:e.lon)||(e==null?void 0:e.lng),e==null?void 0:e.addressDetails,d))||n.push(s.getFirst(i.name)||"An item"));const c=r.seller;if(c){const a=s.isBusinessOpen(c);a.isOpen||n.push(`${s.getFirst(i.name)} (Seller currently closed: ${a.message})`)}r.addOns&&r.addOns.forEach(a=>{const d=s.extractAreaServed(a.orderedItem);d.length>0&&(d.some(g=>s.isLocationInArea(e==null?void 0:e.lat,(e==null?void 0:e.lon)||(e==null?void 0:e.lng),e==null?void 0:e.addressDetails,g))||n.push(s.getFirst(a.orderedItem.name)||"An addon"))})}),n}getMaxLeadTime(){const e=s.getArray(this.order.orderedItem);let t=0;return e.forEach(n=>{const r=s.extractLeadTime(n.orderedItem);r>t&&(t=r),n.addOns&&n.addOns.forEach(i=>{const o=s.extractLeadTime(i.orderedItem);o>t&&(t=o)})}),t}clear(){this.order.orderedItem=[],this.saveToStorage()}}class j{constructor(){b(this,"data",{lat:null,lon:null,pin:null,city:null});b(this,"storageKey","antinna_location");this.loadFromStorage()}loadFromStorage(){const e=localStorage.getItem(this.storageKey);if(e)try{this.data=JSON.parse(e)}catch{}}save(){localStorage.setItem(this.storageKey,JSON.stringify(this.data))}getData(){return this.data}setData(e){this.data={...this.data,...e},this.save()}clear(){this.data={lat:null,lon:null,pin:null,city:null},localStorage.removeItem(this.storageKey)}async reverseGeocode(e,t){try{const r=await(await fetch(`https://nominatim.openstreetmap.org/reverse?lat=${e}&lon=${t}&format=json`,{headers:{"User-Agent":"Antinna-Blogger-Engine/1.0"}})).json();if(r.address)return{pin:r.address.postcode||this.data.pin,city:r.address.city||r.address.town||r.address.village||r.address.state_district}}catch(n){console.error("Geocoding failed",n)}return{}}async lookupPin(e){try{const n=await(await fetch(`https://nominatim.openstreetmap.org/search?postalcode=${e}&country=India&format=json&addressdetails=1`,{headers:{"User-Agent":"Antinna-Blogger-Engine/1.0"}})).json();if(n&&n.length>0){const r=n[0].address;return{lat:parseFloat(n[0].lat),lon:parseFloat(n[0].lon),city:r.city||r.town||r.village||r.state_district||r.county}}}catch(t){console.error("PIN lookup failed",t)}return{city:null,lat:null,lon:null}}}class q{async fetchFeedData(e=50,t=1,n="",r=""){var c;let i="";if(n){const d=(Array.isArray(n)?n:[n]).filter(u=>u.trim()!=="");d.length>0&&(i=`/-/${d.map(g=>encodeURIComponent(g.trim())).join(",")}`)}let o=`/feeds/posts/default${i}?alt=json&max-results=${e}&start-index=${t}`;r&&(o+=`&q=${encodeURIComponent(r)}`);try{const d=await(await fetch(o)).json();return{entries:d.feed.entry||[],totalResults:parseInt(((c=d.feed.openSearch$totalResults)==null?void 0:c.$t)||"0")}}catch(a){return console.error("Failed to fetch Blogger feed",a),{entries:[],totalResults:0}}}extractSchemaFromEntry(e){var n;const t=((n=e.content)==null?void 0:n.$t)||"";return s.extractJsonLd(t)}async fetchSearchSuggestions(e){if(!e||e.length<2)return[];try{const t=/label:([^|\s\s]+)/g,n=[];let r,i="";for(;(r=t.exec(e))!==null;)n.push(decodeURIComponent(r[1].trim().replace(/_/g," ")));const o=e.lastIndexOf("|")>e.lastIndexOf("label:")?e.lastIndexOf("|")+1:e.lastIndexOf("label:"),c=Array.from(e.matchAll(t));if(c.length>0){const p=c[c.length-1];i=e.substring(0,p.index+p[0].length).trim()+" ",e.trim().endsWith("|")&&(i=e.trim()+" ")}const a=e.replace(t,"").replace(/\|/g,"").trim(),{entries:d}=await this.fetchFeedData(50,1,n,a),u=new Set,g=a.toLowerCase();return d.forEach(p=>{var f;const m=((f=p.title)==null?void 0:f.$t)||"";(!g||m.toLowerCase().includes(g))&&u.add(i+m);const h=this.extractSchemaFromEntry(p);if(h){const y=s.getFirst(h.keywords);y&&typeof y=="string"&&y.split(",").forEach(w=>{const x=w.trim();(!g||x.toLowerCase().includes(g))&&u.add(i+x)});const v=s.getFirst(h.name);v&&typeof v=="string"&&(!g||v.toLowerCase().includes(g))&&u.add(i+v)}}),Array.from(u).slice(0,10)}catch(t){return console.error("Failed to fetch suggestions",t),[]}}}class U{constructor(){b(this,"merchantId","BCR2DN5TVPLKL4KZ");b(this,"merchantName","Antinna")}async initPayment(e,t){if(!window.PaymentRequest){alert("Payment Request API not supported in this browser.");return}try{const{ProductionApiService:d}=await Promise.resolve().then(()=>X);await d.getInstance().createOrder({...e,verifiedLocation:t})}catch(d){console.error("Failed to record order in backend",d)}const n={supportedMethods:"https://tez.google.com/pay",data:{pa:"manishsharma3994@okhdfcbank",pn:this.merchantName,tr:`TR${Date.now()}`,url:window.location.href,mc:"5251",tn:`Order from ${this.merchantName}`}},r={supportedMethods:"https://google.com/pay",data:{environment:"PRODUCTION",apiVersion:2,apiVersionMinor:0,merchantInfo:{merchantId:this.merchantId,merchantName:this.merchantName},allowedPaymentMethods:[{type:"CARD",parameters:{allowedAuthMethods:["PAN_ONLY","CRYPTOGRAM_3DS"],allowedCardNetworks:["MASTERCARD","VISA"]},tokenizationSpecification:{type:"PAYMENT_GATEWAY",parameters:{gateway:"example",gatewayMerchantId:"exampleGatewayMerchantId"}}}]}},i=[n,r],o=e,c=[];s.getArray(e.orderedItem).forEach(d=>{var g,p;const{price:u}=s.extractPrice((g=d.orderedItem)==null?void 0:g.offers);c.push({label:`${s.getFirst((p=d.orderedItem)==null?void 0:p.name)} (x${d.orderQuantity})`,amount:{currency:o.priceCurrency||"INR",value:String((parseFloat(u)*(d.orderQuantity||1)).toFixed(2))}}),s.getArray(d.addOns).forEach(m=>{var f,y;const{price:h}=s.extractPrice((f=m.orderedItem)==null?void 0:f.offers);c.push({label:`  + ${s.getFirst((y=m.orderedItem)==null?void 0:y.name)} (x${m.orderQuantity})`,amount:{currency:o.priceCurrency||"INR",value:String((parseFloat(h)*(m.orderQuantity||1)).toFixed(2))}})})}),t&&c.push({label:`Delivery: ${t.address||"Verified Location"}`,amount:{currency:o.priceCurrency||"INR",value:"0.00"}});const a={total:{label:"Total Amount",amount:{currency:o.priceCurrency||"INR",value:String(o.totalPrice)}},displayItems:c};try{const d=new window.PaymentRequest(i,a);await d.canMakePayment();const u=await d.show();console.log("Payment response:",u)}catch(d){console.error("Payment Error:",d)}}}class l{static el(e){return document.getElementById(e)}static query(e){return document.querySelector(e)}static setContent(e,t){const n=this.el(e)||this.query(e);n&&(n.textContent=t)}static setHtml(e,t){const n=this.el(e)||this.query(e);n&&(n.innerHTML=t)}static toggleClass(e,t,n){const r=this.el(e)||this.query(e);r&&r.classList.toggle(t,n)}static injectModalStyles(){if(document.getElementById("antinna-modal-styles"))return;const e=document.createElement("style");e.id="antinna-modal-styles",e.textContent=`
+      @keyframes slideUp { from { transform: translateY(20px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
+      @keyframes fadeOut { from { opacity: 1; } to { opacity: 0; } }
+      .toast-container { position: fixed; bottom: 24px; right: 24px; z-index: 9999; display: flex; flex-direction: column; align-items: flex-end; pointer-events: none; }
+      .antinna-geo-backdrop { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: rgba(0,0,0,0.6); backdrop-filter: blur(4px); z-index: 4000; display: none; align-items: center; justify-content: center; opacity: 0; transition: opacity 0.3s; pointer-events: none; }
+      .antinna-geo-backdrop.active { display: flex; opacity: 1; pointer-events: auto; }
+      .antinna-geo-content { background: var(--card); width: 95%; max-width: 500px; padding: 25px; border-radius: 20px; box-shadow: 0 20px 40px rgba(0,0,0,0.3); position: relative; max-height: 90vh; overflow-y: auto; color: var(--text); }
+      .antinna-geo-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; }
+      .antinna-geo-header h3 { margin: 0; font-size: 1.3rem; font-weight: 800; }
+      .antinna-geo-close { background: none; border: none; font-size: 1.8rem; cursor: pointer; color: var(--text); opacity: 0.5; }
+      .antinna-geo-subtitle { font-size: 0.85rem; color: #777; margin: 0 0 15px 0; }
+      .antinna-geo-search-container { position: relative; width: 100%; }
+      .antinna-geo-search-container input { width: 100%; padding: 12px 15px; border-radius: 10px; border: 1px solid #ddd; outline: none; font-size: 1rem; background: var(--bg); color: var(--text); box-sizing: border-box; }
+      html.dark .antinna-geo-search-container input { border-color: #334155; }
+      .antinna-geo-dropdown { position: absolute; top: 100%; left: 0; width: 100%; background: var(--card); border: 1px solid #ddd; border-radius: 0 0 10px 10px; box-shadow: 0 10px 20px rgba(0,0,0,0.1); max-height: 200px; overflow-y: auto; z-index: 1001; display: none; }
+      html.dark .antinna-geo-dropdown { border-color: #334155; }
+      .antinna-geo-dropdown-item { padding: 12px; cursor: pointer; font-size: 0.9rem; border-bottom: 1px solid #eee; }
+      html.dark .antinna-geo-dropdown-item { border-bottom-color: #334155; }
+      .antinna-geo-dropdown-item:hover { background: #f0f0f0; color: var(--accent); }
+      html.dark .antinna-geo-dropdown-item:hover { background: #334155; }
+      #antinna-geo-map-canvas { width: 100%; height: 250px; border-radius: 12px; margin-top: 15px; background: #eee; border: 1px solid #ddd; }
+      html.dark #antinna-geo-map-canvas { border-color: #334155; background: #0f172a; }
+      .antinna-geo-status { margin-top: 8px; font-size: 0.8rem; color: var(--accent); font-weight: 600; min-height: 18px; }
+      .antinna-geo-metrics { background: #f0f7ff; padding: 15px; margin-top: 15px; border-radius: 12px; border-left: 5px solid #34a853; font-size: 0.9rem; }
+      html.dark .antinna-geo-metrics { background: #1e293b; border-color: #059669; }
+      .antinna-geo-tag { font-family: monospace; font-size: 0.75rem; background: #e2e8f0; padding: 2px 6px; border-radius: 4px; color: #475569; }
+      html.dark .antinna-geo-tag { background: #334155; color: #cbd5e1; }
+      .antinna-geo-input { width: 100%; padding: 10px; border-radius: 8px; border: 1px solid #ddd; font-size: 0.9rem; outline: none; background: var(--bg); color: var(--text); }
+      html.dark .antinna-geo-input { border-color: #334155; }
+
+      .antinna-spinner { display: none; width: 22px; height: 22px; border: 3px solid rgba(0,0,0,0.1); border-radius: 50%; border-top-color: #e67e22; animation: antinna-spin 0.8s linear infinite; box-sizing: border-box; }
+      @keyframes antinna-spin {
+          from { transform: translate(-50%, -50%) rotate(0deg); }
+          to { transform: translate(-50%, -50%) rotate(360deg); }
+      }
+
+      .v-btn.loading { pointer-events: none; opacity: 0.8; position: relative; }
+      .v-btn.loading .antinna-spinner { display: block !important; position: absolute; left: 50%; top: 50%; border-top-color: #fff; margin: 0; }
+      .v-btn.loading .btn-text { visibility: hidden; }
+
+      .loc-btn.loading { pointer-events: none; position: relative; color: transparent !important; font-size: 0 !important; }
+      .loc-btn.loading * { visibility: hidden; }
+      .loc-btn.loading .antinna-spinner { display: block !important; visibility: visible; position: absolute; left: 50%; top: 50%; border-top-color: #e67e22; margin: 0; }
+
+      .antinna-input-prefixed { display: flex; align-items: center; border: 1px solid #ddd; border-radius: 12px; position: relative; background: var(--bg); }
+      html.dark .antinna-input-prefixed { border-color: #334155; }
+      .antinna-input-prefix { padding: 0 15px; background: #eee; height: 100%; display: flex; align-items: center; font-weight: 700; color: #555; border-right: 1px solid #ddd; border-radius: 12px 0 0 12px; }
+      html.dark .antinna-input-prefix { background: #334155; color: #cbd5e1; border-right-color: #475569; }
+      .antinna-input-prefixed input { border: none !important; flex: 1; border-radius: 0 12px 12px 0 !important; }
+
+      .antinna-country-selector { position: relative; display: flex; align-items: center; gap: 10px; padding: 0 18px; height: 48px; cursor: pointer; border-right: 1px solid #eee; background: var(--card); transition: all 0.2s; border-radius: 12px 0 0 12px; font-weight: 700; }
+      html.dark .antinna-country-selector { border-right-color: #334155; }
+      .antinna-country-selector:hover { background: var(--bg); }
+
+      .antinna-country-chevron { border: solid #888; border-width: 0 2px 2px 0; display: inline-block; padding: 2px; transform: rotate(45deg); margin-left: 4px; transition: transform 0.3s; }
+      .antinna-country-selector.active .antinna-country-chevron { transform: rotate(-135deg) translateY(-2px); }
+
+      .antinna-country-list { position: absolute; top: calc(100% + 10px); left: 0; width: 240px; background: var(--card); border: 1px solid rgba(0,0,0,0.08); border-radius: 16px; box-shadow: 0 15px 35px rgba(0,0,0,0.15); z-index: 5000; display: block; opacity: 0; pointer-events: none; transform: translateY(-10px); transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); max-height: 300px; overflow-y: auto; scrollbar-width: thin; }
+      html.dark .antinna-country-list { border-color: #334155; box-shadow: 0 15px 35px rgba(0,0,0,0.4); }
+      .antinna-country-list.active { opacity: 1; pointer-events: auto; transform: translateY(0); }
+
+      .antinna-country-item { display: flex; align-items: center; gap: 14px; padding: 14px 18px; font-size: 0.95rem; transition: all 0.2s; cursor: pointer; border-bottom: 1px solid rgba(0,0,0,0.03); }
+      html.dark .antinna-country-item { border-bottom-color: #334155; }
+      .antinna-country-item:last-child { border-bottom: none; }
+      .antinna-country-item:hover { background: var(--bg); transform: translateX(5px); }
+      .antinna-country-flag { font-size: 1.2rem; }
+      .antinna-country-name { flex: 1; color: var(--text); }
+      .antinna-country-code { color: var(--accent); font-weight: 800; font-size: 0.85rem; }
+
+      .antinna-search-dropdown {
+        position: absolute; top: 100%; left: 0; right: 0; background: var(--card);
+        border: 1px solid rgba(0,0,0,0.1); border-radius: 0 0 12px 12px;
+        box-shadow: 0 10px 25px rgba(0,0,0,0.1); z-index: 9999; display: none;
+        max-height: 300px; overflow-y: auto; margin-top: 0; width: 100%; box-sizing: border-box;
+      }
+      .antinna-search-item { padding: 12px 15px; cursor: pointer; border-bottom: 1px solid rgba(0,0,0,0.05); font-size: 0.9rem; transition: background 0.2s; color: var(--text); }
+      .antinna-search-item:hover, .antinna-search-item.active { background: rgba(0,0,0,0.05); color: var(--accent); }
+
+      .btn-clear-loc {
+        margin-top: 15px; width: 100%; padding: 12px; border-radius: 10px;
+        background: rgba(255, 59, 48, 0.1); color: #ff3b30;
+        border: 1px solid rgba(255, 59, 48, 0.2); cursor: pointer;
+        font-weight: 700; transition: all 0.2s;
+      }
+      .btn-clear-loc:hover { background: rgba(255, 59, 48, 0.2); }
+
+      .condition-badge { display: inline-block; padding: 4px 12px; border-radius: 6px; font-size: 0.7rem; font-weight: 900; background: #f1f5f9; color: #64748b; text-transform: uppercase; border: 1px solid #e2e8f0; margin-left: 10px; vertical-align: middle; letter-spacing: 0.5px; }
+      .condition-badge.cond-new { background: #e0f2fe; color: #0369a1; border-color: #bae6fd; }
+      .condition-badge.cond-refurbished { background: #fef3c7; color: #92400e; border-color: #fde68a; }
+      .condition-badge.cond-used { background: #f1f5f9; color: #475569; border-color: #e2e8f0; }
+      .condition-badge.cond-damaged { background: #fee2e2; color: #b91c1c; border-color: #fecaca; }
+      html.dark .condition-badge { background: #1e293b; color: #94a3b8; border-color: #334155; }
+      html.dark .condition-badge.cond-new { background: rgba(3, 105, 161, 0.2); color: #7dd3fc; border-color: rgba(3, 105, 161, 0.3); }
+      html.dark .condition-badge.cond-refurbished { background: rgba(146, 64, 14, 0.2); color: #fcd34d; border-color: rgba(146, 64, 14, 0.3); }
+
+      .antinna-3d-active { overflow: hidden !important; height: 100vh; position: fixed; width: 100%; }
+      .antinna-3d-backdrop { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: #000; z-index: 9999; display: none; flex-direction: column; touch-action: none; }
+      .antinna-3d-backdrop.active { display: flex; }
+      .antinna-3d-header { padding: 15px 25px; display: flex; justify-content: space-between; align-items: center; background: rgba(255,255,255,0.05); color: #fff; touch-action: auto; }
+      .antinna-3d-close { background: none; border: none; color: #fff; font-size: 2rem; cursor: pointer; opacity: 0.8; }
+      #antinna-3d-container { flex: 1; width: 100%; position: relative; }
+      #antinna-3d-container model-viewer { width: 100%; height: 100%; --poster-color: transparent; }
+      .antinna-ar-button {
+          position: absolute; top: 20px; right: 20px;
+          background: #fff; color: #000; border-radius: 30px;
+          padding: 10px 20px; font-weight: 800; font-size: 0.8rem;
+          border: none; cursor: pointer; box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+          display: flex; align-items: center; gap: 8px; z-index: 100;
+      }
+
+      .g-signin-button {
+        display: inline-flex; align-items: center; justify-content: center;
+        background: #131314; color: #E3E3E3;
+        border: 1px solid #8E918F; border-radius: 20px;
+        padding: 1px; cursor: pointer; transition: background 0.2s, box-shadow 0.2s;
+        font-family: 'Google Sans Medium', 'Roboto', arial, sans-serif;
+        font-weight: 500; font-size: 14px; line-height: 20px;
+      }
+      .g-signin-button:hover { background: #1e1e1f; box-shadow: 0 1px 2px 0 rgba(0,0,0,0.30), 0 1px 3px 1px rgba(0,0,0,0.15); }
+      .g-signin-button .g-icon-wrapper { background: transparent; padding: 10px 0 10px 12px; border-radius: 20px 0 0 20px; display: flex; align-items: center; justify-content: center; }
+      .g-signin-button .g-text { padding: 0 12px; }
+    `,document.head.appendChild(e)}static injectModelViewer(){return new Promise(e=>{if(document.querySelector('script[src*="model-viewer"]'))return e();const t=document.createElement("script");t.type="module",t.src="https://ajax.googleapis.com/ajax/libs/model-viewer/3.5.0/model-viewer.min.js",t.onload=()=>e(),document.head.appendChild(t)})}static injectLeaflet(){return new Promise(e=>{if(window.L)return e();const t=document.createElement("link");t.rel="stylesheet",t.href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css",document.head.appendChild(t);const n=document.createElement("script");n.src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js",n.onload=()=>e(),document.head.appendChild(n)})}static async show3DViewer(e){this.injectModalStyles(),await this.injectModelViewer();let t=this.el("antinna-3d-modal");t||(t=document.createElement("div"),t.id="antinna-3d-modal",t.className="antinna-3d-backdrop",t.innerHTML=`
+            <div class="antinna-3d-header">
+                <h3 style="margin:0;">3D Model Preview</h3>
+                <button class="antinna-3d-close" onclick="UIManager.hide3DViewer()">&times;</button>
+            </div>
+            <div id="antinna-3d-container"></div>
+        `,document.body.appendChild(t));const n=this.el("antinna-3d-container");n&&(n.innerHTML=`
+            <model-viewer src="${e}" ar ar-modes="webxr scene-viewer quick-look" camera-controls touch-action="pan-y" alt="A 3D model" shadow-intensity="1">
+                <button slot="ar-button" class="antinna-ar-button">
+                   <span>📷</span> View in your space (AR)
+                </button>
+                <div slot="progress-bar"></div>
+            </model-viewer>
+        `),t.classList.add("active"),document.body.classList.add("antinna-3d-active")}static hide3DViewer(){const e=this.el("antinna-3d-modal");if(e){e.classList.remove("active"),document.body.classList.remove("antinna-3d-active");const t=this.el("antinna-3d-container");t&&(t.innerHTML="")}}static showToast(e,t="success"){this.injectModalStyles();let n=document.getElementById("toast-container");n||(n=document.createElement("div"),n.id="toast-container",n.className="toast-container",document.body.appendChild(n));const r=document.createElement("div");r.className=`toast toast-${t}`,r.style.cssText=`
+        background: ${t==="success"?"#10b981":t==="error"?"#ef4444":"#1e293b"};
+        color: white;
+        padding: 12px 24px;
+        border-radius: 10px;
+        box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        margin-top: 10px;
+        font-size: 0.9rem;
+        font-weight: 600;
+        animation: slideUp 0.3s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+        pointer-events: auto;
+        border: 1px solid rgba(255,255,255,0.1);
+    `,r.innerText=e,n.appendChild(r),setTimeout(()=>{r.style.animation="fadeOut 0.3s forwards",setTimeout(()=>r.remove(),300)},3e3)}}class H{render(e,t,n){var o,c;l.injectModalStyles();const r=e["@type"]==="LocalBusiness"||e["@type"]==="Store"||e["@type"]==="Organization",i=e["@type"]==="Service";if(r)this.renderBusinessView(e);else{const a=s.findMatchingVariant(e,t.selectedVariants,t.lastClickedAttribute);a&&e.variesBy&&s.getArray(e.variesBy).forEach(y=>{const w=(typeof y=="string"?y:s.getFirst(y.url)||s.getFirst(y.name)||"").split(/[\/#]/).pop()||"",x=s.getFirst(a[w]);x&&(t.selectedVariants[w]=String(x))}),l.setContent("p-name",s.getFirst(a.name)||s.getFirst(e.name)),l.setContent("p-desc",s.getFirst(a.description)||s.getFirst(e.description)),l.setContent("p-sku",a.sku?"SKU: "+s.getFirst(a.sku):"");const d=s.getFirst(a.brand||e.brand),u=typeof d=="string"?d:s.getFirst(d==null?void 0:d.name);l.setContent("p-brand",u||"");const g=s.getFirst(a.offers||e.offers),p=l.el("p-price");if(p&&g){const{price:y,currency:v}=s.extractPrice(g),w=s.getCurrencySymbol(v);p.textContent=`${w}${y}`;const x=s.extractAvailability(g);p.classList.toggle("blurry",x==="https://schema.org/OutOfStock")}this.renderStockBadge(g),this.renderConditionBadge(a||e),this.renderAreaServed(e);const m=Array.isArray(a.image||e.image)?a.image||e.image:[a.image||e.image];this.renderCarousel(m.filter(Boolean));const h=s.extract3DModel(a)||s.extract3DModel(e);this.render3DButton(h),this.renderQuantityConstraints(g),this.renderVariants(e,t,n),this.renderSpecs(a,e),l.toggleClass(".qty-controls","hidden",i),l.toggleClass("#add-to-cart-btn","hidden",!1);const f=((o=s.getFirst(a.offers))==null?void 0:o.seller)||((c=s.getFirst(e.offers))==null?void 0:c.seller)||s.getFirst(e.seller)||e.provider;this.renderSeller(f),this.renderOtherServices(f,a)}}renderBusinessView(e){l.setContent("p-name",s.getFirst(e.name)),l.setContent("p-desc",s.getFirst(e.description)||""),l.setContent("p-brand",s.getFirst(e["@type"]));const t=l.el("p-price");t&&(t.textContent="Service Provider"),l.toggleClass("#p-sku","hidden",!0),l.toggleClass("#stock-badge-container","hidden",!0),l.toggleClass("#p-variants","hidden",!0),l.toggleClass(".qty-controls","hidden",!0),l.toggleClass("#add-to-cart-btn","hidden",!0),this.renderCarousel(Array.isArray(e.image)?e.image:[e.image]),this.renderSeller(e),this.renderOtherServices(e,e)}renderConditionBadge(e){const t=l.el("stock-badge-container");if(!t)return;const n=s.extractCondition(e),r=l.el("p-condition-badge");if(r&&r.remove(),n){const i=document.createElement("span");i.id="p-condition-badge",i.className=`condition-badge cond-${n.toLowerCase()}`,i.textContent=n,t.appendChild(i)}}renderStockBadge(e){const t=l.el("stock-badge-container");if(t&&e){l.toggleClass("#stock-badge-container","hidden",!1);const n=s.extractAvailability(e);let r="Out of Stock",i="out-stock",o=!1;n==="https://schema.org/InStock"||n==="https://schema.org/OnlineOnly"?(r="In Stock",i="in-stock",o=!0):n==="https://schema.org/InStoreOnly"?(r="In-Store Only",i="instore-only",o=!1):n==="https://schema.org/PreOrder"&&(r="Pre-Order",i="pre-order",o=!0),t.innerHTML=`<span class="stock-badge ${i}">${r}</span>`;const c=l.el("add-to-cart-btn");c&&(l.toggleClass("#add-to-cart-btn","hidden",!1),c.disabled=!o)}}renderAreaServed(e){const t=l.el("p-desc"),n=s.getFirst(e.areaServed);if(e&&n&&t){const r=typeof n=="string"?n:s.getFirst(n.name)||s.getFirst(n["@type"]),i=l.el("svc-area-badge");i&&i.remove();const o=document.createElement("div");o.id="svc-area-badge",o.className="geo-badge",o.style.background="#e8f5e9",o.style.color="#2e7d32",o.style.marginBottom="15px",o.innerHTML=`&#127760; <b>Area Served:</b> ${r}`,t.before(o)}}renderQuantityConstraints(e){const{minValue:t,maxValue:n}=s.extractEligibleQuantity(e),r=s.extractInventoryLevel(e),i=n!==null&&r!==null?Math.min(n,r):n||r,o=l.query(".qty-controls");if(!o)return;const c=l.el("qty-constraints-hint");if(c&&c.remove(),t!==null||i!==null){const a=document.createElement("div");a.id="qty-constraints-hint",a.style.fontSize="0.75rem",a.style.color="#777",a.style.marginTop="8px",a.style.fontWeight="600";let d="";t!==null&&i!==null?(d=`Min: ${t}, Max: ${i}`,r!==null&&r<(n||1/0)&&(d+=" (Limited Stock)")):t!==null?d=`Minimum order: ${t}`:i!==null&&(d=`Maximum order: ${i}`,r!==null&&r<(n||1/0)&&(d+=" (Limited Stock)")),a.textContent=d,o.after(a)}window.currentQuantityLimits={minValue:t,maxValue:i},this.updateQtyButtons()}updateQtyButtons(){var r;const e=window.currentQuantityLimits,t=l.el("qty-plus"),n=parseInt(((r=l.el("qty-val"))==null?void 0:r.textContent)||"1");t&&(e==null?void 0:e.maxValue)!==null&&(t.disabled=n>=e.maxValue,t.style.opacity=t.disabled?"0.5":"1")}renderCarousel(e){const t=l.el("carousel-inner"),n=l.el("thumbnail-row");t&&(t.innerHTML="",n&&(n.innerHTML=""),e.forEach((r,i)=>{const o=r.url||r,c=document.createElement("div");if(c.className="carousel-item",c.innerHTML=`<img src="${o}"/>`,t.appendChild(c),n&&e.length>1){const a=document.createElement("img");a.className="thumb"+(i===0?" active":""),a.src=o,a.onclick=()=>window.AntinnaEngine.goToSlide(i),n.appendChild(a)}}),t.style.transform="translateX(0)")}render3DButton(e){const t=l.query(".carousel-container");if(!t)return;const n=l.el("view-3d-btn");if(n&&n.remove(),!e)return;const r=document.createElement("button");r.id="view-3d-btn",r.className="v-btn",r.style.cssText=`
+        margin-top: 15px; width: 100%;
+        background: rgba(0,0,0,0.8); color: #fff; border: none;
+        padding: 12px 20px; border-radius: 12px; font-weight: 700;
+        display: flex; align-items: center; justify-content: center; gap: 10px; font-size: 0.95rem;
+      `,r.innerHTML="<span>📦</span> View in 3D Preview",r.onclick=()=>l.show3DViewer(e),t.appendChild(r)}renderVariants(e,t,n){const r=l.el("p-variants");if(r&&!r.children.length){if(e.variesBy)l.toggleClass("#p-variants","hidden",!1),s.getArray(e.variesBy).forEach(i=>{const c=(typeof i=="string"?i:s.getFirst(i.url)||s.getFirst(i.name)||"").split(/[\/#]/).pop()||"",a=s.getArray(e.hasVariant),d=[...new Set(a.map(p=>s.getFirst(p[c])).filter(Boolean))];if(d.length===0)return;const u=document.createElement("div");u.className="v-group",u.innerHTML=`<span class="v-label">Select ${c}</span>`;const g=document.createElement("div");g.className="v-options",d.forEach(p=>{const m=document.createElement("button");if(m.className="v-btn",m.dataset.attr=c,m.dataset.val=String(p),c.toLowerCase()==="color"){m.classList.add("v-color");const f=s.getArray(e.hasVariant).find(v=>String(s.getFirst(v[c]))===String(p)),y=f&&s.getFirst(f.image);if(y){const v=y.url||y;m.style.backgroundImage=`url('${v}')`}else m.style.backgroundColor=String(p);m.title=String(p)}else m.textContent=String(p);m.onclick=()=>n(c,String(p)),g.appendChild(m)}),u.appendChild(g),r.appendChild(u),t.selectedVariants[c]||(t.selectedVariants[c]=String(d[0]))});else if(e.hasOfferCatalog){l.toggleClass("#p-variants","hidden",!1);const i=document.createElement("div");i.className="v-group",i.innerHTML='<span class="v-label">Available Packages</span>';const o=document.createElement("div");o.className="v-options";const c=s.getFirst(e.hasOfferCatalog);s.getArray(c==null?void 0:c.itemListElement).forEach(a=>{var m;const d=document.createElement("button");d.className="v-btn";const u=s.getFirst((m=a.itemOffered)==null?void 0:m.name)||s.getFirst(a.name),g=s.getFirst(a.price),p=s.getFirst(a.priceCurrency);d.innerHTML=`${u}<br/><small>${p||"INR"} ${g}</small>`,d.onclick=()=>{t.selectedPackage=a;const h=s.getCurrencySymbol(s.getFirst(a.priceCurrency));l.setContent("p-price",`${h}${s.getFirst(a.price)}`),this.renderQuantityConstraints(a),document.querySelectorAll(".v-btn").forEach(f=>f.classList.remove("active")),d.classList.add("active")},o.appendChild(d)}),i.appendChild(o),r.appendChild(i)}}document.querySelectorAll(".v-btn[data-attr]").forEach(i=>{const o=i.dataset.attr||"",c=i.dataset.val||i.textContent;i.classList.toggle("active",t.selectedVariants[o]===c)}),this.checkAvailability(e,t)}checkAvailability(e,t){const n=s.getArray(e.hasVariant);!e||n.length===0||document.querySelectorAll(".v-btn[data-attr]").forEach(r=>{const i=r.dataset.attr||"",o=r.dataset.val||"",c={...t.selectedVariants,[i]:o},a=n.find(g=>Object.entries(c).every(([p,m])=>{const h=s.getFirst(g[p]);return!h||String(h)===String(m)})),u=(a?s.extractAvailability(a.offers):null)==="https://schema.org/OutOfStock";r.style.opacity=a?u?"0.6":"1":"0.3",r.style.borderStyle=a?"solid":"dashed"})}renderSpecs(e,t){var i,o,c;const n=l.el("p-specs"),r=l.el("specs-list");if(n&&r){const a=h=>h?typeof h=="string"?h:typeof h=="number"?String(h):s.getFirst(h.name)||s.getFirst(h.value)||s.getFirst(h.text)||null:null,d={SKU:a(e.sku||t.sku),MPN:a(e.mpn||t.mpn),Model:a(e.model||t.model),Brand:a(e.brand||t.brand),Manufacturer:a(e.manufacturer||t.manufacturer),Material:a(e.material||t.material),Pattern:a(e.pattern||t.pattern),GTIN:e.gtin13||e.gtin8||e.gtin14||e.gtin||"",Weight:((i=e.weight||t.weight)==null?void 0:i.value)||e.weight||t.weight},u=s.getFirst(e.audience||t.audience);if(u){const h=a(u.name||u),f=a(((o=u.suggestedAge)==null?void 0:o.name)||((c=u.suggestedAge)==null?void 0:c.value)||u.suggestedAge);h&&(d.Audience=h),f&&(d["Suggested Age"]=f)}const g=s.getArray(e.hasCertification||t.hasCertification);g.length>0&&(d.Certifications=g.map(h=>a(h.name||h.certificationName||h)).join(", "));let p="";for(let[h,f]of Object.entries(d))f&&(p+=`<div style="display:flex;justify-content:space-between;padding:10px 0;border-bottom:1px solid rgba(0,0,0,0.05);"><span style="opacity:0.6;">${h}</span><span style="font-weight:700;">${f}</span></div>`);[...s.getArray(t.additionalProperty),...s.getArray(e.additionalProperty)].forEach(h=>{const f=s.getFirst(h.name),y=s.getFirst(h.value);f&&y&&(p+=`<div style="display:flex;justify-content:space-between;padding:10px 0;border-bottom:1px solid rgba(0,0,0,0.05);"><span style="opacity:0.6;">${f}</span><span style="font-weight:700;">${y}</span></div>`)}),p?(n.style.display="block",r.innerHTML=p):n.style.display="none"}}renderSeller(e){const t=l.el("p-seller"),n=l.el("seller-info"),r=l.el("maps-link");if(!t||!n)return;if(!e){t.style.display="none";return}t.style.display="block";const{isOpen:i,message:o}=s.isBusinessOpen(e),c=i?'<span class="stock-badge in-stock" style="margin:0 0 10px 0;">Open Now</span>':`<span class="stock-badge out-stock" style="margin:0 0 10px 0;">${o||"Currently Closed"}</span>`,a=l.el("add-to-cart-btn");a&&!i&&(a.disabled=!0,a.textContent=o||"Seller Currently Closed");const d=s.getFirst(e.alternateName),u=s.getFirst(e.name)||"Antinna",g=d?`${u} (${d})`:u,p=s.getFirst(e.address),m=s.getArray(e.amenityFeature),h=m.length>0?`<div style="margin-top:10px; display:flex; gap:5px; flex-wrap:wrap;">${m.map(v=>`<span style="font-size:0.7rem; background:rgba(0,0,0,0.05); padding:2px 8px; border-radius:4px;">${s.getFirst(v.name)}</span>`).join("")}</div>`:"",f=s.getFirst(e.telephone),y=f?`&#128222; <a href="tel:${f}" style="color:inherit; text-decoration:none;">${f}</a><br/>`:"";if(n.innerHTML=`${c}<br/><strong>${g}</strong><br/>${y}${s.getFirst(e.email)?`&#128231; <a href="mailto:${s.getFirst(e.email)}">${s.getFirst(e.email)}</a><br/>`:""}${p?`📍 ${s.getFirst(p.streetAddress)||""}, ${s.getFirst(p.addressLocality)||""}`:""}${h}`,r){const v=s.getFirst(e.geo);s.getFirst(e.hasMap)||v?(r.style.display="inline-flex",r.href=s.getFirst(e.hasMap)||`https://www.google.com/maps/search/?api=1&query=${v.latitude},${v.longitude}`):r.style.display="none"}}renderOtherServices(e,t){const n=l.el("other-services"),r=l.el("other-services-list"),i=n==null?void 0:n.querySelector(".section-title");if(!n||!r||!e)return;const o=s.getArray(e.hasOfferCatalog||t.hasOfferCatalog),c=[];o.forEach(d=>{c.push(...s.getArray(d.itemListElement))});const a=s.getArray(t.addOn||e.addOn);if(this.renderAddOns(a,e,t),c.length>0){if(n.style.display="block",i){const d=t["@type"]==="LocalBusiness"||t["@type"]==="Store"||t["@type"]==="Organization";i.textContent=d?"Deals In / Our Services":"Optional Product-Related Services"}r.innerHTML=c.map(d=>{const u=s.getFirst(d.itemOffered)||d,g=s.getFirst(u.name)||s.getFirst(d.name),{price:p,currency:m}=s.extractPrice(d),h=s.getFirst(t.url)||window.location.href.split("?")[0].split("#")[0],{minValue:f,maxValue:y}=s.extractEligibleQuantity(d),v=s.extractInventoryLevel(d.offers||d),w={...u,name:g,"@type":u["@type"]||d["@type"]||"Service",url:h,offers:{"@type":"Offer",price:p,priceCurrency:m,availability:s.extractAvailability(d),eligibleQuantity:f!==null||y!==null?{"@type":"QuantitativeValue",minValue:f,maxValue:y}:void 0,inventoryLevel:v!==null?{"@type":"QuantitativeValue",value:v}:void 0}},x=JSON.stringify(w).replace(/"/g,"&quot;"),A=JSON.stringify(e).replace(/"/g,"&quot;"),S=s.getCurrencySymbol(m);return`<div class="h-card"><div style="font-weight:700;margin-bottom:10px;height:3em;overflow:hidden;">${g}</div><div class="price" style="font-size:1.2rem;margin-bottom:15px;">${p!=="0"?S+p:"Free/Included"}</div><button class="v-btn" style="width:100%;padding:10px;font-size:0.85rem;" onclick="CartManager.addItem(${x}, ${A}); CartRenderer.updateUI(); showToast('Service Added', 'success');">Add Service</button></div>`}).join("")}else n.style.display="none"}renderAddOns(e,t,n){var u;let r=l.el("addon-services");r||(r=document.createElement("div"),r.id="addon-services",r.className="details-card",r.style.marginTop="20px",r.innerHTML='<h2 class="section-title">Addons</h2><div id="addon-services-list" class="h-list"></div>',(u=l.el("other-services"))==null||u.before(r));const i=l.el("addon-services-list");if(!i)return;if(e.length===0){r.style.display="none";return}r.style.display="block";const o=window.CartManager,c=window.location.href.split("?")[0].split("#")[0],a=o.generateItemKey({...n,url:c},window.AntinnaEngine.state.selectedVariants),d=o.getOrder().orderedItem.some(g=>g.itemKey===a);i.innerHTML=e.map(g=>{const p=s.getFirst(g.itemOffered)||g,m=s.getFirst(p.name)||s.getFirst(g.name),{price:h,currency:f}=s.extractPrice(g),y=s.getCurrencySymbol(f),{minValue:v,maxValue:w}=s.extractEligibleQuantity(g),x=s.extractInventoryLevel(g.offers||g),A={...p,name:m,"@type":p["@type"]||g["@type"]||"Service",offers:{"@type":"Offer",price:h,priceCurrency:f,availability:s.extractAvailability(g),eligibleQuantity:v!==null||w!==null?{"@type":"QuantitativeValue",minValue:v,maxValue:w}:void 0,inventoryLevel:x!==null?{"@type":"QuantitativeValue",value:x}:void 0}},S=JSON.stringify(A).replace(/"/g,"&quot;");return`
+            <div class="h-card" style="opacity: ${d?"1":"0.5"}">
+                <div style="font-weight:700;margin-bottom:10px;height:3em;overflow:hidden;">${m}</div>
+                <div class="price" style="font-size:1.2rem;margin-bottom:15px;">${y}${h}</div>
+                <button class="v-btn ${d?"active":""}" style="width:100%;padding:10px;font-size:0.85rem;"
+                    ${d?"":"disabled"}
+                    onclick="CartManager.addAddOn('${a}', ${S}); CartRenderer.updateUI(); showToast('Addon Added', 'success');">
+                    ${d?"Add Addon":"Add Base Product First"}
+                </button>
+            </div>`}).join("")}}class G{constructor(e){this.cartManager=e}renderFab(){const e=l.el("cart-fab-container");if(!e)return;let t=l.el("cart-fab");if(!t){t=document.createElement("div"),t.id="cart-fab",t.className="cart-fab",t.onclick=()=>window.AntinnaEngine.refreshCartData();const n=document.createElement("style");n.textContent=`
+        .cart-fab { position: fixed; bottom: 30px; right: 30px; z-index: 1000; transition: transform 0.3s; cursor: pointer; display: flex; align-items: center; justify-content: center; }
+        .cart-fab.loading { pointer-events: none; opacity: 0.8; }
+        .cart-spinner {
+            display: none; width: 24px; height: 24px; border: 3px solid rgba(255,255,255,.3);
+            border-radius: 50%; border-top-color: #fff; animation: cart-spin 1s ease-in-out infinite;
+        }
+        .cart-fab.loading .cart-spinner { display: block; }
+        .cart-fab.loading .cart-icon { display: none; }
+        .cart-fab.loading .cart-count { display: none; }
+        @keyframes cart-spin { to { transform: rotate(360deg); } }
+      `,document.head.appendChild(n),t.innerHTML='<span class="cart-icon">🛒</span><span class="cart-spinner"></span><span class="cart-count">0</span>',e.appendChild(t)}this.updateUI()}setLoading(e){const t=l.el("cart-fab");t&&t.classList.toggle("loading",e)}updateUI(){const e=this.cartManager.getTotalQuantity(),t=l.el("cart-fab");if(t){const r=t.querySelector(".cart-count");r&&(r.textContent=String(e)),t.style.transform=e>0?"scale(1)":"scale(0)"}const n=l.el("cart-proceed-btn");if(n){const r=this.cartManager.isCartValid();n.disabled=e===0||!r,n.style.opacity=n.disabled?"0.5":"1"}}showModal(){const e=l.el("cart-modal-backdrop"),t=l.el("cart-drawer"),n=l.el("cart-items-list");if(!n)return;const r=l.query(".cart-footer");r&&!l.el("cart-proceed-btn")&&(r.innerHTML=`
+            <div style="display:flex; justify-content:space-between; font-weight:900; font-size:1.2rem; margin-bottom:20px;"><span>Total</span><span id="cart-total-price">--</span></div>
+            <button class="v-btn active" id="cart-proceed-btn" onclick="AntinnaEngine.startCheckout()" style="width:100%; padding:18px; font-size:1.1rem; border-radius:12px;">Proceed</button>
+        `);const i=this.cartManager.getOrder(),o=s.getArray(i.orderedItem);n.innerHTML=o.map((a,d)=>{var S,I,k,O,E,T;const u=a.isUnavailable,g=s.extractAvailability((S=a.orderedItem)==null?void 0:S.offers),p=g==="https://schema.org/OutOfStock"||g==="https://schema.org/SoldOut",m=!u&&!p,h=this.cartManager.isItemQuantityValid(a),f=m&&h?"1":"0.5";let y="";u?y='<div style="color:red; font-size:0.7rem; font-weight:800;">Currently Unavailable</div>':p?y='<div style="color:orange; font-size:0.7rem; font-weight:800;">Out of Stock</div>':h||(y=`<div style="color:#ef4444; font-size:0.7rem; font-weight:800;">Minimum ${(I=a._constraints)==null?void 0:I.minValue} required</div>`);const{price:v,currency:w}=s.extractPrice((k=a.orderedItem)==null?void 0:k.offers),x=s.extractAdvanceBookingRequirement((O=a.orderedItem)==null?void 0:O.offers),A=s.getArray(a.addOns).map((L,N)=>{var Q,B;const{price:Z,currency:ee}=s.extractPrice((Q=L.orderedItem)==null?void 0:Q.offers),V=this.cartManager.getAddOnLimits(a,L),te=V.minValue===null?L.orderQuantity>1:L.orderQuantity>V.minValue,ne=V.maxValue===null||L.orderQuantity<V.maxValue;return`
+            <div style="display:flex; align-items:center; gap:10px; padding:10px 0; border-top:1px dashed rgba(0,0,0,0.05); margin-top:10px; font-size:0.8rem;">
+               <div style="flex:1; opacity:0.8;">
+                  <div style="font-weight:600;">+ ${s.getFirst((B=L.orderedItem)==null?void 0:B.name)}</div>
+                  <div style="color:var(--accent); font-weight:700;">${s.getCurrencySymbol(ee)}${Z}</div>
+               </div>
+               <div style="display:flex; align-items:center; gap:8px;">
+                  <button class="qty-btn" style="width:20px; height:20px; font-size:0.7rem;" ${te?"":"disabled"} onclick="CartManager.updateAddOnQty(${d},${N},-1); CartRenderer.showModal();">-</button>
+                  <span style="font-weight:600;">${L.orderQuantity}</span>
+                  <button class="qty-btn" style="width:20px; height:20px; font-size:0.7rem;" ${ne?"":"disabled"} onclick="CartManager.updateAddOnQty(${d},${N},1); CartRenderer.showModal();">+</button>
+               </div>
+               <button onclick="CartManager.removeAddOn(${d},${N}); CartRenderer.showModal();" style="background:none;border:none;color:#ff3b30;cursor:pointer;font-size:1rem; padding:5px;">×</button>
+            </div>
+          `}).join("");return`
+        <div style="padding:15px; border-bottom:1px solid rgba(0,0,0,0.05); opacity:${f};">
+          <div style="display:flex; gap:15px; align-items:center;">
+             <img src="${this.getItemImage(a.orderedItem)}" style="width:60px; height:60px; border-radius:10px; object-fit:cover;"/>
+             <div style="flex:1;">
+                <div style="font-weight:700;font-size:0.9rem;">${s.getFirst((E=a.orderedItem)==null?void 0:E.name)}</div>
+                ${y}
+                ${x?`<div style="color:var(--accent); font-size:0.7rem; font-weight:700;">Booking: ${x}</div>`:""}
+                <div style="color:var(--accent); font-weight:800; font-size:0.85rem; margin-top:4px;">${s.getCurrencySymbol(w)}${v}</div>
+                <div style="display:flex; align-items:center; gap:12px; margin-top:10px;">
+                   <button class="qty-btn" style="width:24px; height:24px; font-size:0.8rem;" ${m?"":"disabled"} onclick="CartManager.updateQty(${d},-1); CartRenderer.showModal();">-</button>
+                   <span style="font-weight:800;">${a.orderQuantity||1}</span>
+                   <button class="qty-btn" style="width:24px; height:24px; font-size:0.8rem;" ${!m||((T=a._constraints)==null?void 0:T.maxValue)!==null&&(a.orderQuantity||1)>=a._constraints.maxValue?"disabled":""} onclick="CartManager.updateQty(${d},1); CartRenderer.showModal();">+</button>
+                </div>
+             </div>
+             <button onclick="CartManager.removeItem(${d}); CartRenderer.showModal();" style="background:none;border:none;color:#ff3b30;cursor:pointer;font-size:1.2rem; padding:10px;">×</button>
+          </div>
+          <div style="margin-left: 75px;">
+            ${A}
+          </div>
+        </div>
+      `}).join("")||'<div style="text-align:center; padding:50px; opacity:0.5; font-weight:700;">Bag is empty</div>';const c=l.el("cart-total-price");c&&(c.textContent=`${s.getCurrencySymbol(i.priceCurrency||"INR")}${i.totalPrice||0}`),e==null||e.classList.add("active"),t==null||t.classList.add("active"),this.updateUI()}hideModal(){var e,t;(e=l.el("cart-modal-backdrop"))==null||e.classList.remove("active"),(t=l.el("cart-drawer"))==null||t.classList.remove("active")}getItemImage(e){var t,n;return Array.isArray(e.image)?((t=e.image[0])==null?void 0:t.url)||e.image[0]||"":((n=e.image)==null?void 0:n.url)||e.image||""}}class K{constructor(e){this.locationManager=e}init(){const e=this.locationManager.getData();!e.pin&&!e.city&&setTimeout(()=>this.showModal(),2e3),this.updateUI()}showModal(){l.injectModalStyles();const e=l.el("loc-modal-backdrop");if(e){const t=this.locationManager.getData(),n=!!(t.pin||t.city);let r=l.el("modal-clear-loc-btn");if(!r){const i=e.querySelector(".antinna-geo-content")||e.querySelector(".modal-content");i&&(r=document.createElement("button"),r.id="modal-clear-loc-btn",r.className="btn-clear-loc",r.innerHTML="Clear Location",r.onclick=()=>this.handleClearLocation(),i.appendChild(r))}r&&(r.style.display=n?"block":"none"),e.classList.add("active")}}hideModal(){var e;(e=l.el("loc-modal-backdrop"))==null||e.classList.remove("active")}updateUI(){const e=this.locationManager.getData(),t=l.el("loc-display-v2"),n=l.el("modal-pin-input"),r=e.city?e.pin?`${e.city}, ${e.pin}`:e.city:e.pin||"";t&&(t.value=r),n&&(n.value=e.pin||"")}async handleRequestLocation(){if(!navigator.geolocation){l.showToast("Geolocation not supported","error");return}const e=l.query(".loc-btn");if(e&&(e.classList.add("loading"),!e.querySelector(".antinna-spinner"))){const t=document.createElement("span");t.className="antinna-spinner",e.appendChild(t)}navigator.geolocation.getCurrentPosition(async t=>{try{const{latitude:n,longitude:r}=t.coords,i=await this.locationManager.reverseGeocode(n,r);this.locationManager.setData({lat:n,lon:r,...i}),this.updateUI(),this.hideModal(),l.showToast(`Location set to ${i.city||"your area"}`,"success")}catch{l.showToast("Failed to resolve address","error")}finally{e==null||e.classList.remove("loading")}},t=>{l.showToast("Location access denied","error"),e==null||e.classList.remove("loading")})}async handleSetPin(){const e=l.el("modal-pin-input");if(e&&e.value.length===6){const t=e.value;l.showToast("Verifying PIN...","success");const n=await this.locationManager.lookupPin(t);this.locationManager.setData({pin:t,...n}),this.updateUI(),this.hideModal(),n.city?l.showToast(`Location set to ${n.city}`,"success"):l.showToast("Location updated!","success")}else l.showToast("Enter a valid 6-digit PIN","error")}handleClearLocation(){this.locationManager.clear(),this.updateUI(),this.hideModal(),l.showToast("Location cleared","success")}}const $=class ${constructor(){b(this,"mapUrl","https://script.google.com/macros/s/AKfycbyca4Xz_AE6Om1okIMf0TQ9EE9uIifQcVZhsDwnZK0K4weG7VD0w3jEzM0aCcuBeoWIIA/exec")}static getInstance(){return $.instance||($.instance=new $),$.instance}setMapUrl(e){this.mapUrl=e}async callAction(e,t={}){const n={action:e,params:t};try{const r=await fetch(this.mapUrl,{method:"POST",headers:{"Content-Type":"text/plain;charset=utf-8"},body:JSON.stringify(n)});if(!r.ok)throw new Error(`HTTP error! status: ${r.status}`);return await r.json()}catch(r){throw console.error(`AppsScriptService error [${e}]:`,r),r}}async getPlaceSuggestions(e){try{const t=await this.callAction("getPlaceSuggestions",{inputToken:e});return t.success?t.suggestions:[]}catch{return[]}}async processLocationAndMetrics(e,t,n){return this.callAction("processLocationAndMetrics",{originLat:e,originLng:t,destinationQuery:n})}async processPinDropMetrics(e,t,n,r){return this.callAction("processPinDropMetrics",{originLat:e,originLng:t,pinLat:n,pinLng:r})}};b($,"instance");let D=$;class _{constructor(e){b(this,"map");b(this,"targetMarker");b(this,"debounceTimer");b(this,"appsScriptService",D.getInstance());b(this,"currentDeviceLat",28.52785);b(this,"currentDeviceLng",76.08361);b(this,"isAddressModified",!1);const t=e.getData();t.lat&&(this.currentDeviceLat=t.lat),t.lon&&(this.currentDeviceLng=t.lon)}renderPopup(){let e=l.el("antinna-geo-modal");e||(e=document.createElement("div"),e.id="antinna-geo-modal",e.className="antinna-geo-backdrop",e.innerHTML=`
+        <div class="antinna-geo-content">
+          <div class="antinna-geo-header">
+            <h3>Destination Verification</h3>
+            <button class="antinna-geo-close" onclick="document.getElementById('antinna-geo-modal').classList.remove('active')">&times;</button>
+          </div>
+          <p class="antinna-geo-subtitle">
+            Type to search, choose from suggestions, <b>OR click directly on the map</b> to drop a custom pinpoint marker.
+          </p>
+
+          <div class="antinna-geo-search-container">
+            <input id="antinna-geo-search" type="text" placeholder="Start typing address..." autocomplete="off">
+            <div id="antinna-geo-dropdown" class="antinna-geo-dropdown"></div>
+          </div>
+
+          <div id="antinna-geo-status" class="antinna-geo-status">Detecting position...</div>
+
+          <div id="antinna-geo-map-canvas"></div>
+
+          <div id="antinna-geo-metrics" class="antinna-geo-metrics" style="display: none;">
+            <strong>Target Location Context:</strong><br>
+            <span id="antinna-geo-clean-address" style="color: #202124; font-weight: 600;"></span><br>
+
+            <div style="margin-top:10px; display:grid; grid-template-columns: 1fr 1fr; gap:10px;">
+                <div>📍 Target: <span class="antinna-geo-tag" id="antinna-geo-tag-target">0.0, 0.0</span></div>
+                <div>📱 Current: <span class="antinna-geo-tag" id="antinna-geo-tag-current">0.0, 0.0</span></div>
+            </div>
+            <div style="margin-top:8px; font-weight:700; color:var(--accent);">
+                Distance: <span id="antinna-geo-dist">--</span> | Duration: <span id="antinna-geo-dur">--</span>
+            </div>
+          </div>
+
+          <div id="antinna-geo-address-form" style="display:none; margin-top:15px; border-top: 1px solid #eee; padding-top:15px;">
+              <div style="display:grid; grid-template-columns: 1fr 1fr; gap:10px;">
+                  <div class="v-group">
+                      <span class="v-label">Flat/Plot/Building</span>
+                      <input id="geo-extendedAddress" class="antinna-geo-input" placeholder="e.g. 3rd Floor, Plot 42"/>
+                  </div>
+                  <div class="v-group">
+                      <span class="v-label">Street/Sector</span>
+                      <input id="geo-streetAddress" class="antinna-geo-input" placeholder="e.g. Sector 14"/>
+                  </div>
+              </div>
+              <div style="display:grid; grid-template-columns: 1fr 1fr; gap:10px; margin-top:10px;">
+                  <div class="v-group">
+                      <span class="v-label">City</span>
+                      <input id="geo-locality" class="antinna-geo-input" readonly style="background:#f8f9fa;"/>
+                  </div>
+                  <div class="v-group">
+                      <span class="v-label">Postal Code</span>
+                      <input id="geo-postalCode" class="antinna-geo-input" placeholder="6-digit PIN"/>
+                  </div>
+              </div>
+          </div>
+
+          <button id="antinna-geo-finalize-btn" class="v-btn active" style="width:100%; margin-top:20px; display:none; align-items:center; justify-content:center; gap:10px;">
+            <span class="antinna-spinner"></span>
+            <span class="btn-text">Finalize Order</span>
+          </button>
+        </div>
+      `,document.body.appendChild(e),l.injectModalStyles(),this.setupListeners()),e.classList.add("active"),this.initMap()}setupListeners(){const e=l.el("antinna-geo-search");e&&(e.oninput=r=>this.handleTypeAhead(r.target.value)),["geo-extendedAddress","geo-streetAddress","geo-postalCode"].forEach(r=>{const i=l.el(r);i&&(i.oninput=()=>{r!=="geo-postalCode"&&(this.isAddressModified=!0),this.validateAddressForm()})}),document.addEventListener("click",r=>{const i=l.el("antinna-geo-dropdown");i&&r.target!==e&&(i.style.display="none")});const n=l.el("antinna-geo-finalize-btn");n&&(n.onclick=async()=>{try{this.setFinalizeLoading(!0),await new Promise(i=>setTimeout(i,800));const r=this.collectDeliveryData();window.AntinnaEngine.setOrderDelivery(r),this.setFinalizeLoading(!1),window.AntinnaEngine.showOrderSummary()}catch(r){console.error("Error in finalizeBtn.onclick:",r)}})}setFinalizeLoading(e){const t=l.el("antinna-geo-finalize-btn");t&&t.classList.toggle("loading",e)}validateAddressForm(){var i,o,c;const e=(i=l.el("geo-extendedAddress"))==null?void 0:i.value.trim(),t=(o=l.el("geo-streetAddress"))==null?void 0:o.value.trim(),n=(c=l.el("geo-postalCode"))==null?void 0:c.value.trim(),r=l.el("antinna-geo-finalize-btn");if(r){const a=!!(e&&t&&n&&n.length>=6);r.style.display=a?"flex":"none"}}collectDeliveryData(){var r,i,o,c,a,d,u,g,p;const e=(r=this.targetMarker)==null?void 0:r.getLatLng(),t=e?e.lat:((i=window.lastGeoResponse)==null?void 0:i.lat)||0,n=e?e.lng:((o=window.lastGeoResponse)==null?void 0:o.lng)||0;return{"@type":"ParcelDelivery",deliveryName:"Standard Handheld Delivery",deliveryAddress:{"@type":"PostalAddress",extendedAddress:(c=l.el("geo-extendedAddress"))==null?void 0:c.value,streetAddress:(a=l.el("geo-streetAddress"))==null?void 0:a.value,addressLocality:(d=l.el("geo-locality"))==null?void 0:d.value,addressRegion:((g=(u=window.lastGeoResponse)==null?void 0:u.addressDetails)==null?void 0:g.addressRegion)||"HR",postalCode:(p=l.el("geo-postalCode"))==null?void 0:p.value,addressCountry:"IN"},deliveryStatus:{"@type":"DeliveryEvent",name:"Final Destination Drop-off",location:{"@type":"Place",name:"Exact Delivery Coordinates",geo:{"@type":"GeoCoordinates",latitude:String(t),longitude:String(n)}}}}}async initMap(){await l.injectLeaflet();const e=window.L;if(!e)return;const t=[this.currentDeviceLat,this.currentDeviceLng];if(this.map)this.map.setView(t,13),this.targetMarker.setLatLng(t);else{const n=e.tileLayer("https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}",{attribution:"Tiles &copy; Esri"}),r=e.tileLayer("https://server.arcgisonline.com/ArcGIS/rest/services/Reference/World_Boundaries_and_Places/MapServer/tile/{z}/{y}/{x}"),i=e.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",{attribution:"© OpenStreetMap contributors"});this.map=e.map(l.el("antinna-geo-map-canvas"),{layers:[n,r]}).setView(t,13);const o={"Satellite Hybrid":e.layerGroup([n,r]),Streets:i};e.control.layers(o).addTo(this.map),this.targetMarker=e.marker(t,{draggable:!0,title:"Delivery Location"}).addTo(this.map),this.map.on("click",c=>{this.handleManualPinPosition(c.latlng.lat,c.latlng.lng)}),this.targetMarker.on("dragend",c=>{const a=c.target.getLatLng();this.handleManualPinPosition(a.lat,a.lng)})}navigator.geolocation&&navigator.geolocation.getCurrentPosition(n=>{this.currentDeviceLat=n.coords.latitude,this.currentDeviceLng=n.coords.longitude;const r=[this.currentDeviceLat,this.currentDeviceLng];this.map.setView(r,13),this.targetMarker.setLatLng(r),l.setContent("antinna-geo-status","Position synchronized.")})}async handleManualPinPosition(e,t){this.targetMarker&&this.targetMarker.setLatLng([e,t]),l.setContent("antinna-geo-status","Pin dropped. Computing metrics...");try{const n=await this.appsScriptService.processPinDropMetrics(this.currentDeviceLat,this.currentDeviceLng,e,t);this.updateTelemetryUI(n)}catch{l.setContent("antinna-geo-status","Error computing metrics.")}}handleTypeAhead(e){clearTimeout(this.debounceTimer);const t=l.el("antinna-geo-dropdown");if(t){if(e.length<3){t.innerHTML="",t.style.display="none";return}this.debounceTimer=setTimeout(async()=>{try{const n=await this.appsScriptService.getPlaceSuggestions(e);this.populateDropdown(n)}catch{}},400)}}populateDropdown(e){const t=l.el("antinna-geo-dropdown");if(t){if(t.innerHTML="",e.length===0){t.style.display="none";return}e.forEach(n=>{const r=document.createElement("div");r.className="antinna-geo-dropdown-item",r.innerText=n,r.onclick=async()=>{const i=l.el("antinna-geo-search");i&&(i.value=n),t.style.display="none",l.setContent("antinna-geo-status","Resolving coordinates...");try{this.isAddressModified=!1;const o=await this.appsScriptService.processLocationAndMetrics(this.currentDeviceLat,this.currentDeviceLng,n);if(o.success){const c=[o.lat,o.lng];this.map.setView(c,15),this.targetMarker.setLatLng(c),this.updateTelemetryUI(o)}}catch{}},t.appendChild(r)}),t.style.display="block"}}updateTelemetryUI(e){if(e.success){window.lastGeoResponse=e,l.setContent("antinna-geo-status","Location verified."),l.setContent("antinna-geo-clean-address",e.address),l.setContent("antinna-geo-dist",e.distance),l.setContent("antinna-geo-dur",e.duration);const t=Number(e.lat||0),n=Number(e.lng||e.lon||0);l.setContent("antinna-geo-tag-target",`${t.toFixed(4)}, ${n.toFixed(4)}`),l.setContent("antinna-geo-tag-current",`${this.currentDeviceLat.toFixed(4)}, ${this.currentDeviceLng.toFixed(4)}`),l.toggleClass("#antinna-geo-metrics","hidden",!1),l.el("antinna-geo-metrics").style.display="block";const r=l.el("antinna-geo-address-form");if(r){if(r.style.display="block",e.addressDetails){const i=e.addressDetails,o=l.el("geo-extendedAddress"),c=l.el("geo-streetAddress");this.isAddressModified||(o.value=i.extendedAddress||"",c.value=i.streetAddress||""),l.el("geo-locality").value=i.addressLocality||"",l.el("geo-postalCode").value=i.postalCode||""}this.validateAddressForm()}window.AntinnaEngine.setVerifiedLocation(e)}}}class J{constructor(e){this.cartManager=e}render(e,t){let n=l.el("antinna-summary-modal");n||(n=document.createElement("div"),n.id="antinna-summary-modal",n.className="antinna-geo-backdrop",document.body.appendChild(n),l.injectModalStyles());const r=this.cartManager.getOrder(),i=this.cartManager.getServiceabilityErrors(e),o=i.length===0,c=s.getArray(r.orderedItem).map(h=>{var I;const f=h.orderedItem||h.itemOffered||h,{price:y,currency:v}=s.extractPrice(f.offers||h.offers),w=s.getFirst(f.name)||"Unnamed Item",x=h.orderQuantity||((I=h.amount)==null?void 0:I.value)||1,A=s.extractAdvanceBookingRequirement(f.offers||h.offers),S=s.getArray(h.addOns).map(k=>{var T,L;const{price:O,currency:E}=s.extractPrice((T=k.orderedItem)==null?void 0:T.offers);return`
+                <div style="display:flex; justify-content:space-between; font-size:0.75rem; opacity:0.7; padding-left:15px; margin-top:4px;">
+                    <span>+ ${s.getFirst((L=k.orderedItem)==null?void 0:L.name)} <b>x${k.orderQuantity}</b></span>
+                    <span>${s.getCurrencySymbol(E)}${(parseFloat(O)*Number(k.orderQuantity)).toFixed(2)}</span>
+                </div>
+            `}).join("");return`
+            <div style="padding:10px 0; border-bottom:1px solid #eee; font-size:0.9rem;">
+                <div style="display:flex; justify-content:space-between;">
+                    <span style="flex:1;">${w} <b>x${x}</b></span>
+                    <span style="font-weight:700;">${s.getCurrencySymbol(v)}${(parseFloat(y)*Number(x)).toFixed(2)}</span>
+                </div>
+                ${S}
+                ${A?`<div style="font-size:0.75rem; color:var(--accent); margin-top:2px;">Booking: ${A}</div>`:""}
+            </div>
+        `}).join("");let a="";o||(a=`
+            <div style="margin-bottom:20px; padding:15px; background:#fff5f5; border:1px solid #feb2b2; border-radius:12px; color:#c53030; font-size:0.85rem;">
+                <div style="font-weight:800; margin-bottom:5px;">⚠️ Non-Serviceable Items</div>
+                <p style="margin:0;">The following items are not available in your area:</p>
+                <ul style="margin:5px 0 0 15px; padding:0;">
+                    ${i.map(h=>`<li>${h}</li>`).join("")}
+                </ul>
+                <div style="margin-top:10px; font-weight:700;">Please remove these from your cart to continue.</div>
+            </div>
+        `);const d=this.cartManager.getMaxLeadTime(),u=(e==null?void 0:e.duration)||"0 mins",p=(parseInt(u)||0)+d;let m=`${p} mins`;if(p>=60){const h=Math.floor(p/60),f=p%60;m=f>0?`${h}h ${f}m`:`${h}h`}n.innerHTML=`
+      <div class="antinna-geo-content">
+        <div class="antinna-geo-header">
+          <h3>Order Summary</h3>
+          <button class="antinna-geo-close" onclick="document.getElementById('antinna-summary-modal').classList.remove('active')">&times;</button>
+        </div>
+
+        ${a}
+
+        <div style="margin-bottom:20px; padding:15px; background:var(--bg); border-radius:12px;">
+            <div style="font-size:0.75rem; text-transform:uppercase; color:#777; margin-bottom:5px; font-weight:800;">Delivery Destination</div>
+            <div style="font-weight:700; font-size:0.95rem;">
+                ${t?`${t.deliveryAddress.extendedAddress}, ${t.deliveryAddress.streetAddress}, ${t.deliveryAddress.addressLocality}`:(e==null?void 0:e.address)||"Verified Location"}
+            </div>
+            <div style="font-size:0.8rem; color:var(--accent); margin-top:4px;">
+                Distance: ${(e==null?void 0:e.distance)||"--"} | Est. Time: ${m}
+            </div>
+        </div>
+
+        <div style="max-height:200px; overflow-y:auto; margin-bottom:20px;">
+            ${c}
+        </div>
+
+        <div style="display:flex; justify-content:space-between; font-weight:900; font-size:1.2rem; margin:20px 0;">
+            <span>Grand Total</span>
+            <span>${s.getCurrencySymbol(r.priceCurrency||"INR")}${r.totalPrice||0}</span>
+        </div>
+
+        <div id="google-pay-button-container" style="display:flex; justify-content:center; margin-top:20px;"></div>
+
+        <p style="font-size:0.7rem; text-align:center; opacity:0.5; margin-top:15px;">
+            By clicking Pay, you agree to our <a href="/p/terms-conditions.html" target="_blank" style="color:inherit; text-decoration:underline;">terms and conditions</a>.
+        </p>
+      </div>
+    `,n.classList.add("active"),this.renderGooglePayButton(r,e,o)}renderGooglePayButton(e,t,n){const r=l.el("google-pay-button-container");if(!r)return;if(r.innerHTML="",!n){r.innerHTML=`
+            <button class="v-btn" style="width:100%; opacity:0.5; cursor:not-allowed;" disabled>
+                Check Coverage to Pay
+            </button>
+          `;return}const i=document.documentElement.classList.contains("dark"),o=document.createElement("button");o.className=`gpay-button ${i?"white":"black"}`,o.style.cssText=`
+          background-image: url('https://www.gstatic.com/instantbuy/svg/dark_gpay.svg');
+          background-origin: content-box;
+          background-position: center;
+          background-repeat: no-repeat;
+          background-size: contain;
+          border: 0;
+          border-radius: 4px;
+          box-shadow: 0 1px 1px 0 rgba(60, 64, 67, 0.3), 0 1px 3px 1px rgba(60, 64, 67, 0.15);
+          cursor: pointer;
+          height: 48px;
+          min-width: 160px;
+          padding: 12px 24px;
+          width: 100%;
+          background-color: ${i?"#fff":"#000"};
+      `,i&&(o.style.backgroundImage="url('https://www.gstatic.com/instantbuy/svg/light_gpay.svg')"),o.onclick=()=>{window.GooglePayService.initPayment(e,t)},r.appendChild(o)}}class W{constructor(){b(this,"confirmationResult",null);b(this,"resendTimer",null);b(this,"countdown",60);b(this,"selectedCountry",{code:"+91",name:"India",flag:"🇮🇳"});b(this,"countries",[{code:"+91",name:"India",flag:"🇮🇳"},{code:"+1",name:"USA",flag:"🇺🇸"},{code:"+44",name:"UK",flag:"🇬🇧"},{code:"+971",name:"UAE",flag:"🇦🇪"},{code:"+65",name:"Singapore",flag:"🇸🇬"}])}render(){let e=l.el("antinna-phone-modal");e||(e=document.createElement("div"),e.id="antinna-phone-modal",e.className="antinna-geo-backdrop",l.injectModalStyles(),e.innerHTML=`
+        <div class="antinna-geo-content">
+          <div class="antinna-geo-header">
+            <h3>Phone Verification</h3>
+            <button class="antinna-geo-close" onclick="document.getElementById('antinna-phone-modal').classList.remove('active')">&times;</button>
+          </div>
+          <p class="antinna-geo-subtitle">
+            Please link your phone number to continue with the order.
+          </p>
+
+          <div id="phone-input-container">
+            <div class="antinna-geo-search-container antinna-input-prefixed">
+                <div id="antinna-country-trigger" class="antinna-country-selector">
+                    <span id="antinna-selected-flag">${this.selectedCountry.flag}</span>
+                    <span id="antinna-selected-code">${this.selectedCountry.code}</span>
+                    <span class="antinna-country-chevron"></span>
+                    <div id="antinna-country-list" class="antinna-country-list">
+                        ${this.countries.map(t=>`
+                            <div class="antinna-country-item" data-code="${t.code}">
+                                <span class="antinna-country-flag">${t.flag}</span>
+                                <span class="antinna-country-name">${t.name}</span>
+                                <span class="antinna-country-code">${t.code}</span>
+                            </div>
+                        `).join("")}
+                    </div>
+                </div>
+                <input id="antinna-phone-number" type="tel" placeholder="98765 43210" autocomplete="off">
+            </div>
+            <div id="recaptcha-container" style="margin-top:15px;"></div>
+            <button id="antinna-send-otp-btn" class="v-btn active" style="width:100%; margin-top:20px; display: flex; align-items: center; justify-content: center;">
+                <span class="antinna-spinner"></span>
+                <span class="btn-text">Send OTP</span>
+            </button>
+          </div>
+
+          <div id="otp-input-container" style="display:none;">
+            <div class="antinna-geo-search-container">
+                <input id="antinna-otp-code" type="text" placeholder="Enter 6-digit OTP" maxlength="6" autocomplete="off">
+            </div>
+            <div id="antinna-resend-container" style="margin-top:15px; font-size:0.85rem; text-align:center; color:#777;">
+                Didn't receive code? <button id="antinna-resend-btn" disabled style="background:none; border:none; color:var(--accent); font-weight:700; cursor:pointer; opacity:0.5;">Resend (<span id="antinna-countdown">60</span>s)</button>
+            </div>
+            <button id="antinna-verify-otp-btn" class="v-btn active" style="width:100%; margin-top:20px; display: flex; align-items: center; justify-content: center;">
+                <span class="antinna-spinner"></span>
+                <span class="btn-text">Verify & Link</span>
+            </button>
+            <button class="qty-btn" style="border:none; margin-top:10px; background:none; width:100%;" onclick="document.getElementById('phone-input-container').style.display='block'; document.getElementById('otp-input-container').style.display='none';">Back</button>
+          </div>
+        </div>
+      `,document.body.appendChild(e),this.setupListeners()),e.classList.add("active"),this.initRecaptcha()}setupListeners(){const e=l.el("antinna-send-otp-btn"),t=l.el("antinna-verify-otp-btn"),n=l.el("antinna-resend-btn"),r=l.el("antinna-country-trigger"),i=l.el("antinna-country-list");e&&(e.onclick=()=>this.handleSendOTP()),t&&(t.onclick=()=>this.handleVerifyOTP()),n&&(n.onclick=()=>this.handleSendOTP()),r&&(r.onclick=o=>{o.stopPropagation();const c=i==null?void 0:i.classList.toggle("active");r.classList.toggle("active",c)}),document.querySelectorAll(".antinna-country-item").forEach(o=>{o.onclick=c=>{c.stopPropagation();const a=o.dataset.code;a&&this.setCountry(a)}}),document.addEventListener("click",()=>{i==null||i.classList.remove("active")})}setCountry(e){const t=this.countries.find(n=>n.code===e);if(t){this.selectedCountry=t,l.setContent("antinna-selected-flag",t.flag),l.setContent("antinna-selected-code",t.code);const n=l.el("antinna-country-list"),r=l.el("antinna-country-trigger");n==null||n.classList.remove("active"),r==null||r.classList.remove("active")}}initRecaptcha(){if(window.firebaseAuth&&!window.recaptchaVerifier)try{const{RecaptchaVerifier:t}=window.firebaseAuthInternal||{};t&&console.log("RecaptchaVerifier ready")}catch{}}setBtnLoading(e,t){const n=l.el(e);n&&n.classList.toggle("loading",t)}startResendTimer(){this.resendTimer&&clearInterval(this.resendTimer),this.countdown=60,l.setHtml("antinna-resend-container",`Didn't receive code? <button id="antinna-resend-btn" disabled style="background:none; border:none; color:var(--accent); font-weight:700; cursor:pointer; opacity:0.5;">Resend (<span id="antinna-countdown">60</span>s)</button>`),l.el("antinna-resend-btn")&&console.log("Resend btn ready");const t=l.el("antinna-countdown");this.resendTimer=setInterval(()=>{if(this.countdown--,t&&(t.textContent=String(this.countdown)),this.countdown<=0&&(clearInterval(this.resendTimer),l.el("antinna-resend-container"))){l.setHtml("antinna-resend-container",`Didn't receive code? <button id="antinna-resend-btn" style="background:none; border:none; color:var(--accent); font-weight:700; cursor:pointer;">Resend Now</button>`);const r=l.el("antinna-resend-btn");r&&(r.onclick=()=>this.handleSendOTP())}},1e3)}async handleSendOTP(){const e=l.el("antinna-phone-number");let t=e==null?void 0:e.value.trim().replace(/\D/g,"");if(!t||t.length<7){l.showToast("Enter a valid phone number","error");return}t=this.selectedCountry.code+t;const n=window.firebaseAuth,r=n==null?void 0:n.currentUser;if(!r){l.showToast("Authentication required","error");return}const i=window.RecaptchaVerifier,o=window.linkWithPhoneNumber;if(!i||!o){l.showToast("Auth engine not fully loaded","error");return}const c=l.el("phone-input-container").style.display!=="none"?"antinna-send-otp-btn":"antinna-resend-btn";this.setBtnLoading(c,!0);try{window.recaptchaVerifier||(window.recaptchaVerifier=new i(n,"recaptcha-container",{size:"invisible"})),this.confirmationResult=await o(r,t,window.recaptchaVerifier),l.el("phone-input-container").style.display="none",l.el("otp-input-container").style.display="block",l.showToast("OTP sent successfully!","success"),this.startResendTimer()}catch(a){console.error("Phone linking failed",a),l.showToast(a.message||"Failed to send OTP","error")}finally{this.setBtnLoading(c,!1)}}async handleVerifyOTP(){var n;const e=l.el("antinna-otp-code"),t=e==null?void 0:e.value.trim();if(!t||t.length!==6){l.showToast("Enter a valid 6-digit OTP","error");return}if(this.confirmationResult){this.setBtnLoading("antinna-verify-otp-btn",!0);try{await this.confirmationResult.confirm(t),l.showToast("Phone linked successfully!","success"),(n=l.el("antinna-phone-modal"))==null||n.classList.remove("active"),window.hasPhoneLinked=!0,this.resendTimer&&clearInterval(this.resendTimer),window.AntinnaEngine.showGeoVerification()}catch(r){console.error("OTP Verification failed",r);const i=r.message||r.toString();l.showToast(`OTP Verification failed: ${i}`,"error")}finally{this.setBtnLoading("antinna-verify-otp-btn",!1)}}}}class Y{constructor(e,t){b(this,"dropdown",null);b(this,"selectedIndex",-1);b(this,"suggestions",[]);this.inputId=e,this.bloggerService=t,this.init()}init(){const e=l.el(this.inputId);if(!e)return;e.setAttribute("autocomplete","off"),this.dropdown=document.createElement("div"),this.dropdown.className="antinna-search-dropdown";const t=e.closest(".search-input-group")||e.parentElement;t&&(t.style.setProperty("position","relative","important"),t.appendChild(this.dropdown));let n;e.oninput=()=>{clearTimeout(n),n=setTimeout(()=>this.handleInput(e.value),300)},e.onkeydown=r=>this.handleKeydown(r),document.addEventListener("click",r=>{var i;!e.contains(r.target)&&!((i=this.dropdown)!=null&&i.contains(r.target))&&this.hide()})}async handleInput(e){if(e.length<2){this.hide();return}this.suggestions=await this.bloggerService.fetchSearchSuggestions(e),this.render()}render(){if(this.dropdown){if(this.suggestions.length===0){this.hide();return}this.dropdown.innerHTML=this.suggestions.map((e,t)=>`
+        <div class="antinna-search-item ${t===this.selectedIndex?"active":""}"
+             onclick="window.handleSuggestionClick('${e.replace(/'/g,"\\'")}')">
+            ${e}
+        </div>
+    `).join(""),window.handleSuggestionClick=e=>this.select(e),this.dropdown.style.display="block"}}handleKeydown(e){var t;((t=this.dropdown)==null?void 0:t.style.display)==="block"&&(e.key==="ArrowDown"?(e.preventDefault(),this.selectedIndex=(this.selectedIndex+1)%this.suggestions.length,this.render()):e.key==="ArrowUp"?(e.preventDefault(),this.selectedIndex=(this.selectedIndex-1+this.suggestions.length)%this.suggestions.length,this.render()):e.key==="Enter"&&this.selectedIndex>=0?(e.preventDefault(),this.select(this.suggestions[this.selectedIndex])):e.key==="Escape"&&this.hide())}select(e){var n;const t=l.el(this.inputId);t&&(t.value=e,this.hide(),(n=t.form)==null||n.dispatchEvent(new Event("submit",{cancelable:!0,bubbles:!0})))}hide(){this.dropdown&&(this.dropdown.style.display="none",this.selectedIndex=-1)}}class z{constructor(){b(this,"state",{product:null,selectedVariants:{},currentSlide:0,quantity:1,lastClickedAttribute:null,selectedPackage:null,verifiedLocation:null,orderDelivery:null});b(this,"gridPageSize",20);b(this,"gridStartIndex",1);b(this,"currentLabels",[]);b(this,"currentSearchQuery","");b(this,"displaySearchQuery","");b(this,"searchKeywordsOnly","");b(this,"CartManager",new F);b(this,"LocationManager",new j);b(this,"BloggerDataService",new q);b(this,"GooglePayService",new U);b(this,"ProductRenderer",new H);b(this,"CartRenderer",new G(this.CartManager));b(this,"LocationRenderer",new K(this.LocationManager));b(this,"GeoVerificationRenderer",new _(this.LocationManager));b(this,"OrderSummaryRenderer",new J(this.CartManager));b(this,"PhoneVerificationRenderer",new W);b(this,"SearchAutocompleteRenderer");this.detectContext(),this.exposeGlobals(),this.init()}detectContext(){const e=window.location.pathname,t=new URLSearchParams(window.location.search);if(e.includes("/search/label/")){const r=e.split("/search/label/")[1].split("?")[0];r&&this.currentLabels.push(decodeURIComponent(r))}const n=t.get("q");if(n){this.currentSearchQuery=n;const r=[/"postalCode":\s*"([^"]+)"/,/postalCode:\s*([^|\s]+)/,/"addressLocality":\s*"([^"]+)"/,/addressLocality:\s*([^|\s]+)/];let i=n;r.forEach(a=>{i=i.replace(a,"").trim()}),this.displaySearchQuery=i,this.searchKeywordsOnly=i.replace(/label:[^|\s]+/g,"").trim();const o=/label:([^|\s]+)/g;let c;for(;(c=o.exec(n))!==null;)if(c[1]){const a=decodeURIComponent(c[1].replace(/_/g," "));this.currentLabels.includes(a)||this.currentLabels.push(a)}}}formatLocationQuery(){const e=this.LocationManager.getData();return e.pin?`"postalCode": "${e.pin}"`:e.city?`"addressLocality": "${e.city}"`:""}exposeGlobals(){window.AntinnaEngine=this,window.CartManager=this.CartManager,window.LocationManager=this.LocationManager,window.CartRenderer=this.CartRenderer,window.LocationRenderer=this.LocationRenderer,window.GooglePayService=this.GooglePayService,window.GeoVerificationRenderer=this.GeoVerificationRenderer,window.UIManager=l,window.nextSlide=()=>this.goToSlide(this.state.currentSlide+1),window.prevSlide=()=>this.goToSlide(this.state.currentSlide-1),window.goToSlide=e=>this.goToSlide(e),window.syncDots=e=>this.syncDots(e),window.showToast=(e,t)=>l.showToast(e,t),window.loadMorePosts=()=>this.loadMorePosts(),window.refreshCartData=()=>this.refreshCartData(),window.startCheckout=()=>this.startCheckout(),window.showOrderSummary=()=>this.showOrderSummary(),window.showGeoVerification=()=>this.showGeoVerification(),window.handleClearLocation=()=>this.LocationRenderer.handleClearLocation(),window.handleAddToCart=()=>this.handleAddToCart(),window.setQuantity=e=>{this.state.quantity=e},window.loadProductData=()=>this.loadProductData()}init(){document.addEventListener("DOMContentLoaded",()=>{this.LocationRenderer.init(),this.CartRenderer.renderFab(),this.setupEventListeners(),this.loadProductData(),this.loadGridData(),this.updateCategoryLinks(),this.highlightActiveLabels(),this.initSearchInput(),this.SearchAutocompleteRenderer=new Y("search-q",this.BloggerDataService)})}initSearchInput(){const e=l.el("search-q");e&&this.displaySearchQuery&&(e.value=this.displaySearchQuery)}updateCategoryLinks(){const e=this.searchKeywordsOnly.trim(),t=this.formatLocationQuery();if(!e&&!t)return;document.querySelectorAll(".cat-link").forEach(r=>{var a;const i=((a=r.textContent)==null?void 0:a.trim())||"";let o="";i.toUpperCase()==="ALL"?o=`${e} ${t}`.trim():o=`label:${i} ${e} ${t}`.trim();const c=encodeURIComponent(o).replace(/%20/g," ").replace(/%3A/g,":");r.href=`/search?q=${c}`})}highlightActiveLabels(){const e=document.querySelectorAll(".cat-link");this.currentLabels.length>0&&e.forEach(t=>{var i;const n=(i=t.textContent)==null?void 0:i.trim();if((n==null?void 0:n.toUpperCase())==="ALL"){t.classList.remove("active");return}this.currentLabels.some(o=>n===o)&&t.classList.add("active")})}setupEventListeners(){const e=l.el("qty-plus"),t=l.el("qty-minus"),n=l.el("add-to-cart-btn"),r=l.el("search-form");e&&(e.onclick=()=>{const i=window.currentQuantityLimits;if((i==null?void 0:i.maxValue)!==null&&this.state.quantity>=i.maxValue){l.showToast(`Maximum limit of ${i.maxValue} reached`,"error");return}this.state.quantity++,l.setContent("qty-val",String(this.state.quantity)),this.ProductRenderer.updateQtyButtons()}),t&&(t.onclick=()=>{this.state.quantity>1&&(this.state.quantity--,l.setContent("qty-val",String(this.state.quantity)),this.ProductRenderer.updateQtyButtons())}),n&&(n.onclick=()=>{this.handleAddToCart(),this.ProductRenderer.render(this.state.product,this.state,(i,o)=>{this.state.selectedVariants[i]=o,this.state.lastClickedAttribute=i,this.ProductRenderer.render(this.state.product,this.state,()=>{})})}),r&&(r.onsubmit=i=>{i.preventDefault();const o=l.el("search-q");if(!o)return;const c=o.value.trim(),a=this.formatLocationQuery();if(!c&&!a){l.showToast("Please enter a query or select location","error");return}const d=a&&!c.includes(a)?`${c} ${a}`.trim():c,u=r.getAttribute("action")||"/search";let g=encodeURIComponent(d).replace(/%3A/g,":").replace(/%7C/g,"|");window.location.href=`${u}?q=${g}`})}loadProductData(){setTimeout(()=>{var t,n;const e=l.el("post-body-raw");if(e){const r=s.extractJsonLd(e.textContent||"");r&&(this.state.product=r,this.ProductRenderer.render(r,this.state,(i,o)=>{this.state.selectedVariants[i]=o,this.state.lastClickedAttribute=i,this.ProductRenderer.render(this.state.product,this.state,()=>{})}),((t=r.offers)!=null&&t.seller||r.seller||r.provider)&&this.ProductRenderer.renderSeller(((n=r.offers)==null?void 0:n.seller)||r.seller||r.provider))}l.toggleClass("#initializing-state","hidden",!0),l.toggleClass("#carousel-section","hidden",!1),l.toggleClass("#details-section","hidden",!1)},100)}async loadGridData(){const e=l.el("app-grid");if(!e)return;const{entries:t}=await this.BloggerDataService.fetchFeedData(50,1,this.currentLabels,this.currentSearchQuery);e.children.length===0?this.renderEntriesToGrid(t,e):e.querySelectorAll(".card").forEach(r=>{var a;const i=r.href.split("?")[0].split("#")[0],o=t.find(d=>{var g;return(((g=d.link.find(p=>p.rel==="alternate"))==null?void 0:g.href)||"").toLowerCase().includes(i.toLowerCase())}),c=o?this.BloggerDataService.extractSchemaFromEntry(o):s.extractJsonLd(((a=r.querySelector(".grid-data"))==null?void 0:a.textContent)||"");c&&this.renderGridCard(r,c)})}async loadMorePosts(){var r;const e=l.el("app-grid");if(!e)return;this.gridStartIndex+=this.gridPageSize;const{entries:t,totalResults:n}=await this.BloggerDataService.fetchFeedData(this.gridPageSize,this.gridStartIndex,this.currentLabels,this.currentSearchQuery);this.renderEntriesToGrid(t,e),this.gridStartIndex+this.gridPageSize>n&&((r=l.el("load-more-btn"))==null||r.classList.add("hidden"))}renderEntriesToGrid(e,t){e.forEach(n=>{var i;const r=this.BloggerDataService.extractSchemaFromEntry(n);if(r){const o=((i=n.link.find(u=>u.rel==="alternate"))==null?void 0:i.href)||"#",c=document.createElement("a");c.className="card",c.href=o;const a=s.getFirst(r.image),d=(a==null?void 0:a.url)||a||"https://via.placeholder.com/400x300?text=Antinna";c.innerHTML=`
+            <div class="card-img-wrapper">
+               <div class="card-img-scroll" onscroll="AntinnaEngine.syncDots(this)">
+                  <img class="card-img" src="${d}" loading="lazy"/>
+               </div>
+               <div class="card-dots"></div>
+            </div>
+            <div class="card-body">
+              <div class="card-badge">Loading...</div>
+              <h3 class="card-title">${s.getFirst(r.name)||"Untitled"}</h3>
+              <div class="card-price">--</div>
+            </div>
+          `,t.appendChild(c),this.renderGridCard(c,r)}})}async refreshCartData(){this.CartRenderer.setLoading(!0);try{const e=this.CartManager.getOrder(),{entries:t}=await this.BloggerDataService.fetchFeedData(100,1);s.getArray(e.orderedItem).forEach((n,r)=>{var a;const i=s.getFirst((a=n.orderedItem)==null?void 0:a.url);if(!i)return;const o=t.find(d=>{var g;return(((g=d.link.find(p=>p.rel==="alternate"))==null?void 0:g.href)||"").toLowerCase().includes(i.toLowerCase().split("?")[0].split("#")[0])}),c=o?this.BloggerDataService.extractSchemaFromEntry(o):null;this.CartManager.updateItemDetails(r,c)})}catch(e){console.error("Refresh failed",e)}finally{this.CartRenderer.setLoading(!1),this.CartRenderer.showModal()}}renderGridCard(e,t){const n=e.querySelector(".card-badge"),r=e.querySelector(".card-price"),i=e.querySelector(".card-img-scroll"),o=e.querySelector(".card-dots"),c=s.getArray(t["@type"]),a=c.some(u=>u==="LocalBusiness"||u==="Store"||u==="Organization");if(n&&(a?n.textContent="Business":c.some(u=>u==="ProductGroup"||u==="Product")?n.textContent="Product":n.textContent="Service"),r)if(a)r.textContent=s.getFirst(t.telephone)||"Contact Us";else{const u=s.getArray(t.hasVariant),g=u.length>0?u[0]:t,{price:p,currency:m}=s.extractPrice(g.offers||g),h=s.getCurrencySymbol(m);r.textContent=`${h}${p}`}const d=s.getArray(t.image);d[0]&&i&&(i.innerHTML=d.map(u=>`<img class="card-img" src="${u.url||u}" loading="lazy"/>`).join(""),o&&d.length>1&&(o.innerHTML=d.map((u,g)=>`<div class="dot ${g===0?"active":""}"></div>`).join("")))}handleAddToCart(){var i,o;const e=this.state.product;if(!e)return;let t=s.findMatchingVariant(e,this.state.selectedVariants,this.state.lastClickedAttribute);this.state.selectedPackage&&(t={...t,name:((i=this.state.selectedPackage.itemOffered)==null?void 0:i.name)||this.state.selectedPackage.name,offers:{price:this.state.selectedPackage.price,priceCurrency:this.state.selectedPackage.priceCurrency}});const n={...t,url:window.location.href.split("?")[0].split("#")[0]},r=s.getFirst((o=n.offers)==null?void 0:o.seller)||s.getFirst(e.seller)||e.provider;this.CartManager.addItem(n,r,this.state.selectedVariants,this.state.quantity),this.CartRenderer.updateUI(),l.showToast("Added to Bag","success")}goToSlide(e){const t=l.el("carousel-inner"),n=document.querySelectorAll(".carousel-item");!t||n.length===0||(e<0&&(e=n.length-1),e>=n.length&&(e=0),this.state.currentSlide=e,t.style.transform=`translateX(-${e*100}%)`,document.querySelectorAll(".thumb").forEach((r,i)=>r.classList.toggle("active",i===e)))}syncDots(e){var r;const t=Math.round(e.scrollLeft/e.offsetWidth),n=(r=e.parentElement)==null?void 0:r.querySelectorAll(".dot");n==null||n.forEach((i,o)=>i.classList.toggle("active",o===t))}startCheckout(){if(this.CartRenderer.hideModal(),!window.isLoggedIn){this.showLoginPrompt();return}if(!window.hasPhoneLinked){this.PhoneVerificationRenderer.render();return}this.showGeoVerification()}showGeoVerification(){this.GeoVerificationRenderer.renderPopup()}setVerifiedLocation(e){this.state.verifiedLocation=e}setOrderDelivery(e){this.state.orderDelivery=e}showOrderSummary(){var e;if(!window.isLoggedIn){this.showLoginPrompt();return}(e=l.el("antinna-geo-modal"))==null||e.classList.remove("active"),this.OrderSummaryRenderer.render(this.state.verifiedLocation,this.state.orderDelivery)}showLoginPrompt(){let e=l.el("antinna-login-modal");if(!e){e=document.createElement("div"),e.id="antinna-login-modal",e.className="antinna-geo-backdrop",l.injectModalStyles(),e.innerHTML=`
+            <div class="antinna-geo-content" style="text-align:center;">
+                <div class="antinna-geo-header">
+                    <h3>Sign in Required</h3>
+                    <button class="antinna-geo-close" onclick="document.getElementById('antinna-login-modal').classList.remove('active')">&times;</button>
+                </div>
+                <p style="margin-bottom:30px; opacity:0.8;">Please sign in to your account to finalize your order and proceed to payment.</p>
+                <div style="display:flex; justify-content:center;">
+                    <button class="g-signin-button" id="google-login-btn-checkout">
+                        <div class="g-icon-wrapper">
+                            <svg viewBox="0 0 18 18" width="18px" height="18px" xmlns="http://www.w3.org/2000/svg">
+                                <path fill="#4285F4" d="M17.64 9.2c0-.63-.06-1.25-.16-1.84H9v3.47h4.84c-.21 1.12-.83 2.07-1.79 2.73v2.27h2.9c1.7-1.57 2.69-3.87 2.69-6.63z"/>
+                                <path fill="#34A853" d="M9 18c2.43 0 4.47-.8 5.96-2.18l-2.9-2.27c-.8.54-1.83.86-3.06.86-2.33 0-4.3-1.58-5-3.7H.9v2.33C2.38 16.03 5.46 18 9 18z"/>
+                                <path fill="#FBBC05" d="M4 10.71a4.99 4.99 0 010-3.42V4.96H.9a8.99 8.99 0 000 8.08L4 10.71z"/>
+                                <path fill="#EA4335" d="M9 3.58c1.32 0 2.5.45 3.44 1.35L15 2.22C13.46.79 11.43 0 9 0 5.46 0 2.38 1.97.9 4.96L4 7.29c.7-2.12 2.67-3.71 5-3.71z"/>
+                            </svg>
+                        </div>
+                        <span class="g-text">Sign in with Google</span>
+                    </button>
+                </div>
+            </div>
+          `,document.body.appendChild(e);const n=l.el("google-login-btn-checkout");n&&(n.onclick=()=>{const r=l.el("google-login-btn-sidebar");r?r.click():window.handleLogin&&window.handleLogin()})}e.classList.add("active");const t=setInterval(()=>{window.isLoggedIn&&(clearInterval(t),e==null||e.classList.remove("active"),this.startCheckout())},1e3)}}new z;const P=class P{constructor(){b(this,"baseUrl","https://api.antinna.in")}static getInstance(){return P.instance||(P.instance=new P),P.instance}async request(e,t,n=null){var o,c;const r={"Content-Type":"application/json","X-Antinna-Client-Id":localStorage.getItem("antinna_client_id")||"",Authorization:`Bearer ${window.firebaseAuthToken||((c=(o=window.firebaseAuth)==null?void 0:o.currentUser)==null?void 0:c.accessToken)||""}`},i={method:e,headers:r};n&&(i.body=JSON.stringify(n));try{const a=await fetch(`${this.baseUrl}${t}`,i);if(!a.ok)throw new Error(`API error! status: ${a.status}`);return await a.json()}catch(a){throw console.error(`ProductionApiService error [${t}]:`,a),a}}async createOrder(e){return this.request("POST","/orders",e)}async recordPayment(e){return this.request("POST","/payments",e)}async isOrderPaid(e){return this.request("GET",`/orders/${e}/status`)}async listNotifications(e=1,t=20){return this.request("GET",`/notifications?page=${e}&pageSize=${t}`)}};b(P,"instance");let R=P;const X=Object.freeze(Object.defineProperty({__proto__:null,ProductionApiService:R},Symbol.toStringTag,{value:"Module"}));return M.App=z,Object.defineProperty(M,Symbol.toStringTag,{value:"Module"}),M}({});
+
+//]]></script></body></html>

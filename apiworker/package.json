@@ -1,0 +1,20 @@
+{
+	"name": "apiworker",
+	"version": "0.0.0",
+	"private": true,
+	"scripts": {
+		"deploy": "wrangler deploy",
+		"dev": "wrangler dev --test-scheduled",
+		"start": "wrangler dev --test-scheduled",
+		"cf-typegen": "wrangler types --include-runtime false"
+	},
+	"devDependencies": {
+		"@cloudflare/workers-types": "^5.20260713.1",
+		"typescript": "^5.5.2",
+		"wrangler": "^4.110.0"
+	},
+	"dependencies": {
+		"hono": "^4.12.30",
+		"@antinna/schema-ld-types": "^1.0.0"
+	}
+}

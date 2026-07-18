@@ -1,0 +1,43 @@
+{
+	"name": "backend",
+	"type": "module",
+	"version": "1.0.0",
+	"description": "the full antinna full backend for blogger",
+	"keywords": [
+		"appscript",
+		"backend",
+		"api",
+		"map",
+		"notification",
+		"firebase"
+	],
+	"homepage": "https://github.com/mg3994/antinna_backend#readme",
+	"bugs": {
+		"url": "https://github.com/mg3994/antinna_backend/issues"
+	},
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/mg3994/antinna_backend.git"
+	},
+	"license": "MIT",
+	"author": "Manishmg3994",
+	"scripts": {
+		"cleanup": "node cleanup.js",
+		"typecheck": "tsc --noEmit",
+		"build:dev": "npm run cleanup && npm run typecheck && node build.mjs",
+		"build:prod": "npm run cleanup && npm run typecheck && node build.mjs --prod",
+		"dev": "npm run cleanup && npm run typecheck && node build.mjs --watch",
+		"push": "clasp push",
+		"redeploy": "node redeploy.mjs"
+	},
+	"devDependencies": {
+		"@google/clasp": "^3.3.0",
+		"@types/google-apps-script": "^1.0.83",
+		"esbuild": "^0.28.1",
+		"glob": "^13.0.6",
+		"typescript": "^7.0.0"
+	},
+	"dependencies": {
+		
+	}
+}
