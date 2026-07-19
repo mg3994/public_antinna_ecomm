@@ -12,17 +12,44 @@ export class SchemaResolver {
   /**
    * Helper to clean up / normalize a potential blog post ID.
    * Matches 15-22 digit numeric sequences typical of Blogger post IDs.
+   * Gracefully extracts "@id" fields from schema-compliant nested reference objects,
+   * handles paths and query strings, and isolates the unique leaf numeric identifier.
+   * In compliance with strict schema.org guidelines, string values are only resolved
+   * if they are defined inside an "@id" field.
    */
-  private getPostId(val: any): string | null {
+  private getPostId(val: any, isIdField: boolean = false): string | null {
     if (val === null || val === undefined) return null;
-    if (typeof val === 'string') {
-      const trimmed = val.trim();
-      if (/^\d{15,22}$/.test(trimmed)) return trimmed;
+
+    // Handle nested reference objects as per schema.org guidelines
+    if (typeof val === 'object' && val['@id'] !== undefined && val['@id'] !== null) {
+      return this.getPostId(val['@id'], true);
     }
-    if (typeof val === 'number') {
-      const str = String(val);
-      if (/^\d{15,22}$/.test(str)) return str;
+
+    // Direct strings are only resolved if they came from an "@id" field
+    if (isIdField) {
+      if (typeof val === 'string') {
+        const trimmed = val.trim();
+        // Extract numeric leaf from URLs or hash references
+        const parts = trimmed.split(/[\/#\?]/);
+        for (let i = parts.length - 1; i >= 0; i--) {
+          const segment = parts[i].trim();
+          if (/^\d{15,22}$/.test(segment)) {
+            return segment;
+          }
+        }
+        if (/^\d{15,22}$/.test(trimmed)) {
+          return trimmed;
+        }
+      }
+
+      if (typeof val === 'number') {
+        const str = String(val);
+        if (/^\d{15,22}$/.test(str)) {
+          return str;
+        }
+      }
     }
+
     return null;
   }
 
@@ -39,7 +66,7 @@ export class SchemaResolver {
     if (Array.isArray(schema)) {
       return Promise.all(schema.map(async item => {
         const pathResolving = new Set(resolving);
-        const postId = this.getPostId(item);
+        const postId = this.getPostId(item, false);
         if (postId) {
           return this.fetchAndResolve(postId, pathResolving);
         }
@@ -48,7 +75,7 @@ export class SchemaResolver {
     }
 
     // If this object itself represents a pure reference: e.g., { "@id": "8077604533075111071" }
-    const objectId = this.getPostId(schema['@id']);
+    const objectId = this.getPostId(schema['@id'], true);
     const isRootOrParent = objectId && !resolving.has(objectId);
 
     if (objectId) {
@@ -63,17 +90,17 @@ export class SchemaResolver {
     // Traverse all properties of the object
     for (const key of Object.keys(schema)) {
       const val = schema[key];
-      const postId = this.getPostId(val);
+      const postId = this.getPostId(val, false);
       const pathResolving = new Set(resolving);
 
       if (postId) {
-        // Direct primitive reference: e.g., "seller": "8077604533075111071"
+        // Direct reference to resolve
         const resolvedValue = await this.fetchAndResolve(postId, pathResolving);
         if (resolvedValue) {
           schema[key] = resolvedValue;
         }
       } else if (val && typeof val === 'object') {
-        const nestedPostId = this.getPostId(val['@id']);
+        const nestedPostId = this.getPostId(val['@id'], true);
         if (nestedPostId && Object.keys(val).length === 1) {
           // Object reference: e.g., "seller": { "@id": "8077604533075111071" }
           const resolvedValue = await this.fetchAndResolve(nestedPostId, pathResolving);

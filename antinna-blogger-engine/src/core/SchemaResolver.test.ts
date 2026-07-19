@@ -20,11 +20,11 @@ describe('SchemaResolver', () => {
     global.fetch = vi.fn();
   });
 
-  it('should resolve a primitive string @id reference', async () => {
+  it('should resolve an object containing an @id reference', async () => {
     const parentSchema = {
       "@type": "ProductGroup",
       "name": "T-Shirt Group",
-      "hasVariant": "8077604533075111071"
+      "hasVariant": { "@id": "8077604533075111071" }
     };
 
     const mockPostJson = {
@@ -50,6 +50,19 @@ describe('SchemaResolver', () => {
       "@type": "Product",
       "name": "Blue S"
     });
+  });
+
+  it('should NOT resolve a bare primitive string as a reference ID', async () => {
+    const parentSchema = {
+      "@type": "ProductGroup",
+      "name": "T-Shirt Group",
+      "hasVariant": "8077604533075111071"
+    };
+
+    const resolved = await resolver.resolve(parentSchema);
+
+    expect(global.fetch).not.toHaveBeenCalled();
+    expect(resolved.hasVariant).toBe("8077604533075111071");
   });
 
   it('should resolve a nested object @id reference', async () => {
@@ -92,8 +105,8 @@ describe('SchemaResolver', () => {
     const parentSchema = {
       "@type": "ProductGroup",
       "hasVariant": [
-        "8077604533075111071",
-        "8077604533075111071"
+        { "@id": "8077604533075111071" },
+        { "@id": "8077604533075111071" }
       ]
     };
 
@@ -153,5 +166,34 @@ describe('SchemaResolver', () => {
     expect(resolved.related.name).toBe("Another Product");
     // Circular reference to parent (8077604533075111071) should return the unresolved @id object
     expect(resolved.related.related).toEqual({ "@id": "8077604533075111071" });
+  });
+
+  it('should resolve schema.org-compliant nested @id object arrays, hashes, and full URLs', async () => {
+    const parentSchema = {
+      "@type": "ProductGroup",
+      "hasVariant": [
+        { "@id": "8077604533075111071" },
+        { "@id": "https://mg3994.blogspot.com/feeds/posts/default/8077604533075111072" }
+      ]
+    };
+
+    mockBloggerService.extractSchemaFromEntry
+      .mockReturnValueOnce({ "@type": "Product", "name": "Variant 1" })
+      .mockReturnValueOnce({ "@type": "Product", "name": "Variant 2" });
+
+    (global.fetch as any).mockResolvedValue({
+      ok: true,
+      json: async () => ({
+        entry: { content: { $t: '{}' } }
+      }),
+    });
+
+    const resolved = await resolver.resolve(parentSchema);
+
+    expect(global.fetch).toHaveBeenCalledWith('/feeds/posts/default/8077604533075111071?alt=json');
+    expect(global.fetch).toHaveBeenCalledWith('/feeds/posts/default/8077604533075111072?alt=json');
+
+    expect(resolved.hasVariant[0]).toEqual({ "@type": "Product", "name": "Variant 1" });
+    expect(resolved.hasVariant[1]).toEqual({ "@type": "Product", "name": "Variant 2" });
   });
 });
