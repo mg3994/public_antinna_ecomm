@@ -277,7 +277,7 @@ export class App {
     try {
       const rawBody = UIManager.el("post-body-raw");
       if (rawBody) {
-        let data = SchemaExtractor.extractJsonLd<any>(rawBody.textContent || "");
+        let data = SchemaExtractor.extractJsonLd<any>(rawBody.innerHTML || rawBody.textContent || "");
         if (data) {
           data = await this.SchemaResolver.resolve(data);
           this.state.product = data;
@@ -318,7 +318,7 @@ export class App {
           });
           const data = entry
             ? this.BloggerDataService.extractSchemaFromEntry(entry)
-            : SchemaExtractor.extractJsonLd<any>(card.querySelector(".grid-data")?.textContent || "");
+            : SchemaExtractor.extractJsonLd<any>(card.querySelector(".grid-data")?.innerHTML || card.querySelector(".grid-data")?.textContent || "");
 
           if (data) {
             this.renderGridCard(card, data);

@@ -42,7 +42,8 @@ jobs:
         node -e '
         const fs = require("fs");
         const jsCode = fs.readFileSync("antinna-blogger-engine/dist/antinna-engine.iife.js", "utf8");
-        const dartCode = `import '\''package:blogger_theme/blogger_theme.dart'\'';\n\nfinal antinna_engine_script = Script(\n  type: '\''text/javascript'\'',\n  contentInCDATA: true,\n  content: r\"\"\"` + jsCode + `\"\"\",\n);\n`;
+        const jsCodeClean = jsCode.replace(/\"\"\"/g, "\\\"\\\"\\\"");
+        const dartCode = `import '\''package:blogger_theme/blogger_theme.dart'\'';\n\nfinal antinna_engine_script = Script(\n  type: '\''module'\'',\n  contentInCDATA: true,\n  content: r\"\"\"` + jsCodeClean + `\"\"\",\n);\n`;
         fs.writeFileSync("blogger_theme/bin/body/scripts/antinna_engine.dart", dartCode, "utf8");
         console.log("Successfully synchronized JS engine with Dart script!");
         '
