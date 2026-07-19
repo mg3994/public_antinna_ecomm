@@ -1,5 +1,4 @@
 import 'package:blogger_theme/blogger_theme.dart';
-import 'categories_widget.dart';
 import 'blog_posts_widget.dart';
 
 final scrollable_main_content = Main(
@@ -10,7 +9,6 @@ final scrollable_main_content = Main(
       id: 'main-feed-stream',
       showaddelement: true,
       children: [
-        categories_widget,
         blog_posts_widget,
       ],
     ),

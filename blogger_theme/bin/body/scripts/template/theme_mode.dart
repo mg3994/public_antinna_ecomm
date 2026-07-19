@@ -125,6 +125,7 @@ final theme_mode_sync_script = Script(
             // 3. Mobile Header Hide/Show on Scroll inside scrollable-main-content
             const scrollLayer = document.querySelector('.scrollable-main-content');
             const headerEl = document.querySelector('.top-navbar-header');
+            const catSectionEl = document.querySelector('.category-section-wrapper');
 
             if (scrollLayer && headerEl) {
                 let lastScrollTop = 0;
@@ -140,12 +141,14 @@ final theme_mode_sync_script = Script(
                         }
 
                         if (scrollTop > lastScrollTop && scrollTop > 64) {
-                            // Scrolling Down - hide header
+                            // Scrolling Down - hide header, slide category bar up
                             headerEl.classList.add('header-hidden');
+                            if (catSectionEl) catSectionEl.classList.add('header-hidden');
                             scrollLayer.classList.add('header-hidden-padding');
                         } else {
-                            // Scrolling Up - show header
+                            // Scrolling Up - show header, slide category bar down
                             headerEl.classList.remove('header-hidden');
+                            if (catSectionEl) catSectionEl.classList.remove('header-hidden');
                             scrollLayer.classList.remove('header-hidden-padding');
                         }
                         lastScrollTop = scrollTop;

@@ -249,10 +249,10 @@ html.dark .avatar-footer-row { background-color: rgba(0, 0, 0, 0.2); }
     background-color: var(--bg-app);
     border-bottom: 1px solid var(--border-ui); 
     padding: 0 1.5rem; 
-    display: flex;
+    display: grid;
+    grid-template-columns: 1fr auto 1fr;
     align-items: center; 
-    justify-content: space-between;
-    gap: 1.5rem;
+    gap: 1rem;
 }
 .header-left, .header-right { display: flex; align-items: center; height: 100%; }
 
@@ -262,14 +262,11 @@ html.dark .avatar-footer-row { background-color: rgba(0, 0, 0, 0.2); }
 }
 
 .header-center-search { 
-    flex: 1;
-    max-width: 100%;
-    width: 100%;
     display: flex;
     align-items: center;
     justify-content: center;
 }
-.search-container { position: relative; width: 100%; max-width: 100%; }
+.search-container { position: relative; width: 100%; max-width: 20rem; }
 .search-form {
     position: relative;
     width: 100%;
@@ -1005,11 +1002,11 @@ html.dark .search-divider { background: #334155; }
       transform: translateY(-100%) !important;
   }
   .scrollable-main-content {
-      padding-top: calc(var(--header-height) + 1.5rem) !important;
+      padding-top: calc(var(--header-height) + 58px + 1rem) !important;
       transition: padding-top 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
   }
   .scrollable-main-content.header-hidden-padding {
-      padding-top: 1.5rem !important;
+      padding-top: calc(58px + 1rem) !important;
   }
   .top-navbar-header .header-left {
       display: none !important; /* Avoid hamburger menu completely inside header on mobile */
@@ -1032,34 +1029,39 @@ html.dark .search-divider { background: #334155; }
   .search-input-v2 { padding: 8px 0; }
 }
 
+/* Category Section Wrapper (statically positioned on desktop, fixed on mobile) */
+.category-section-wrapper {
+    background: var(--bg-app);
+    border-bottom: 1px solid var(--border-ui);
+    z-index: 98;
+}
+
+@media (max-width: 992px) {
+    .category-section-wrapper {
+        position: fixed !important;
+        top: var(--header-height) !important;
+        left: 0 !important;
+        width: 100% !important;
+        z-index: 98 !important;
+        transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
+    }
+    .category-section-wrapper.header-hidden {
+        transform: translateY(-64px) !important; /* slides up perfectly to top: 0! */
+    }
+}
+
 /* Category Scrolling Label Bar (Sticky TabBar behavior) */
 .cat-bar {
     background: var(--bg-app);
-    border-bottom: 1px solid var(--border-ui);
     padding: 10px 0;
     overflow-x: auto;
     white-space: nowrap;
     scrollbar-width: none;
-    margin-bottom: 20px;
-    position: sticky !important;
-    top: 0 !important;
-    z-index: 98 !important;
-    box-shadow: 0 4px 6px -1px rgba(0,0,0,0.02);
-    transition: top 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
 }
 .cat-bar::-webkit-scrollbar { display: none; }
 .cat-inner { max-width: 1100px; margin: 0 auto; padding: 0 10px; display: flex; gap: 15px; }
 .cat-link { text-decoration: none; color: var(--text-muted); font-size: 0.85rem; font-weight: 600; padding: 6px 15px; border-radius: 20px; background: var(--bg-surface); transition: all 0.2s; }
 .cat-link:hover, .cat-link.active { background: var(--color-accent); color: #fff; }
-
-@media (max-width: 992px) {
-    .cat-bar {
-        top: var(--header-height) !important; /* Fixed below the sticky mobile header */
-    }
-    .header-hidden-padding .cat-bar {
-        top: 0 !important; /* Slides up smoothly to be fixed at the very top of screen when header hidden */
-    }
-}
 
 /* Grid layout and standard card elements */
 .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 25px; margin-top: 20px; }
@@ -1280,8 +1282,7 @@ html.dark .carousel-btn { background: #334155; color: #fff; }
 .mobile-menu-fab {
     display: none;
 }
-@media (max-width: 768px) {
-    /* Only display the bottom floating menu on small mobile screens where the header hamburger is hidden */
+@media (max-width: 992px) {
     .mobile-menu-fab {
         display: flex !important;
         position: fixed !important;
