@@ -1,0 +1,68 @@
+name: Build and Release
+
+on:
+  push:
+    branches:
+      - '**'
+  pull_request:
+    branches:
+      - '**'
+
+permissions:
+  contents: write
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v3
+
+    - name: Use Node.js
+      uses: actions/setup-node@v3
+      with:
+        node-version: 'latest'
+        cache: 'npm'
+        cache-dependency-path: antinna-blogger-engine/package-lock.json
+
+    - name: Install dependencies
+      working-directory: antinna-blogger-engine
+      run: npm install
+
+    - name: Run tests
+      working-directory: antinna-blogger-engine
+      run: npx vitest run src/core/SchemaResolver.test.ts
+
+    - name: Build project
+      working-directory: antinna-blogger-engine
+      run: npm run build
+
+    - name: Synchronize JS Engine to Dart Script
+      run: |
+        node -e '
+        const fs = require("fs");
+        const jsCode = fs.readFileSync("antinna-blogger-engine/dist/antinna-engine.iife.js", "utf8");
+        const dartCode = `import '\''package:blogger_theme/blogger_theme.dart'\'';\n\nfinal antinna_engine_script = Script(\n  type: '\''text/javascript'\'',\n  contentInCDATA: true,\n  content: r\"\"\"` + jsCode + `\"\"\",\n);\n`;
+        fs.writeFileSync("blogger_theme/bin/body/scripts/antinna_engine.dart", dartCode, "utf8");
+        console.log("Successfully synchronized JS engine with Dart script!");
+        '
+
+    - name: Set up Dart SDK
+      uses: dart-lang/setup-dart@v1
+
+    - name: Get Dart dependencies
+      working-directory: blogger_theme
+      run: dart pub get
+
+    - name: Compile Blogger XML theme
+      working-directory: blogger_theme
+      run: dart bin/main.dart --generate-only
+
+    - name: Push into Releases Tab
+      uses: ncipollo/release-action@v1
+      with:
+        artifacts: "blogger_theme/build/blogger/theme.xml"
+        tag: "v${{ github.run_number }}"
+        name: "Release v${{ github.run_number }}"
+        allowUpdates: true
+        token: ${{ secrets.GITHUB_TOKEN }}
