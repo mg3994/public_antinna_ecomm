@@ -378,7 +378,11 @@ final blog_posts_widget = BWidget(
                           ],
                         ),
                         Div(
-                          attributes: {'class': 'hidden', 'id': 'post-body-raw'},
+                          attributes: {
+                            'class': 'hidden',
+                            'id': 'post-body-raw',
+                            'style': 'display: none !important;'
+                          },
                           children: [BData(value: 'post.body')],
                         ),
                       ],
@@ -441,7 +445,10 @@ final blog_posts_widget = BWidget(
               ],
             ),
             Div(
-              attributes: {'class': 'hidden grid-data'},
+              attributes: {
+                'class': 'hidden grid-data',
+                'style': 'display: none !important;'
+              },
               children: [BData(value: 'post.body')],
             ),
           ],
