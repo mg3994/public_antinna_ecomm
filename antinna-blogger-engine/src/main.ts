@@ -136,7 +136,7 @@ export class App {
   }
 
   private init(): void {
-    document.addEventListener("DOMContentLoaded", () => {
+    const runInit = () => {
       this.LocationRenderer.init();
       this.CartRenderer.renderFab();
       this.setupEventListeners();
@@ -146,7 +146,13 @@ export class App {
       this.highlightActiveLabels();
       this.initSearchInput();
       this.SearchAutocompleteRenderer = new SearchAutocompleteRenderer("search-q", this.BloggerDataService);
-    });
+    };
+
+    if (document.readyState === "complete" || document.readyState === "interactive") {
+      runInit();
+    } else {
+      document.addEventListener("DOMContentLoaded", runInit);
+    }
   }
 
   private initSearchInput(): void {
