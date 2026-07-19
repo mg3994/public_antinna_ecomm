@@ -20,6 +20,15 @@ class BloggerBody implements Component {
       cart_fab_container,
       loc_modal_backdrop,
 
+      // Floating Hamburger Menu FAB for Mobile
+      Button(
+        attributes: {
+          'class': 'mobile-menu-fab',
+          'onclick': 'toggleSidebarDrawer()',
+        },
+        children: [Text('☰')],
+      ),
+
       //js scripts
       theme_mode_sync_script,
       firebase_and_toast,

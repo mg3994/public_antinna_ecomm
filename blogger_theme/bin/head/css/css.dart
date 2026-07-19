@@ -992,11 +992,13 @@ html.dark .search-divider { background: #334155; }
       padding-top: 10px !important;
       padding-bottom: 10px !important;
   }
-  .header-left {
-      display: flex !important;
+  .top-navbar-header .header-left {
+      display: none !important; /* Avoid hamburger menu completely inside header on mobile */
   }
-  .header-center-search {
+  .top-navbar-header .header-center-search {
       flex: 1 !important;
+      width: 100% !important;
+      max-width: 100% !important;
   }
   .search-form-v2 { flex-direction: column; align-items: stretch; border-radius: 15px; gap: 0; padding: 5px; }
   .search-divider { display: none; }
@@ -1091,6 +1093,21 @@ html.dark .carousel-btn { background: #334155; color: #fff; }
 .pin-field { display: flex; gap: 10px; }
 .pin-field input { flex: 1; padding: 12px 15px; border-radius: 10px; border: 1px solid var(--border-ui); outline: none; font-size: 1rem; font-weight: 700; background: transparent; color: inherit; }
 .pin-field button { padding: 0 20px; border-radius: 10px; border: none; background: var(--color-accent); color: #fff; font-weight: 700; cursor: pointer; }
+
+@media (max-width: 480px) {
+    .pin-field {
+        flex-direction: column !important;
+        align-items: stretch !important;
+        gap: 8px !important;
+    }
+    .pin-field input {
+        width: 100% !important;
+    }
+    .pin-field button {
+        padding: 12px !important;
+        width: 100% !important;
+    }
+}
 
 /* Country Dropdown Selector and list */
 #modal-country-trigger:hover {
@@ -1212,5 +1229,31 @@ html.dark .carousel-btn { background: #334155; color: #fff; }
     border-top: 1px solid var(--border-ui);
     background: var(--bg-app);
     flex-shrink: 0;
+}
+
+/* Floating Hamburger Menu FAB for Mobile */
+.mobile-menu-fab {
+    display: none;
+}
+@media (max-width: 992px) {
+    .mobile-menu-fab {
+        display: flex !important;
+        position: fixed !important;
+        bottom: calc(84px + env(safe-area-inset-bottom, 0px)) !important;
+        left: 20px !important;
+        width: 48px;
+        height: 48px;
+        background: var(--bg-panel);
+        color: #fff;
+        border: none;
+        border-radius: 50%;
+        align-items: center;
+        justify-content: center;
+        font-size: 1.4rem;
+        cursor: pointer;
+        z-index: 1000 !important;
+        box-shadow: 0 4px 12px rgba(0,0,0,0.25);
+        transition: transform 0.3s;
+    }
 }
 ''', variables: bskin_variables);
