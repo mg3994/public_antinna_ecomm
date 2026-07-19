@@ -564,7 +564,7 @@ final blog_posts_widget = BWidget(
             BIf(
               cond: 'data:this.messages.blogComment != ""',
               children: [
-                P(children: [BData(value: 'data:this.messages.blogComment')]),
+                P(children: [BData(value: 'this.messages.blogComment')]),
               ],
             ),
             BInclude(name: 'commentFormIframeSrc', data: 'post'),
@@ -624,13 +624,13 @@ final blog_posts_widget = BWidget(
                             BParam(exprValue: 'data:comment.authorUrl', value: 'authorUrl'),
                           ],
                         ),
-                      ],
-                    ),
-                    BElse(),
-                    BMessage(
-                      name: 'messages.authorSaid',
-                      children: [
-                        BParam(exprValue: 'data:comment.author', value: 'authorName'),
+                        BElse(),
+                        BMessage(
+                          name: 'messages.authorSaid',
+                          children: [
+                            BParam(exprValue: 'data:comment.author', value: 'authorName'),
+                          ],
+                        ),
                       ],
                     ),
                   ],
@@ -846,7 +846,7 @@ final blog_posts_widget = BWidget(
             BIf(
               cond: 'data:this.messages.blogComment != ""',
               children: [
-                P(children: [BData(value: 'data:this.messages.blogComment')]),
+                P(children: [BData(value: 'this.messages.blogComment')]),
               ],
             ),
             BInclude(name: 'commentFormIframeSrc', data: 'post'),
