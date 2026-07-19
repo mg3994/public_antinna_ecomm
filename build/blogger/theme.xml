@@ -1170,6 +1170,10 @@ html.dark .search-divider { background: #334155; }
       width: 100% !important;
       max-width: 100% !important;
   }
+  .search-container {
+      max-width: 100% !important;
+      width: 100% !important;
+  }
   .search-form-v2 { flex-direction: column; align-items: stretch; border-radius: 15px; gap: 0; padding: 5px; }
   .search-divider { display: none; }
   .search-input-group { padding: 10px 15px; border-bottom: 1px solid #eee; }
@@ -1179,12 +1183,34 @@ html.dark .search-divider { background: #334155; }
   .search-input-v2 { padding: 8px 0; }
 }
 
-/* Category Scrolling Label Bar */
-.cat-bar { background: var(--bg-app); border-bottom: 1px solid var(--border-ui); padding: 10px 0; overflow-x: auto; white-space: nowrap; scrollbar-width: none; margin-bottom: 20px; }
+/* Category Scrolling Label Bar (Sticky TabBar behavior) */
+.cat-bar {
+    background: var(--bg-app);
+    border-bottom: 1px solid var(--border-ui);
+    padding: 10px 0;
+    overflow-x: auto;
+    white-space: nowrap;
+    scrollbar-width: none;
+    margin-bottom: 20px;
+    position: sticky !important;
+    top: 0 !important;
+    z-index: 98 !important;
+    box-shadow: 0 4px 6px -1px rgba(0,0,0,0.02);
+    transition: top 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
+}
 .cat-bar::-webkit-scrollbar { display: none; }
 .cat-inner { max-width: 1100px; margin: 0 auto; padding: 0 10px; display: flex; gap: 15px; }
 .cat-link { text-decoration: none; color: var(--text-muted); font-size: 0.85rem; font-weight: 600; padding: 6px 15px; border-radius: 20px; background: var(--bg-surface); transition: all 0.2s; }
 .cat-link:hover, .cat-link.active { background: var(--color-accent); color: #fff; }
+
+@media (max-width: 992px) {
+    .cat-bar {
+        top: var(--header-height) !important; /* Fixed below the sticky mobile header */
+    }
+    .header-hidden-padding .cat-bar {
+        top: 0 !important; /* Slides up smoothly to be fixed at the very top of screen when header hidden */
+    }
+}
 
 /* Grid layout and standard card elements */
 .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 25px; margin-top: 20px; }
