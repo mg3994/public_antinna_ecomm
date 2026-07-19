@@ -512,15 +512,11 @@ final firebase_and_toast = Script(
                 
                 window.showToast("Phone number association removed successfully.", "success");
                 
-                // Instantly clean up UI variants without breaking modal visibility context
-                if (modalPhoneContainer) modalPhoneContainer.classList.add('ui-hidden');
-                if (modalUnlinkContainer) {
-                  modalUnlinkContainer.classList.add('ui-hidden');
-                  modalUnlinkContainer.innerHTML = '';
-                }
-                
                 // Update global tracking context indicators
                 window.hasPhoneLinked = false;
+
+                // Re-render auth state to instantly show the linking form again
+                renderAuthState(auth.currentUser);
 
               } catch (err) {
                 console.error("Provider mutation failed:", err);
