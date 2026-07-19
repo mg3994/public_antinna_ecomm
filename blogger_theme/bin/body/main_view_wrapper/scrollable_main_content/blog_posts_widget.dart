@@ -584,7 +584,7 @@ final blog_posts_widget = BWidget(
             BData(value: 'post.cmtfpIframe'),
             Script(
               type: 'text/javascript',
-              content: "BLOG_CMT_createIframe('\" + data:post.appRpcRelayPath + \"');",
+              content: "BLOG_CMT_createIframe('<data:post.appRpcRelayPath/>');",
             ),
           ],
         ),
@@ -866,7 +866,7 @@ final blog_posts_widget = BWidget(
             BData(value: 'post.cmtfpIframe'),
             Script(
               type: 'text/javascript',
-              content: "BLOG_CMT_createIframe('\" + data:post.appRpcRelayPath + \"');",
+              content: "BLOG_CMT_createIframe('<data:post.appRpcRelayPath/>');",
             ),
           ],
         ),
@@ -887,7 +887,7 @@ final blog_posts_widget = BWidget(
         BTemplateScript(name: 'threaded_comments', version: '1.0.0'),
         Script(
           type: 'text/javascript',
-          content: "blogger.widgets.blog.initThreadedComments(\" + data:post.commentJso + \", \" + data:post.commentMsgs + \", \" + data:post.commentConfig + \");",
+          content: "blogger.widgets.blog.initThreadedComments(<data:post.commentJso/>, <data:post.commentMsgs/>, <data:post.commentConfig/>);",
         ),
       ],
     ),
