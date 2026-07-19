@@ -1431,7 +1431,8 @@ html.dark .carousel-btn { background: #334155; color: #fff; }
 .mobile-menu-fab {
     display: none;
 }
-@media (max-width: 992px) {
+@media (max-width: 768px) {
+    /* Only display the bottom floating menu on small mobile screens where the header hamburger is hidden */
     .mobile-menu-fab {
         display: flex !important;
         position: fixed !important;
