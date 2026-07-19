@@ -121,6 +121,37 @@ final theme_mode_sync_script = Script(
                     }
                 }
             }
+
+            // 3. Mobile Header Hide/Show on Scroll inside scrollable-main-content
+            const scrollLayer = document.querySelector('.scrollable-main-content');
+            const headerEl = document.querySelector('.top-navbar-header');
+
+            if (scrollLayer && headerEl) {
+                let lastScrollTop = 0;
+                const scrollThreshold = 10; // Scroll threshold to trigger hide/show
+
+                scrollLayer.addEventListener('scroll', () => {
+                    // Check if width is mobile (<= 992px)
+                    if (window.innerWidth <= 992) {
+                        const scrollTop = scrollLayer.scrollTop;
+
+                        if (Math.abs(lastScrollTop - scrollTop) <= scrollThreshold) {
+                            return;
+                        }
+
+                        if (scrollTop > lastScrollTop && scrollTop > 64) {
+                            // Scrolling Down - hide header
+                            headerEl.classList.add('header-hidden');
+                            scrollLayer.classList.add('header-hidden-padding');
+                        } else {
+                            // Scrolling Up - show header
+                            headerEl.classList.remove('header-hidden');
+                            scrollLayer.classList.remove('header-hidden-padding');
+                        }
+                        lastScrollTop = scrollTop;
+                    }
+                });
+            }
         });
       ''',
 );

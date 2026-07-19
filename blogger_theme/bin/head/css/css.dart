@@ -249,10 +249,10 @@ html.dark .avatar-footer-row { background-color: rgba(0, 0, 0, 0.2); }
     background-color: var(--bg-app);
     border-bottom: 1px solid var(--border-ui); 
     padding: 0 1.5rem; 
-    display: grid; 
-    grid-template-columns: 1fr auto 1fr;
+    display: flex;
     align-items: center; 
-    gap: 1rem;
+    justify-content: space-between;
+    gap: 1.5rem;
 }
 .header-left, .header-right { display: flex; align-items: center; height: 100%; }
 
@@ -262,11 +262,14 @@ html.dark .avatar-footer-row { background-color: rgba(0, 0, 0, 0.2); }
 }
 
 .header-center-search { 
-display: flex; 
-align-items: center; 
-justify-content: center; 
+    flex: 1;
+    max-width: 100%;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
-.search-container { position: relative; width: 100%; max-width: 20rem; }
+.search-container { position: relative; width: 100%; max-width: 100%; }
 .search-form {
     position: relative;
     width: 100%;
@@ -981,7 +984,7 @@ html.dark .search-divider { background: #334155; }
 .search-btn-v2:hover { background: #1d4ed8; transform: translateY(-1px); }
 
 /* Responsive Header Logic */
-@media (max-width: 768px) {
+@media (max-width: 992px) {
   .top-navbar-header {
       display: flex !important;
       padding: 0 10px !important;
@@ -991,6 +994,22 @@ html.dark .search-divider { background: #334155; }
       min-height: auto !important;
       padding-top: 10px !important;
       padding-bottom: 10px !important;
+      position: absolute !important;
+      top: 0 !important;
+      left: 0 !important;
+      width: 100% !important;
+      z-index: 99 !important;
+      transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
+  }
+  .top-navbar-header.header-hidden {
+      transform: translateY(-100%) !important;
+  }
+  .scrollable-main-content {
+      padding-top: calc(var(--header-height) + 1.5rem) !important;
+      transition: padding-top 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
+  }
+  .scrollable-main-content.header-hidden-padding {
+      padding-top: 1.5rem !important;
   }
   .top-navbar-header .header-left {
       display: none !important; /* Avoid hamburger menu completely inside header on mobile */
@@ -1255,5 +1274,13 @@ html.dark .carousel-btn { background: #334155; color: #fff; }
         box-shadow: 0 4px 12px rgba(0,0,0,0.25);
         transition: transform 0.3s;
     }
+}
+
+/* Hide Floating Hamburger menu when drawer backdrop is active */
+#sidebar-backdrop.backdrop-active ~ .mobile-menu-fab {
+    display: none !important;
+}
+#sidebar-backdrop.backdrop-active ~ #cart-fab-container .cart-fab {
+    display: none !important;
 }
 ''', variables: bskin_variables);
