@@ -539,21 +539,23 @@ final firebase_and_toast = Script(
             <div class="link-action-row" style="margin-top: 12px; padding-top: 12px; border-top: 1px dashed var(--border-ui); display: flex; flex-direction: column; gap: 8px;">
               <span style="font-size: 0.85rem; color: var(--text-muted); font-weight: 600;">Link Phone Number</span>
 
-              <div id="modal-link-phone-input-group" style="display: flex; gap: 8px; align-items: center; border: 1px solid var(--border-ui); border-radius: 8px; background: var(--bg-surface); padding: 2px;">
-                <div id="modal-country-trigger" style="position: relative; display: flex; align-items: center; gap: 6px; padding: 8px 12px; cursor: pointer; border-right: 1px solid var(--border-ui); font-weight: 700; font-size: 0.85rem; color: var(--text-main);">
-                    <span id="modal-selected-flag">🇮🇳</span>
-                    <span id="modal-selected-code">+91</span>
-                    <span style="font-size: 0.6rem; opacity: 0.7;">▼</span>
-                    <div id="modal-country-list-dropdown" class="ui-hidden" style="position: absolute; top: calc(100% + 8px); left: 0; width: 200px; background: var(--card); border: 1px solid var(--border-ui); border-radius: 10px; box-shadow: 0 10px 25px rgba(0,0,0,0.15); z-index: 10000; max-height: 200px; overflow-y: auto;">
-                        <div class="modal-country-item" data-code="+91" data-flag="🇮🇳" style="display: flex; align-items: center; gap: 8px; padding: 8px 12px; font-size: 0.8rem; cursor: pointer;"><span>🇮🇳</span><span>India (+91)</span></div>
-                        <div class="modal-country-item" data-code="+1" data-flag="🇺🇸" style="display: flex; align-items: center; gap: 8px; padding: 8px 12px; font-size: 0.8rem; cursor: pointer;"><span>🇺🇸</span><span>USA (+1)</span></div>
-                        <div class="modal-country-item" data-code="+44" data-flag="🇬🇧" style="display: flex; align-items: center; gap: 8px; padding: 8px 12px; font-size: 0.8rem; cursor: pointer;"><span>🇬🇧</span><span>UK (+44)</span></div>
-                        <div class="modal-country-item" data-code="+971" data-flag="🇦🇪" style="display: flex; align-items: center; gap: 8px; padding: 8px 12px; font-size: 0.8rem; cursor: pointer;"><span>🇦🇪</span><span>UAE (+971)</span></div>
-                        <div class="modal-country-item" data-code="+65" data-flag="🇸🇬" style="display: flex; align-items: center; gap: 8px; padding: 8px 12px; font-size: 0.8rem; cursor: pointer;"><span>🇸🇬</span><span>Singapore (+65)</span></div>
-                    </div>
+              <div id="modal-link-phone-input-group" style="display: flex; flex-wrap: wrap; gap: 8px; align-items: center; border: 1px solid var(--border-ui); border-radius: 12px; background: var(--bg-surface); padding: 4px;">
+                <div style="display: flex; flex: 2; min-width: 160px; align-items: center;">
+                  <div id="modal-country-trigger" style="position: relative; display: flex; align-items: center; gap: 6px; padding: 8px 12px; cursor: pointer; border-right: 1px solid var(--border-ui); font-weight: 700; font-size: 0.85rem; color: var(--text-main);">
+                      <span id="modal-selected-flag">🇮🇳</span>
+                      <span id="modal-selected-code">+91</span>
+                      <span style="font-size: 0.6rem; opacity: 0.7;">▼</span>
+                      <div id="modal-country-list-dropdown" class="ui-hidden" style="position: absolute; top: calc(100% + 8px); left: 0; width: 200px; background: var(--card); border: 1px solid var(--border-ui); border-radius: 10px; box-shadow: 0 10px 25px rgba(0,0,0,0.15); z-index: 10000; max-height: 200px; overflow-y: auto;">
+                          <div class="modal-country-item" data-code="+91" data-flag="🇮🇳" style="display: flex; align-items: center; gap: 8px; padding: 8px 12px; font-size: 0.8rem; cursor: pointer;"><span>🇮🇳</span><span>India (+91)</span></div>
+                          <div class="modal-country-item" data-code="+1" data-flag="🇺🇸" style="display: flex; align-items: center; gap: 8px; padding: 8px 12px; font-size: 0.8rem; cursor: pointer;"><span>🇺🇸</span><span>USA (+1)</span></div>
+                          <div class="modal-country-item" data-code="+44" data-flag="🇬🇧" style="display: flex; align-items: center; gap: 8px; padding: 8px 12px; font-size: 0.8rem; cursor: pointer;"><span>🇬🇧</span><span>UK (+44)</span></div>
+                          <div class="modal-country-item" data-code="+971" data-flag="🇦🇪" style="display: flex; align-items: center; gap: 8px; padding: 8px 12px; font-size: 0.8rem; cursor: pointer;"><span>🇦🇪</span><span>UAE (+971)</span></div>
+                          <div class="modal-country-item" data-code="+65" data-flag="🇸🇬" style="display: flex; align-items: center; gap: 8px; padding: 8px 12px; font-size: 0.8rem; cursor: pointer;"><span>🇸🇬</span><span>Singapore (+65)</span></div>
+                      </div>
+                  </div>
+                  <input id="modal-phone-input-field" type="tel" placeholder="9876543210" style="flex: 1; min-width: 0; border: none; background: transparent; outline: none; padding: 8px; font-size: 0.85rem; color: var(--text-main);" />
                 </div>
-                <input id="modal-phone-input-field" type="tel" placeholder="9876543210" style="flex: 1; border: none; background: transparent; outline: none; padding: 8px; font-size: 0.85rem; color: var(--text-main);" />
-                <button id="modal-send-otp-btn" style="background: var(--color-accent); color: white; border: none; padding: 8px 12px; border-radius: 6px; font-size: 0.8rem; cursor: pointer; font-weight: 600; margin-right: 4px;">
+                <button id="modal-send-otp-btn" style="background: var(--color-accent); color: white; border: none; padding: 10px 16px; border-radius: 8px; font-size: 0.8rem; cursor: pointer; font-weight: 700; white-space: nowrap; flex: 1; min-width: 100px;">
                   Send OTP
                 </button>
               </div>

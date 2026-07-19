@@ -982,21 +982,25 @@ html.dark .search-divider { background: #334155; }
 
 /* Responsive Header Logic */
 @media (max-width: 992px) {
+  :root {
+      --header-height: 164px !important;
+  }
+
   .top-navbar-header {
       display: flex !important;
-      padding: 0 10px !important;
-      gap: 8px !important;
-      justify-content: space-between !important;
-      height: auto !important;
-      min-height: auto !important;
-      padding-top: 10px !important;
-      padding-bottom: 10px !important;
+      flex-direction: column !important;
+      justify-content: center !important;
+      align-items: stretch !important;
+      height: var(--header-height) !important;
+      min-height: var(--header-height) !important;
+      padding: 12px 16px !important;
       position: absolute !important;
       top: 0 !important;
       left: 0 !important;
       width: 100% !important;
       z-index: 99 !important;
       transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
+      box-sizing: border-box !important;
   }
   .top-navbar-header.header-hidden {
       transform: translateY(-100%) !important;
@@ -1012,7 +1016,7 @@ html.dark .search-divider { background: #334155; }
       display: none !important; /* Avoid hamburger menu completely inside header on mobile */
   }
   .top-navbar-header .header-center-search {
-      flex: 1 !important;
+      flex: unset !important;
       width: 100% !important;
       max-width: 100% !important;
   }
@@ -1020,13 +1024,30 @@ html.dark .search-divider { background: #334155; }
       max-width: 100% !important;
       width: 100% !important;
   }
-  .search-form-v2 { flex-direction: column; align-items: stretch; border-radius: 15px; gap: 0; padding: 5px; }
-  .search-divider { display: none; }
-  .search-input-group { padding: 10px 15px; border-bottom: 1px solid #eee; }
-  html.dark .search-input-group { border-color: #334155; }
-  .search-input-group:last-of-type { border-bottom: none; }
-  .search-btn-v2 { margin: 5px 0 0; width: 100%; padding: 15px; }
-  .search-input-v2 { padding: 8px 0; }
+  .search-form-v2 {
+      display: flex !important;
+      flex-direction: column !important;
+      align-items: stretch !important;
+      width: 100% !important;
+      border-radius: 12px !important;
+      padding: 4px !important;
+      gap: 0 !important;
+  }
+  .search-divider { display: none !important; }
+  .search-input-group {
+      padding: 6px 12px !important;
+      border-bottom: 1px solid var(--border-ui) !important;
+  }
+  html.dark .search-input-group { border-color: #334155 !important; }
+  .search-input-group:last-of-type { border-bottom: none !important; }
+  .search-btn-v2 {
+      margin: 4px 0 0 0 !important;
+      width: 100% !important;
+      padding: 10px !important;
+      font-size: 0.9rem !important;
+      border-radius: 8px !important;
+  }
+  .search-input-v2 { padding: 8px 0 !important; }
 }
 
 /* Category Section Wrapper (statically positioned on desktop, fixed on mobile) */
@@ -1046,7 +1067,7 @@ html.dark .search-divider { background: #334155; }
         transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
     }
     .category-section-wrapper.header-hidden {
-        transform: translateY(-64px) !important; /* slides up perfectly to top: 0! */
+        transform: translateY(calc(var(--header-height) * -1)) !important; /* slides up perfectly to top: 0! */
     }
 }
 
@@ -1310,5 +1331,16 @@ html.dark .carousel-btn { background: #334155; color: #fff; }
 }
 #sidebar-backdrop.backdrop-active ~ #cart-fab-container .cart-fab {
     display: none !important;
+}
+
+/* Modern SVG Style Overrides for Leaflet Control Layers Toggle */
+.leaflet-control-layers-toggle, .leaflet-touch .leaflet-control-layers-toggle {
+    background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="%23475569" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 2 7 12 12 22 7 12 2"></polygon><polyline points="2 17 12 22 22 17"></polyline><polyline points="2 12 12 17 22 12"></polyline></svg>') !important;
+    background-size: 20px 20px !important;
+    background-position: center !important;
+    background-repeat: no-repeat !important;
+}
+html.dark .leaflet-control-layers-toggle, html.dark .leaflet-touch .leaflet-control-layers-toggle {
+    background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="%23f8fafc" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 2 7 12 12 22 7 12 2"></polygon><polyline points="2 17 12 22 22 17"></polyline><polyline points="2 12 12 17 22 12"></polyline></svg>') !important;
 }
 ''', variables: bskin_variables);
