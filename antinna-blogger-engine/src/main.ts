@@ -1,6 +1,5 @@
 import { AppState } from './types/app';
 import { SchemaExtractor } from './core/SchemaExtractor';
-import { SchemaResolver } from './core/SchemaResolver';
 import { CartManager } from './core/CartManager';
 import { LocationManager } from './core/LocationManager';
 import { BloggerDataService } from './infrastructure/BloggerDataService';
@@ -33,10 +32,9 @@ export class App {
   private displaySearchQuery: string = '';
   private searchKeywordsOnly: string = '';
 
-  public BloggerDataService = new BloggerDataService();
-  public SchemaResolver = new SchemaResolver(this.BloggerDataService);
   public CartManager = new CartManager();
   public LocationManager = new LocationManager();
+  public BloggerDataService = new BloggerDataService();
   public GooglePayService = new GooglePayService();
 
   public ProductRenderer = new ProductRenderer();
@@ -136,7 +134,7 @@ export class App {
   }
 
   private init(): void {
-    const runInit = () => {
+    document.addEventListener("DOMContentLoaded", () => {
       this.LocationRenderer.init();
       this.CartRenderer.renderFab();
       this.setupEventListeners();
@@ -146,13 +144,7 @@ export class App {
       this.highlightActiveLabels();
       this.initSearchInput();
       this.SearchAutocompleteRenderer = new SearchAutocompleteRenderer("search-q", this.BloggerDataService);
-    };
-
-    if (document.readyState === "complete" || document.readyState === "interactive") {
-      runInit();
-    } else {
-      document.addEventListener("DOMContentLoaded", runInit);
-    }
+    });
   }
 
   private initSearchInput(): void {
@@ -271,15 +263,12 @@ export class App {
     }
   }
 
-  private async loadProductData(): Promise<void> {
-    // Small delay to ensure any dynamic rendering is settled
-    await new Promise(resolve => setTimeout(resolve, 100));
-    try {
+  private loadProductData(): void {
+    setTimeout(() => {
       const rawBody = UIManager.el("post-body-raw");
       if (rawBody) {
-        let data = SchemaExtractor.extractJsonLd<any>(rawBody.innerHTML || rawBody.textContent || "");
+        const data = SchemaExtractor.extractJsonLd<any>(rawBody.textContent || "");
         if (data) {
-          data = await this.SchemaResolver.resolve(data);
           this.state.product = data;
           this.ProductRenderer.render(data, this.state, (attr, val) => {
             this.state.selectedVariants[attr] = val;
@@ -291,13 +280,10 @@ export class App {
           }
         }
       }
-    } catch (e) {
-      console.error("Error in loadProductData:", e);
-    } finally {
       UIManager.toggleClass("#initializing-state", "hidden", true);
       UIManager.toggleClass("#carousel-section", "hidden", false);
       UIManager.toggleClass("#details-section", "hidden", false);
-    }
+    }, 100);
   }
 
   private async loadGridData(): Promise<void> {
@@ -318,7 +304,7 @@ export class App {
           });
           const data = entry
             ? this.BloggerDataService.extractSchemaFromEntry(entry)
-            : SchemaExtractor.extractJsonLd<any>(card.querySelector(".grid-data")?.innerHTML || card.querySelector(".grid-data")?.textContent || "");
+            : SchemaExtractor.extractJsonLd<any>(card.querySelector(".grid-data")?.textContent || "");
 
           if (data) {
             this.renderGridCard(card, data);
