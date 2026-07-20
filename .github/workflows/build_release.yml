@@ -18,36 +18,6 @@ jobs:
     steps:
     - uses: actions/checkout@v3
 
-    - name: Use Node.js
-      uses: actions/setup-node@v3
-      with:
-        node-version: 'latest'
-        cache: 'npm'
-        cache-dependency-path: antinna-blogger-engine/package-lock.json
-
-    - name: Install dependencies
-      working-directory: antinna-blogger-engine
-      run: npm install
-
-    - name: Run tests
-      working-directory: antinna-blogger-engine
-      run: npx vitest run src/core/SchemaResolver.test.ts
-
-    - name: Build project
-      working-directory: antinna-blogger-engine
-      run: npm run build
-
-    - name: Synchronize JS Engine to Dart Script
-      run: |
-        node -e '
-        const fs = require("fs");
-        const jsCode = fs.readFileSync("antinna-blogger-engine/dist/antinna-engine.iife.js", "utf8");
-        const jsCodeClean = jsCode.replace(/\"\"\"/g, "\\\"\\\"\\\"");
-        const dartCode = `import '\''package:blogger_theme/blogger_theme.dart'\'';\n\nfinal antinna_engine_script = Script(\n  type: '\''module'\'',\n  contentInCDATA: true,\n  content: r\"\"\"` + jsCodeClean + `\"\"\",\n);\n`;
-        fs.writeFileSync("blogger_theme/bin/body/scripts/antinna_engine.dart", dartCode, "utf8");
-        console.log("Successfully synchronized JS engine with Dart script!");
-        '
-
     - name: Set up Dart SDK
       uses: dart-lang/setup-dart@v1
 
