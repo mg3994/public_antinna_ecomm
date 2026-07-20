@@ -6,7 +6,7 @@ final scrollable_main_content = Main(
   children: [
     BSection(
       className: 'main-feed-section',
-      id: 'main-feed-stream',
+      id: 'main-section',
       showaddelement: true,
       children: [
         blog_posts_widget,

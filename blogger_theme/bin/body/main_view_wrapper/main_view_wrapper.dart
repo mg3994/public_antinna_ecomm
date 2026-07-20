@@ -5,7 +5,7 @@ import 'scrollable_main_content/categories_widget.dart';
 
 final categories_section = BSection(
   className: 'category-section-wrapper',
-  id: 'category-section-id',
+  id: 'category-section',
   showaddelement: true,
   children: [categories_widget],
 );
