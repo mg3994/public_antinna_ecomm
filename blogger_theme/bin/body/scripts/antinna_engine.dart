@@ -3,308 +3,622 @@ import 'package:blogger_theme/blogger_theme.dart';
 final antinna_engine_script = Script(
   type: 'module',
   contentInCDATA: true,
-  content: r"""var AntinnaEngineLib=function(k){"use strict";var re=Object.defineProperty;var ie=(k,a,F)=>a in k?re(k,a,{enumerable:!0,configurable:!0,writable:!0,value:F}):k[a]=F;var v=(k,a,F)=>(ie(k,typeof a!="symbol"?a+"":a,F),F);class a{static getFirst(e){return Array.isArray(e)?e[0]:e}static getArray(e){return e==null?[]:Array.isArray(e)?e:[e]}static decodeEntities(e){if(!e)return"";const t=document.createElement("textarea");t.innerHTML=e;let n=t.value;return n.includes("&quot;")&&(t.innerHTML=n,n=t.value),n}static extractJsonLd(e){if(!e)return null;try{let t=this.decodeEntities(e);if(typeof DOMParser<"u")try{const d=new DOMParser().parseFromString(t,"text/html").querySelector('script[type="application/ld+json"]');if(d&&d.textContent){const u=this.decodeEntities(d.textContent).replace(/\/\*[\s\S]*?\*\/|([^\\:]|^)\/\/.*$/gm,"$1").trim();return JSON.parse(u)}}catch{}const n=t.match(/<script[^>]*type=["']application\/ld\+json["'][^>]*>([\s\S]*?)<\/script>/i);let r=n?n[1]:t;const o=this.decodeEntities(r).replace(/\/\*[\s\S]*?\*\/|([^\\:]|^)\/\/.*$/gm,"$1").trim();try{return JSON.parse(o)}catch{const s=o.match(/\{[\s\S]*\}/);if(s)try{return JSON.parse(s[0])}catch{}return null}}catch(t){return console.error("Failed to extract JSON-LD",t),null}}static findMatchingVariant(e,t,n=null){if(!e)return null;const r=this.getArray(e.hasVariant).length>0?this.getArray(e.hasVariant):[e];let i=r.find(o=>Object.entries(t).every(([c,s])=>String(this.getFirst(o[c]))===String(s)));return!i&&n&&(i=r.find(o=>String(this.getFirst(o[n]))===String(t[n]))),i||r[0]}static normalizeName(e){return(e||"").toLowerCase().trim().replace(/\s+/g," ")}static findMatchingServicePackage(e,t){const n=this.getArray(e==null?void 0:e.hasOfferCatalog);if(n.length===0)return null;const r=this.normalizeName(t);for(const i of n){const c=this.getArray(i.itemListElement).find(s=>{const d=s.itemOffered||s,u=this.getFirst(d.name)||this.getFirst(s.name);return this.normalizeName(u)===r});if(c)return c}return null}static findAllServices(e){const t=[],n=[e],r=new Set;for(;n.length>0;){const i=n.pop();if(!(!i||typeof i!="object"||r.has(i)))if(r.add(i),i.hasOfferCatalog&&this.getArray(i.hasOfferCatalog).forEach(c=>{const s=this.getArray(c.itemListElement);t.push(...s),n.push(c)}),i.addOn&&t.push(...this.getArray(i.addOn)),Array.isArray(i))n.push(...i);else for(const[o,c]of Object.entries(i))o!=="hasOfferCatalog"&&o!=="addOn"&&c&&typeof c=="object"&&n.push(c)}return t}static extractPrice(e){var i,o,c,s,d,u;const t=Array.isArray(e)?e[0]:e;if(!t)return{price:"0",currency:"INR"};const n=this.getFirst(t.price)||this.getFirst((o=(i=this.getArray(t.itemOffered)[0])==null?void 0:i.offers)==null?void 0:o.price)||this.getFirst((c=this.getArray(t.offers)[0])==null?void 0:c.price)||"0",r=this.getFirst(t.priceCurrency)||this.getFirst((d=(s=this.getArray(t.itemOffered)[0])==null?void 0:s.offers)==null?void 0:d.priceCurrency)||this.getFirst((u=this.getArray(t.offers)[0])==null?void 0:u.priceCurrency)||"INR";return{price:String(n),currency:String(r)}}static extractAvailability(e){var r,i,o;const t=Array.isArray(e)?e[0]:e;if(!t)return"https://schema.org/InStock";const n=this.getFirst(t.availability)||this.getFirst((i=(r=this.getArray(t.itemOffered)[0])==null?void 0:r.offers)==null?void 0:i.availability)||this.getFirst((o=this.getArray(t.offers)[0])==null?void 0:o.availability)||"https://schema.org/InStock";return(n==null?void 0:n["@id"])||String(n)}static extractEligibleQuantity(e){var o,c,s,d,u,g;const t=Array.isArray(e)?e[0]:e;if(!t)return{minValue:null,maxValue:null};const n=this.getFirst(t.eligibleQuantity)||this.getFirst((c=(o=this.getArray(t.itemOffered)[0])==null?void 0:o.offers)==null?void 0:c.eligibleQuantity)||this.getFirst((s=this.getArray(t.itemOffered)[0])==null?void 0:s.eligibleQuantity)||this.getFirst((d=this.getArray(t.offers)[0])==null?void 0:d.eligibleQuantity)||this.getFirst((g=(u=this.getArray(t.offers)[0])==null?void 0:u.itemOffered)==null?void 0:g.eligibleQuantity);if(!n)return{minValue:null,maxValue:null};const r=this.getFirst(n.minValue),i=this.getFirst(n.maxValue);return{minValue:r!=null?Number(r):null,maxValue:i!=null?Number(i):null}}static extractInventoryLevel(e){var i,o,c,s,d,u;const t=Array.isArray(e)?e[0]:e;if(!t)return null;const n=this.getFirst(t.inventoryLevel)||this.getFirst((o=(i=this.getArray(t.itemOffered)[0])==null?void 0:i.offers)==null?void 0:o.inventoryLevel)||this.getFirst((c=this.getArray(t.itemOffered)[0])==null?void 0:c.inventoryLevel)||this.getFirst((s=this.getArray(t.offers)[0])==null?void 0:s.inventoryLevel)||this.getFirst((u=(d=this.getArray(t.offers)[0])==null?void 0:d.itemOffered)==null?void 0:u.inventoryLevel);if(!n)return null;const r=typeof n=="object"?this.getFirst(n.value):n;return r!=null?Number(r):null}static extractDimensions(e){const t=Array.isArray(e)?e[0]:e;if(!t)return{weight:null,height:null,width:null,depth:null};const n=r=>r==null?null:typeof r=="object"?Number(this.getFirst(r.value))||null:Number(r)||null;return{weight:n(t.weight),height:n(t.height),width:n(t.width),depth:n(t.depth)}}static extractAdvanceBookingRequirement(e){const t=Array.isArray(e)?e[0]:e;if(!t)return null;const n=this.getFirst(t.advanceBookingRequirement);if(!n)return null;if(typeof n=="string")return n;const r=this.getFirst(n.value),i=this.getFirst(n.unitCode)||this.getFirst(n.unitText)||"";if(r===void 0)return null;let o=i;return i==="HUR"?o="Hours":i==="DAY"&&(o="Days"),`${r} ${o}`.trim()}static getCurrencySymbol(e){return{INR:"₹",USD:"$",EUR:"€",GBP:"£",JPY:"¥"}[e.toUpperCase()]||e}static extractCondition(e){var i,o,c,s,d,u;const t=Array.isArray(e)?e[0]:e;if(!t)return null;const n=this.getFirst(t.itemCondition)||this.getFirst((o=(i=this.getArray(t.itemOffered)[0])==null?void 0:i.offers)==null?void 0:o.itemCondition)||this.getFirst((c=this.getArray(t.itemOffered)[0])==null?void 0:c.itemCondition)||this.getFirst((s=this.getArray(t.offers)[0])==null?void 0:s.itemCondition)||this.getFirst((u=(d=this.getArray(t.offers)[0])==null?void 0:d.itemOffered)==null?void 0:u.itemCondition);if(!n)return null;const r=String(n).toLowerCase();return r.includes("newcondition")?"New":r.includes("refurbishedcondition")?"Refurbished":r.includes("usedcondition")?"Used":r.includes("damagedcondition")?"Damaged":r.split("/").pop()||r}static extractAreaServed(e){const t=[],n=[e],r=new Set;for(;n.length>0;){const i=n.pop();if(!i||typeof i!="object"||r.has(i))continue;r.add(i);const o=this.getArray(i.areaServed||i.eligibleRegion);o.length>0&&t.push(...o),i.itemOffered&&n.push(i.itemOffered),i.offers&&n.push(...this.getArray(i.offers)),i.hasVariant&&n.push(...this.getArray(i.hasVariant)),i.hasOfferCatalog&&n.push(...this.getArray(i.hasOfferCatalog)),i.itemListElement&&n.push(...this.getArray(i.itemListElement))}return t}static isBusinessOpen(e){const t=Array.isArray(e)?e[0]:e;if(!t)return{isOpen:!0,message:null};const n=new Date,r=n.toISOString().split("T")[0],i=n.getHours().toString().padStart(2,"0")+":"+n.getMinutes().toString().padStart(2,"0"),c=["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"][n.getDay()],s=this.getArray(t.specialOpeningHoursSpecification);for(const p of s){const y=this.getFirst(p.validFrom),f=this.getFirst(p.validThrough);if(y&&f&&r>=String(y)&&r<=String(f)){const b=String(this.getFirst(p.opens)||"00:00"),x=String(this.getFirst(p.closes)||"00:00");if(b==="00:00"&&x==="00:00")return{isOpen:!1,message:"Closed for Holiday/Event"};const w=i>=b&&i<=x;return{isOpen:w,message:w?null:`Closed (Special Hours: ${b}-${x})`}}}const d=this.getArray(t.openingHoursSpecification);if(d.length===0)return{isOpen:!0,message:null};const u=d.find(p=>this.getArray(p.dayOfWeek).map(f=>String(f).replace("https://schema.org/","")).includes(c));if(!u)return{isOpen:!1,message:`Closed on ${c}`};const g=String(this.getFirst(u.opens)||"00:00"),h=String(this.getFirst(u.closes)||"23:59"),m=i>=g&&i<=h;return{isOpen:m,message:m?null:`Closed (Opens at ${g})`}}static extract3DModel(e){const t=Array.isArray(e)?e[0]:e;if(!t)return null;const r=this.getArray(t.subjectOf).find(o=>this.getFirst(o["@type"])==="3DModel");if(!r)return null;const i=this.getFirst(r.encoding);return this.getFirst(i==null?void 0:i.contentUrl)||null}static extractLeadTime(e){var o,c,s,d,u,g;const t=Array.isArray(e)?e[0]:e;if(!t)return 0;const n=this.getFirst(t.deliveryLeadTime)||this.getFirst((c=(o=this.getArray(t.itemOffered)[0])==null?void 0:o.offers)==null?void 0:c.deliveryLeadTime)||this.getFirst((s=this.getArray(t.itemOffered)[0])==null?void 0:s.deliveryLeadTime)||this.getFirst((d=this.getArray(t.offers)[0])==null?void 0:d.deliveryLeadTime)||this.getFirst((g=(u=this.getArray(t.offers)[0])==null?void 0:u.itemOffered)==null?void 0:g.deliveryLeadTime);if(!n)return 0;if(typeof n=="object"){const h=Number(this.getFirst(n.value))||0,m=this.getFirst(n.unitCode)||this.getFirst(n.unitText)||"MIN";return m==="HUR"||m==="hour"||m==="hours"?h*60:m==="DAY"||m==="day"||m==="days"?h*24*60:h}const r=String(n).toLowerCase(),i=parseInt(r)||0;return r.includes("hour")?i*60:r.includes("day")?i*24*60:i}static isLocationInArea(e,t,n,r){if(!r)return!0;const i=this.getFirst(r["@type"]),o=this.normalizeName(this.getFirst(r.name)||""),c=this.getFirst(r.postalCode);if(i==="GeoCircle"){if(e===null||t===null)return!1;const s=r.geoMidpoint;if(!s)return!1;const d=Number(this.getFirst(s.latitude)),u=Number(this.getFirst(s.longitude)),g=Number(this.getFirst(r.geoRadius))||0;return this.calculateDistance(e,t,d,u)<=g}if(i==="City"||i==="AdministrativeArea"||i==="State"||i==="Country"){const s=this.normalizeName((n==null?void 0:n.addressLocality)||""),d=this.normalizeName((n==null?void 0:n.addressRegion)||""),u=this.normalizeName((n==null?void 0:n.addressCountry)||"");if(o===s||o===d||o===u)return!0}if(i==="PostalAddress"||c){const s=String((n==null?void 0:n.postalCode)||""),d=String(c||this.getFirst(r.postalCode)||"");if(s===d&&s!=="")return!0;const u=this.normalizeName((n==null?void 0:n.addressLocality)||""),g=this.normalizeName(this.getFirst(r.addressLocality)||"");if(u===g&&u!=="")return!0}return!1}static calculateDistance(e,t,n,r){const o=e*Math.PI/180,c=n*Math.PI/180,s=(n-e)*Math.PI/180,d=(r-t)*Math.PI/180,u=Math.sin(s/2)*Math.sin(s/2)+Math.cos(o)*Math.cos(c)*Math.sin(d/2)*Math.sin(d/2);return 6371e3*(2*Math.atan2(Math.sqrt(u),Math.sqrt(1-u)))}}class F{constructor(){v(this,"order");v(this,"storageKey","antinna_cart_order");this.order=this.loadFromStorage()||{"@type":"Order",orderedItem:[],totalPrice:0,priceCurrency:"INR"},this.deduplicate()}loadFromStorage(){const e=localStorage.getItem(this.storageKey);if(!e)return null;try{return JSON.parse(e)}catch{return null}}saveToStorage(){this.calculateTotal(),localStorage.setItem(this.storageKey,JSON.stringify(this.order))}deduplicate(){const e={},t=[];a.getArray(this.order.orderedItem).forEach(r=>{const i=r.itemKey||this.generateItemKey(r.orderedItem,r._selectedVariants);e[i]?e[i].orderQuantity+=r.orderQuantity:(r.itemKey=i,e[i]=r,t.push(r))}),this.order.orderedItem=t,this.calculateTotal()}calculateTotal(){const e=a.getArray(this.order.orderedItem);this.order.totalPrice=e.reduce((t,n)=>{if(!this.isItemOrderable(n))return t;const{price:r}=a.extractPrice(n.orderedItem.offers);let i=parseFloat(r)*(n.orderQuantity||1);return a.getArray(n.addOns).forEach(c=>{const{price:s}=a.extractPrice(c.orderedItem.offers);i+=parseFloat(s)*(c.orderQuantity||0)}),t+i},0)}isItemOrderable(e){var n;if(e.isUnavailable)return!1;const t=a.extractAvailability((n=e.orderedItem)==null?void 0:n.offers);return!(t==="https://schema.org/OutOfStock"||t==="https://schema.org/SoldOut")}isItemQuantityValid(e){var n;const t=(n=e._constraints)==null?void 0:n.minValue;return!(t!=null&&(e.orderQuantity||1)<t)}isCartValid(){const e=a.getArray(this.order.orderedItem);return e.length===0?!1:e.every(t=>this.isItemOrderable(t)&&this.isItemQuantityValid(t))}addItem(e,t,n,r=1){if(a.extractAvailability(e.offers)==="https://schema.org/OutOfStock")return null;a.getFirst(e.url)||(e.url=window.location.href.split("?")[0].split("#")[0]);const o=this.generateItemKey(e,n),c=a.getArray(this.order.orderedItem),s=c.find(p=>p.itemKey===o),{minValue:d,maxValue:u}=a.extractEligibleQuantity(e),g=a.extractInventoryLevel(e.offers||e),h=u!==null&&g!==null?Math.min(u,g):u||g,m=Math.max(Number(r),d||1);if(s){const y=Number(s.orderQuantity||0)+Number(r);if(h!==null&&y>h){const f=window.UIManager;f&&f.showToast(`Maximum limit of ${h} reached for this item`,"error"),s.orderQuantity=h}else s.orderQuantity=y;return this.saveToStorage(),o}else{const p=JSON.parse(JSON.stringify(e)),y=h!==null?Math.min(m,h):m;return c.push({"@type":"OrderItem",orderedItem:{...p,url:e.url,_selectedVariants:n?{...n}:void 0},orderQuantity:y,seller:t?JSON.parse(JSON.stringify(t)):void 0,itemKey:o,_constraints:{minValue:d,maxValue:u,inventoryLevel:g},addOns:[]}),this.order.orderedItem=c,this.saveToStorage(),o}}addAddOn(e,t,n=1){const i=a.getArray(this.order.orderedItem).find(s=>s.itemKey===e);if(!i){const s=window.UIManager;s&&s.showToast("Please add the main product first","error");return}i.addOns||(i.addOns=[]);const o=this.generateItemKey(t),c=i.addOns.find(s=>s.itemKey===o);if(c){const s=this.getAddOnLimits(i,c),d=(c.orderQuantity||0)+n;s.maxValue!==null&&d>s.maxValue?c.orderQuantity=s.maxValue:c.orderQuantity=d}else{const{minValue:s,maxValue:d}=a.extractEligibleQuantity(t),u=a.extractInventoryLevel(t.offers||t),g={orderedItem:JSON.parse(JSON.stringify(t)),_constraints:{minValue:s,maxValue:d,inventoryLevel:u}},h=this.getAddOnLimits(i,g);i.addOns.push({orderedItem:g.orderedItem,orderQuantity:Math.max(n,h.minValue||1),itemKey:o,_constraints:{minValue:s,maxValue:d,inventoryLevel:u}})}this.saveToStorage()}getAddOnLimits(e,t){var d,u,g;const n=e.orderQuantity||1,r=(d=t._constraints)==null?void 0:d.minValue,i=(u=t._constraints)==null?void 0:u.maxValue,o=(g=t._constraints)==null?void 0:g.inventoryLevel,c=i!=null?i*n:null,s=c!==null&&o!==null?Math.min(c,o):c||o;return{minValue:r!=null?r*n:null,maxValue:s}}generateItemKey(e,t){let n=a.getFirst(e.url)||"";n.includes("?")&&(n=n.split("?")[0]),n.includes("#")&&(n=n.split("#")[0]),n=n.toLowerCase().replace(/\/$/,"");const r=a.getFirst(e["@type"])||"Product",i=a.getFirst(e.name)||"",o=a.getFirst(e.sku)||"";let c="";return t&&(c=Object.keys(t).sort().map(d=>`${d}:${t[d]}`).join("|")),`${n}::${r}::${o}::${i}::${c}`}removeItem(e){const t=a.getArray(this.order.orderedItem);e<0||e>=t.length||(t.splice(e,1),this.order.orderedItem=t,this.saveToStorage())}updateQty(e,t){const r=a.getArray(this.order.orderedItem)[e];if(!r)return;const i=r.orderQuantity||0,o=i+t,{maxValue:c,inventoryLevel:s}=r._constraints||{},d=c!==null&&s!==null?Math.min(c,s):c||s;if(t>0&&d!==null&&d!==void 0&&o>d){const u=window.UIManager;u&&u.showToast(`Maximum limit of ${d} reached`,"error");return}if(r.orderQuantity=o,r.addOns){const u=i||1,g=o;r.addOns.forEach(h=>{const m=(h.orderQuantity||0)/u;h.orderQuantity=Math.round(m*g);const p=this.getAddOnLimits(r,h);p.maxValue!==null&&h.orderQuantity>p.maxValue&&(h.orderQuantity=p.maxValue),p.minValue!==null&&h.orderQuantity<p.minValue&&(h.orderQuantity=p.minValue)})}r.orderQuantity<=0?this.removeItem(e):this.saveToStorage()}updateAddOnQty(e,t,n){const i=a.getArray(this.order.orderedItem)[e];if(!i||!i.addOns)return;const o=i.addOns[t];if(!o)return;const c=(o.orderQuantity||0)+n,s=this.getAddOnLimits(i,o);if(n>0&&s.maxValue!==null&&c>s.maxValue){const d=window.UIManager;d&&d.showToast(`Maximum limit of ${s.maxValue} reached`,"error");return}if(n<0&&s.minValue!==null&&c<s.minValue){const d=window.UIManager;d&&d.showToast(`Minimum of ${s.minValue} required`,"error");return}o.orderQuantity=c,o.orderQuantity<=0&&i.addOns.splice(t,1),this.saveToStorage()}removeAddOn(e,t){const r=a.getArray(this.order.orderedItem)[e];!r||!r.addOns||(r.addOns.splice(t,1),this.saveToStorage())}updateItemDetails(e,t){const r=a.getArray(this.order.orderedItem)[e];if(r){if(!t)r.isUnavailable=!0;else{let i=null;const o=r.orderedItem,c=Array.isArray(t)?t:[t],s=a.normalizeName(o.name);for(const d of c){const u=a.findAllServices(d);for(const m of u){const p=m.itemOffered||m,y=a.getFirst(p.name)||a.getFirst(m.name);if(a.normalizeName(y)===s){i=m;break}}if(i)break;if(o["@type"]==="Product"&&d.hasVariant){const m=a.findMatchingVariant(d,o._selectedVariants||{});if(m){i=m;break}}const g=a.getFirst(d.sku)||a.getFirst(d.identifier)||a.getFirst(d.name),h=a.getFirst(o.sku)||a.getFirst(o.identifier)||a.getFirst(o.name);if(a.getFirst(d["@type"])===a.getFirst(o["@type"])&&g===h){i=d;break}}if(i){r.isUnavailable=!1;const{price:d,currency:u}=a.extractPrice(i),g=a.extractAvailability(i),{minValue:h,maxValue:m}=a.extractEligibleQuantity(i),p=a.extractInventoryLevel(i.offers||i);r._constraints={minValue:h,maxValue:m,inventoryLevel:p},r.orderedItem.offers={"@type":"Offer",price:d,priceCurrency:u,availability:g,eligibleQuantity:h!==null||m!==null?{"@type":"QuantitativeValue",minValue:h,maxValue:m}:void 0};const y=i.itemOffered||i;r.orderedItem.image=y.image||r.orderedItem.image,r.orderedItem.name=y.name||r.orderedItem.name,r.orderedItem.description=y.description||r.orderedItem.description,r.addOns&&r.addOns.forEach(f=>{let b=null;const x=a.normalizeName(f.orderedItem.name);for(const w of c){const I=a.findAllServices(w);for(const S of I){const L=S.itemOffered||S,A=a.getFirst(L.name)||a.getFirst(S.name);if(a.normalizeName(A)===x){b=S;break}}if(b)break}if(b){const{price:w,currency:I}=a.extractPrice(b),S=a.extractAvailability(b),{minValue:L,maxValue:A}=a.extractEligibleQuantity(b),O=a.extractInventoryLevel(b.offers||b);f._constraints={minValue:L,maxValue:A,inventoryLevel:O},f.orderedItem.offers={"@type":"Offer",price:w,priceCurrency:I,availability:S,eligibleQuantity:L!==null||A!==null?{"@type":"QuantitativeValue",minValue:L,maxValue:A}:void 0,inventoryLevel:O!==null?{"@type":"QuantitativeValue",value:O}:void 0}}})}else r.isUnavailable=!0}this.saveToStorage()}}getOrder(){return this.order}getTotalQuantity(){return a.getArray(this.order.orderedItem).reduce((t,n)=>t+Number(n.orderQuantity||0),0)}getServiceabilityErrors(e){const t=a.getArray(this.order.orderedItem),n=[];return t.forEach(r=>{const i=r.orderedItem,o=a.extractAreaServed(i);o.length>0&&(o.some(d=>a.isLocationInArea(e==null?void 0:e.lat,(e==null?void 0:e.lon)||(e==null?void 0:e.lng),e==null?void 0:e.addressDetails,d))||n.push(a.getFirst(i.name)||"An item"));const c=r.seller;if(c){const s=a.isBusinessOpen(c);s.isOpen||n.push(`${a.getFirst(i.name)} (Seller currently closed: ${s.message})`)}r.addOns&&r.addOns.forEach(s=>{const d=a.extractAreaServed(s.orderedItem);d.length>0&&(d.some(g=>a.isLocationInArea(e==null?void 0:e.lat,(e==null?void 0:e.lon)||(e==null?void 0:e.lng),e==null?void 0:e.addressDetails,g))||n.push(a.getFirst(s.orderedItem.name)||"An addon"))})}),n}getMaxLeadTime(){const e=a.getArray(this.order.orderedItem);let t=0;return e.forEach(n=>{const r=a.extractLeadTime(n.orderedItem);r>t&&(t=r),n.addOns&&n.addOns.forEach(i=>{const o=a.extractLeadTime(i.orderedItem);o>t&&(t=o)})}),t}clear(){this.order.orderedItem=[],this.saveToStorage()}}class q{constructor(){v(this,"data",{lat:null,lon:null,pin:null,city:null});v(this,"storageKey","antinna_location");this.loadFromStorage()}loadFromStorage(){const e=localStorage.getItem(this.storageKey);if(e)try{this.data=JSON.parse(e)}catch{}}save(){localStorage.setItem(this.storageKey,JSON.stringify(this.data))}getData(){return this.data}setData(e){this.data={...this.data,...e},this.save()}clear(){this.data={lat:null,lon:null,pin:null,city:null},localStorage.removeItem(this.storageKey)}async reverseGeocode(e,t){try{const r=await(await fetch(`https://nominatim.openstreetmap.org/reverse?lat=${e}&lon=${t}&format=json`,{headers:{"User-Agent":"Antinna-Blogger-Engine/1.0"}})).json();if(r.address)return{pin:r.address.postcode||this.data.pin,city:r.address.city||r.address.town||r.address.village||r.address.state_district}}catch(n){console.error("Geocoding failed",n)}return{}}async lookupPin(e){try{const n=await(await fetch(`https://nominatim.openstreetmap.org/search?postalcode=${e}&country=India&format=json&addressdetails=1`,{headers:{"User-Agent":"Antinna-Blogger-Engine/1.0"}})).json();if(n&&n.length>0){const r=n[0].address;return{lat:parseFloat(n[0].lat),lon:parseFloat(n[0].lon),city:r.city||r.town||r.village||r.state_district||r.county}}}catch(t){console.error("PIN lookup failed",t)}return{city:null,lat:null,lon:null}}}class j{async fetchFeedData(e=50,t=1,n="",r=""){var c;let i="";if(n){const d=(Array.isArray(n)?n:[n]).filter(u=>u.trim()!=="");d.length>0&&(i=`/-/${d.map(g=>encodeURIComponent(g.trim())).join(",")}`)}let o=`/feeds/posts/default${i}?alt=json&max-results=${e}&start-index=${t}`;r&&(o+=`&q=${encodeURIComponent(r)}`);try{const d=await(await fetch(o)).json();return{entries:d.feed.entry||[],totalResults:parseInt(((c=d.feed.openSearch$totalResults)==null?void 0:c.$t)||"0")}}catch(s){return console.error("Failed to fetch Blogger feed",s),{entries:[],totalResults:0}}}extractSchemaFromEntry(e){var n;const t=((n=e.content)==null?void 0:n.$t)||"";return a.extractJsonLd(t)}async fetchSearchSuggestions(e){if(!e||e.length<2)return[];try{const t=/label:([^|\s\s]+)/g,n=[];let r,i="";for(;(r=t.exec(e))!==null;)n.push(decodeURIComponent(r[1].trim().replace(/_/g," ")));const o=e.lastIndexOf("|")>e.lastIndexOf("label:")?e.lastIndexOf("|")+1:e.lastIndexOf("label:"),c=Array.from(e.matchAll(t));if(c.length>0){const h=c[c.length-1];i=e.substring(0,h.index+h[0].length).trim()+" ",e.trim().endsWith("|")&&(i=e.trim()+" ")}const s=e.replace(t,"").replace(/\|/g,"").trim(),{entries:d}=await this.fetchFeedData(50,1,n,s),u=new Set,g=s.toLowerCase();return d.forEach(h=>{var y;const m=((y=h.title)==null?void 0:y.$t)||"";(!g||m.toLowerCase().includes(g))&&u.add(i+m);const p=this.extractSchemaFromEntry(h);if(p){const f=a.getFirst(p.keywords);f&&typeof f=="string"&&f.split(",").forEach(x=>{const w=x.trim();(!g||w.toLowerCase().includes(g))&&u.add(i+w)});const b=a.getFirst(p.name);b&&typeof b=="string"&&(!g||b.toLowerCase().includes(g))&&u.add(i+b)}}),Array.from(u).slice(0,10)}catch(t){return console.error("Failed to fetch suggestions",t),[]}}}class U{constructor(){v(this,"merchantId","BCR2DN5TVPLKL4KZ");v(this,"merchantName","Antinna")}async initPayment(e,t){if(!window.PaymentRequest){alert("Payment Request API not supported in this browser.");return}try{const{ProductionApiService:d}=await Promise.resolve().then(()=>X);await d.getInstance().createOrder({...e,verifiedLocation:t})}catch(d){console.error("Failed to record order in backend",d)}const n={supportedMethods:"https://tez.google.com/pay",data:{pa:"manishsharma3994@okhdfcbank",pn:this.merchantName,tr:`TR${Date.now()}`,url:window.location.href,mc:"5251",tn:`Order from ${this.merchantName}`}},r={supportedMethods:"https://google.com/pay",data:{environment:"PRODUCTION",apiVersion:2,apiVersionMinor:0,merchantInfo:{merchantId:this.merchantId,merchantName:this.merchantName},allowedPaymentMethods:[{type:"CARD",parameters:{allowedAuthMethods:["PAN_ONLY","CRYPTOGRAM_3DS"],allowedCardNetworks:["MASTERCARD","VISA"]},tokenizationSpecification:{type:"PAYMENT_GATEWAY",parameters:{gateway:"example",gatewayMerchantId:"exampleGatewayMerchantId"}}}]}},i=[n,r],o=e,c=[];a.getArray(e.orderedItem).forEach(d=>{var g,h;const{price:u}=a.extractPrice((g=d.orderedItem)==null?void 0:g.offers);c.push({label:`${a.getFirst((h=d.orderedItem)==null?void 0:h.name)} (x${d.orderQuantity})`,amount:{currency:o.priceCurrency||"INR",value:String((parseFloat(u)*(d.orderQuantity||1)).toFixed(2))}}),a.getArray(d.addOns).forEach(m=>{var y,f;const{price:p}=a.extractPrice((y=m.orderedItem)==null?void 0:y.offers);c.push({label:`  + ${a.getFirst((f=m.orderedItem)==null?void 0:f.name)} (x${m.orderQuantity})`,amount:{currency:o.priceCurrency||"INR",value:String((parseFloat(p)*(m.orderQuantity||1)).toFixed(2))}})})}),t&&c.push({label:`Delivery: ${t.address||"Verified Location"}`,amount:{currency:o.priceCurrency||"INR",value:"0.00"}});const s={total:{label:"Total Amount",amount:{currency:o.priceCurrency||"INR",value:String(o.totalPrice)}},displayItems:c};try{const d=new window.PaymentRequest(i,s);await d.canMakePayment();const u=await d.show();console.log("Payment response:",u)}catch(d){console.error("Payment Error:",d)}}}class l{static el(e){return document.getElementById(e)}static query(e){return document.querySelector(e)}static setContent(e,t){const n=this.el(e)||this.query(e);n&&(n.textContent=t)}static setHtml(e,t){const n=this.el(e)||this.query(e);n&&(n.innerHTML=t)}static toggleClass(e,t,n){const r=this.el(e)||this.query(e);r&&r.classList.toggle(t,n)}static injectModalStyles(){}static injectModelViewer(){return new Promise(e=>{if(document.querySelector('script[src*="model-viewer"]'))return e();const t=document.createElement("script");t.type="module",t.src="https://ajax.googleapis.com/ajax/libs/model-viewer/3.5.0/model-viewer.min.js",t.onload=()=>e(),document.head.appendChild(t)})}static injectLeaflet(){return new Promise(e=>{if(window.L)return e();const t=document.createElement("link");t.rel="stylesheet",t.href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css",document.head.appendChild(t);const n=document.createElement("script");n.src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js",n.onload=()=>e(),document.head.appendChild(n)})}static async show3DViewer(e){this.injectModalStyles(),await this.injectModelViewer();let t=this.el("antinna-3d-modal");t||(t=document.createElement("div"),t.id="antinna-3d-modal",t.className="antinna-3d-backdrop",t.innerHTML=`
-            <div class="antinna-3d-header">
-                <h3 style="margin:0;">3D Model Preview</h3>
-                <button class="antinna-3d-close" onclick="UIManager.hide3DViewer()">&times;</button>
-            </div>
-            <div id="antinna-3d-container"></div>
-        `,document.body.appendChild(t));const n=this.el("antinna-3d-container");n&&(n.innerHTML=`
-            <model-viewer src="${e}" ar ar-modes="webxr scene-viewer quick-look" camera-controls touch-action="pan-y" alt="A 3D model" shadow-intensity="1">
-                <button slot="ar-button" class="antinna-ar-button">
-                   <span>📷</span> View in your space (AR)
-                </button>
-                <div slot="progress-bar"></div>
-            </model-viewer>
-        `),t.classList.add("active"),document.body.classList.add("antinna-3d-active")}static hide3DViewer(){const e=this.el("antinna-3d-modal");if(e){e.classList.remove("active"),document.body.classList.remove("antinna-3d-active");const t=this.el("antinna-3d-container");t&&(t.innerHTML="")}}static showToast(e,t="success"){this.injectModalStyles();let n=document.getElementById("toast-container");n||(n=document.createElement("div"),n.id="toast-container",n.className="toast-container",document.body.appendChild(n));const r=document.createElement("div");r.className=`toast toast-${t}`,r.style.cssText=`
-        background: ${t==="success"?"#10b981":t==="error"?"#ef4444":"#1e293b"};
-        color: white;
-        padding: 12px 24px;
-        border-radius: 10px;
-        box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
-        display: flex;
-        align-items: center;
-        gap: 10px;
-        margin-top: 10px;
-        font-size: 0.9rem;
-        font-weight: 600;
-        animation: slideUp 0.3s cubic-bezier(0.4, 0, 0.2, 1) forwards;
-        pointer-events: auto;
-        border: 1px solid rgba(255,255,255,0.1);
-    `,r.innerText=e,n.appendChild(r),setTimeout(()=>{r.style.animation="fadeOut 0.3s forwards",setTimeout(()=>r.remove(),300)},3e3)}}class H{render(e,t,n){var o,c;l.injectModalStyles();const r=e["@type"]==="LocalBusiness"||e["@type"]==="Store"||e["@type"]==="Organization",i=e["@type"]==="Service";if(r)this.renderBusinessView(e);else{const s=a.findMatchingVariant(e,t.selectedVariants,t.lastClickedAttribute);s&&e.variesBy&&a.getArray(e.variesBy).forEach(f=>{const x=(typeof f=="string"?f:a.getFirst(f.url)||a.getFirst(f.name)||"").split(/[\/#]/).pop()||"",w=a.getFirst(s[x]);w&&(t.selectedVariants[x]=String(w))}),l.setContent("p-name",a.getFirst(s.name)||a.getFirst(e.name)),l.setContent("p-desc",a.getFirst(s.description)||a.getFirst(e.description)),l.setContent("p-sku",s.sku?"SKU: "+a.getFirst(s.sku):"");const d=a.getFirst(s.brand||e.brand),u=typeof d=="string"?d:a.getFirst(d==null?void 0:d.name);l.setContent("p-brand",u||"");const g=a.getFirst(s.offers||e.offers),h=l.el("p-price");if(h&&g){const{price:f,currency:b}=a.extractPrice(g),x=a.getCurrencySymbol(b);h.textContent=`${x}${f}`;const w=a.extractAvailability(g);h.classList.toggle("blurry",w==="https://schema.org/OutOfStock")}this.renderStockBadge(g),this.renderConditionBadge(s||e),this.renderAreaServed(e);const m=Array.isArray(s.image||e.image)?s.image||e.image:[s.image||e.image];this.renderCarousel(m.filter(Boolean));const p=a.extract3DModel(s)||a.extract3DModel(e);this.render3DButton(p),this.renderQuantityConstraints(g),this.renderVariants(e,t,n),this.renderSpecs(s,e),l.toggleClass(".qty-controls","hidden",i),l.toggleClass("#add-to-cart-btn","hidden",!1);const y=((o=a.getFirst(s.offers))==null?void 0:o.seller)||((c=a.getFirst(e.offers))==null?void 0:c.seller)||a.getFirst(e.seller)||e.provider;this.renderSeller(y),this.renderOtherServices(y,s)}}renderBusinessView(e){l.setContent("p-name",a.getFirst(e.name)),l.setContent("p-desc",a.getFirst(e.description)||""),l.setContent("p-brand",a.getFirst(e["@type"]));const t=l.el("p-price");t&&(t.textContent="Service Provider"),l.toggleClass("#p-sku","hidden",!0),l.toggleClass("#stock-badge-container","hidden",!0),l.toggleClass("#p-variants","hidden",!0),l.toggleClass(".qty-controls","hidden",!0),l.toggleClass("#add-to-cart-btn","hidden",!0),this.renderCarousel(Array.isArray(e.image)?e.image:[e.image]),this.renderSeller(e),this.renderOtherServices(e,e)}renderConditionBadge(e){const t=l.el("stock-badge-container");if(!t)return;const n=a.extractCondition(e),r=l.el("p-condition-badge");if(r&&r.remove(),n){const i=document.createElement("span");i.id="p-condition-badge",i.className=`condition-badge cond-${n.toLowerCase()}`,i.textContent=n,t.appendChild(i)}}renderStockBadge(e){const t=l.el("stock-badge-container");if(t&&e){l.toggleClass("#stock-badge-container","hidden",!1);const n=a.extractAvailability(e);let r="Out of Stock",i="out-stock",o=!1;n==="https://schema.org/InStock"||n==="https://schema.org/OnlineOnly"?(r="In Stock",i="in-stock",o=!0):n==="https://schema.org/InStoreOnly"?(r="In-Store Only",i="instore-only",o=!1):n==="https://schema.org/PreOrder"&&(r="Pre-Order",i="pre-order",o=!0),t.innerHTML=`<span class="stock-badge ${i}">${r}</span>`;const c=l.el("add-to-cart-btn");c&&(l.toggleClass("#add-to-cart-btn","hidden",!1),c.disabled=!o)}}renderAreaServed(e){const t=l.el("p-desc"),n=a.getFirst(e.areaServed);if(e&&n&&t){const r=typeof n=="string"?n:a.getFirst(n.name)||a.getFirst(n["@type"]),i=l.el("svc-area-badge");i&&i.remove();const o=document.createElement("div");o.id="svc-area-badge",o.className="geo-badge",o.style.background="#e8f5e9",o.style.color="#2e7d32",o.style.marginBottom="15px",o.innerHTML=`&#127760; <b>Area Served:</b> ${r}`,t.before(o)}}renderQuantityConstraints(e){const{minValue:t,maxValue:n}=a.extractEligibleQuantity(e),r=a.extractInventoryLevel(e),i=n!==null&&r!==null?Math.min(n,r):n||r,o=l.query(".qty-controls");if(!o)return;const c=l.el("qty-constraints-hint");if(c&&c.remove(),t!==null||i!==null){const s=document.createElement("div");s.id="qty-constraints-hint",s.style.fontSize="0.75rem",s.style.color="#777",s.style.marginTop="8px",s.style.fontWeight="600";let d="";t!==null&&i!==null?(d=`Min: ${t}, Max: ${i}`,r!==null&&r<(n||1/0)&&(d+=" (Limited Stock)")):t!==null?d=`Minimum order: ${t}`:i!==null&&(d=`Maximum order: ${i}`,r!==null&&r<(n||1/0)&&(d+=" (Limited Stock)")),s.textContent=d,o.after(s)}window.currentQuantityLimits={minValue:t,maxValue:i},this.updateQtyButtons()}updateQtyButtons(){var r;const e=window.currentQuantityLimits,t=l.el("qty-plus"),n=parseInt(((r=l.el("qty-val"))==null?void 0:r.textContent)||"1");t&&(e==null?void 0:e.maxValue)!==null&&(t.disabled=n>=e.maxValue,t.style.opacity=t.disabled?"0.5":"1")}renderCarousel(e){const t=l.el("carousel-inner"),n=l.el("thumbnail-row");t&&(t.innerHTML="",n&&(n.innerHTML=""),e.forEach((r,i)=>{const o=r.url||r,c=document.createElement("div");if(c.className="carousel-item",c.innerHTML=`<img src="${o}"/>`,t.appendChild(c),n&&e.length>1){const s=document.createElement("img");s.className="thumb"+(i===0?" active":""),s.src=o,s.onclick=()=>window.AntinnaEngine.goToSlide(i),n.appendChild(s)}}),t.style.transform="translateX(0)")}render3DButton(e){const t=l.query(".carousel-container");if(!t)return;const n=l.el("view-3d-btn");if(n&&n.remove(),!e)return;const r=document.createElement("button");r.id="view-3d-btn",r.className="v-btn",r.style.cssText=`
-        margin-top: 15px; width: 100%;
-        background: rgba(0,0,0,0.8); color: #fff; border: none;
-        padding: 12px 20px; border-radius: 12px; font-weight: 700;
-        display: flex; align-items: center; justify-content: center; gap: 10px; font-size: 0.95rem;
-      `,r.innerHTML="<span>📦</span> View in 3D Preview",r.onclick=()=>l.show3DViewer(e),t.appendChild(r)}renderVariants(e,t,n){const r=l.el("p-variants");if(r&&!r.children.length){if(e.variesBy)l.toggleClass("#p-variants","hidden",!1),a.getArray(e.variesBy).forEach(i=>{const c=(typeof i=="string"?i:a.getFirst(i.url)||a.getFirst(i.name)||"").split(/[\/#]/).pop()||"",s=a.getArray(e.hasVariant),d=[...new Set(s.map(h=>a.getFirst(h[c])).filter(Boolean))];if(d.length===0)return;const u=document.createElement("div");u.className="v-group",u.innerHTML=`<span class="v-label">Select ${c}</span>`;const g=document.createElement("div");g.className="v-options",d.forEach(h=>{const m=document.createElement("button");if(m.className="v-btn",m.dataset.attr=c,m.dataset.val=String(h),c.toLowerCase()==="color"){m.classList.add("v-color");const y=a.getArray(e.hasVariant).find(b=>String(a.getFirst(b[c]))===String(h)),f=y&&a.getFirst(y.image);if(f){const b=f.url||f;m.style.backgroundImage=`url('${b}')`}else m.style.backgroundColor=String(h);m.title=String(h)}else m.textContent=String(h);m.onclick=()=>n(c,String(h)),g.appendChild(m)}),u.appendChild(g),r.appendChild(u),t.selectedVariants[c]||(t.selectedVariants[c]=String(d[0]))});else if(e.hasOfferCatalog){l.toggleClass("#p-variants","hidden",!1);const i=document.createElement("div");i.className="v-group",i.innerHTML='<span class="v-label">Available Packages</span>';const o=document.createElement("div");o.className="v-options";const c=a.getFirst(e.hasOfferCatalog);a.getArray(c==null?void 0:c.itemListElement).forEach(s=>{var m;const d=document.createElement("button");d.className="v-btn";const u=a.getFirst((m=s.itemOffered)==null?void 0:m.name)||a.getFirst(s.name),g=a.getFirst(s.price),h=a.getFirst(s.priceCurrency);d.innerHTML=`${u}<br/><small>${h||"INR"} ${g}</small>`,d.onclick=()=>{t.selectedPackage=s;const p=a.getCurrencySymbol(a.getFirst(s.priceCurrency));l.setContent("p-price",`${p}${a.getFirst(s.price)}`),this.renderQuantityConstraints(s),document.querySelectorAll(".v-btn").forEach(y=>y.classList.remove("active")),d.classList.add("active")},o.appendChild(d)}),i.appendChild(o),r.appendChild(i)}}document.querySelectorAll(".v-btn[data-attr]").forEach(i=>{const o=i.dataset.attr||"",c=i.dataset.val||i.textContent;i.classList.toggle("active",t.selectedVariants[o]===c)}),this.checkAvailability(e,t)}checkAvailability(e,t){const n=a.getArray(e.hasVariant);!e||n.length===0||document.querySelectorAll(".v-btn[data-attr]").forEach(r=>{const i=r.dataset.attr||"",o=r.dataset.val||"",c={...t.selectedVariants,[i]:o},s=n.find(g=>Object.entries(c).every(([h,m])=>{const p=a.getFirst(g[h]);return!p||String(p)===String(m)})),u=(s?a.extractAvailability(s.offers):null)==="https://schema.org/OutOfStock";r.style.opacity=s?u?"0.6":"1":"0.3",r.style.borderStyle=s?"solid":"dashed"})}renderSpecs(e,t){var i,o,c;const n=l.el("p-specs"),r=l.el("specs-list");if(n&&r){const s=p=>p?typeof p=="string"?p:typeof p=="number"?String(p):a.getFirst(p.name)||a.getFirst(p.value)||a.getFirst(p.text)||null:null,d={SKU:s(e.sku||t.sku),MPN:s(e.mpn||t.mpn),Model:s(e.model||t.model),Brand:s(e.brand||t.brand),Manufacturer:s(e.manufacturer||t.manufacturer),Material:s(e.material||t.material),Pattern:s(e.pattern||t.pattern),GTIN:e.gtin13||e.gtin8||e.gtin14||e.gtin||"",Weight:((i=e.weight||t.weight)==null?void 0:i.value)||e.weight||t.weight},u=a.getFirst(e.audience||t.audience);if(u){const p=s(u.name||u),y=s(((o=u.suggestedAge)==null?void 0:o.name)||((c=u.suggestedAge)==null?void 0:c.value)||u.suggestedAge);p&&(d.Audience=p),y&&(d["Suggested Age"]=y)}const g=a.getArray(e.hasCertification||t.hasCertification);g.length>0&&(d.Certifications=g.map(p=>s(p.name||p.certificationName||p)).join(", "));let h="";for(let[p,y]of Object.entries(d))y&&(h+=`<div style="display:flex;justify-content:space-between;padding:10px 0;border-bottom:1px solid rgba(0,0,0,0.05);"><span style="opacity:0.6;">${p}</span><span style="font-weight:700;">${y}</span></div>`);[...a.getArray(t.additionalProperty),...a.getArray(e.additionalProperty)].forEach(p=>{const y=a.getFirst(p.name),f=a.getFirst(p.value);y&&f&&(h+=`<div style="display:flex;justify-content:space-between;padding:10px 0;border-bottom:1px solid rgba(0,0,0,0.05);"><span style="opacity:0.6;">${y}</span><span style="font-weight:700;">${f}</span></div>`)}),h?(n.style.display="block",r.innerHTML=h):n.style.display="none"}}renderSeller(e){const t=l.el("p-seller"),n=l.el("seller-info"),r=l.el("maps-link");if(!t||!n)return;if(!e){t.style.display="none";return}t.style.display="block";const{isOpen:i,message:o}=a.isBusinessOpen(e),c=i?'<span class="stock-badge in-stock" style="margin:0 0 10px 0;">Open Now</span>':`<span class="stock-badge out-stock" style="margin:0 0 10px 0;">${o||"Currently Closed"}</span>`,s=l.el("add-to-cart-btn");s&&!i&&(s.disabled=!0,s.textContent=o||"Seller Currently Closed");const d=a.getFirst(e.alternateName),u=a.getFirst(e.name)||"Antinna",g=d?`${u} (${d})`:u,h=a.getFirst(e.address),m=a.getArray(e.amenityFeature),p=m.length>0?`<div style="margin-top:10px; display:flex; gap:5px; flex-wrap:wrap;">${m.map(b=>`<span style="font-size:0.7rem; background:rgba(0,0,0,0.05); padding:2px 8px; border-radius:4px;">${a.getFirst(b.name)}</span>`).join("")}</div>`:"",y=a.getFirst(e.telephone),f=y?`&#128222; <a href="tel:${y}" style="color:inherit; text-decoration:none;">${y}</a><br/>`:"";if(n.innerHTML=`${c}<br/><strong>${g}</strong><br/>${f}${a.getFirst(e.email)?`&#128231; <a href="mailto:${a.getFirst(e.email)}">${a.getFirst(e.email)}</a><br/>`:""}${h?`📍 ${a.getFirst(h.streetAddress)||""}, ${a.getFirst(h.addressLocality)||""}`:""}${p}`,r){const b=a.getFirst(e.geo);a.getFirst(e.hasMap)||b?(r.style.display="inline-flex",r.href=a.getFirst(e.hasMap)||`https://www.google.com/maps/search/?api=1&query=${b.latitude},${b.longitude}`):r.style.display="none"}}renderOtherServices(e,t){const n=l.el("other-services"),r=l.el("other-services-list"),i=n==null?void 0:n.querySelector(".section-title");if(!n||!r||!e)return;const o=a.getArray(e.hasOfferCatalog||t.hasOfferCatalog),c=[];o.forEach(d=>{c.push(...a.getArray(d.itemListElement))});const s=a.getArray(t.addOn||e.addOn);if(this.renderAddOns(s,e,t),c.length>0){if(n.style.display="block",i){const d=t["@type"]==="LocalBusiness"||t["@type"]==="Store"||t["@type"]==="Organization";i.textContent=d?"Deals In / Our Services":"Optional Product-Related Services"}r.innerHTML=c.map(d=>{const u=a.getFirst(d.itemOffered)||d,g=a.getFirst(u.name)||a.getFirst(d.name),{price:h,currency:m}=a.extractPrice(d),p=a.getFirst(t.url)||window.location.href.split("?")[0].split("#")[0],{minValue:y,maxValue:f}=a.extractEligibleQuantity(d),b=a.extractInventoryLevel(d.offers||d),x={...u,name:g,"@type":u["@type"]||d["@type"]||"Service",url:p,offers:{"@type":"Offer",price:h,priceCurrency:m,availability:a.extractAvailability(d),eligibleQuantity:y!==null||f!==null?{"@type":"QuantitativeValue",minValue:y,maxValue:f}:void 0,inventoryLevel:b!==null?{"@type":"QuantitativeValue",value:b}:void 0}},w=JSON.stringify(x).replace(/"/g,"&quot;"),I=JSON.stringify(e).replace(/"/g,"&quot;"),S=a.getCurrencySymbol(m);return`<div class="h-card"><div style="font-weight:700;margin-bottom:10px;height:3em;overflow:hidden;">${g}</div><div class="price" style="font-size:1.2rem;margin-bottom:15px;">${h!=="0"?S+h:"Free/Included"}</div><button class="v-btn" style="width:100%;padding:10px;font-size:0.85rem;" onclick="CartManager.addItem(${w}, ${I}); CartRenderer.updateUI(); showToast('Service Added', 'success');">Add Service</button></div>`}).join("")}else n.style.display="none"}renderAddOns(e,t,n){var u;let r=l.el("addon-services");r||(r=document.createElement("div"),r.id="addon-services",r.className="details-card",r.style.marginTop="20px",r.innerHTML='<h2 class="section-title">Addons</h2><div id="addon-services-list" class="h-list"></div>',(u=l.el("other-services"))==null||u.before(r));const i=l.el("addon-services-list");if(!i)return;if(e.length===0){r.style.display="none";return}r.style.display="block";const o=window.CartManager,c=window.location.href.split("?")[0].split("#")[0],s=o.generateItemKey({...n,url:c},window.AntinnaEngine.state.selectedVariants),d=o.getOrder().orderedItem.some(g=>g.itemKey===s);i.innerHTML=e.map(g=>{const h=a.getFirst(g.itemOffered)||g,m=a.getFirst(h.name)||a.getFirst(g.name),{price:p,currency:y}=a.extractPrice(g),f=a.getCurrencySymbol(y),{minValue:b,maxValue:x}=a.extractEligibleQuantity(g),w=a.extractInventoryLevel(g.offers||g),I={...h,name:m,"@type":h["@type"]||g["@type"]||"Service",offers:{"@type":"Offer",price:p,priceCurrency:y,availability:a.extractAvailability(g),eligibleQuantity:b!==null||x!==null?{"@type":"QuantitativeValue",minValue:b,maxValue:x}:void 0,inventoryLevel:w!==null?{"@type":"QuantitativeValue",value:w}:void 0}},S=JSON.stringify(I).replace(/"/g,"&quot;");return`
-            <div class="h-card" style="opacity: ${d?"1":"0.5"}">
-                <div style="font-weight:700;margin-bottom:10px;height:3em;overflow:hidden;">${m}</div>
-                <div class="price" style="font-size:1.2rem;margin-bottom:15px;">${f}${p}</div>
-                <button class="v-btn ${d?"active":""}" style="width:100%;padding:10px;font-size:0.85rem;"
-                    ${d?"":"disabled"}
-                    onclick="CartManager.addAddOn('${s}', ${S}); CartRenderer.updateUI(); showToast('Addon Added', 'success');">
-                    ${d?"Add Addon":"Add Base Product First"}
-                </button>
-            </div>`}).join("")}}class G{constructor(e){this.cartManager=e}renderFab(){const e=l.el("cart-fab-container");if(!e)return;let t=l.el("cart-fab");t||(t=document.createElement("div"),t.id="cart-fab",t.className="cart-fab",t.onclick=()=>window.AntinnaEngine.refreshCartData(),t.innerHTML='<span class="cart-icon">🛒</span><span class="cart-spinner"></span><span class="cart-count">0</span>',e.appendChild(t)),this.updateUI()}setLoading(e){const t=l.el("cart-fab");t&&t.classList.toggle("loading",e)}updateUI(){const e=this.cartManager.getTotalQuantity(),t=l.el("cart-fab");if(t){const r=t.querySelector(".cart-count");r&&(r.textContent=String(e)),t.style.transform=e>0?"scale(1)":"scale(0)"}const n=l.el("cart-proceed-btn");if(n){const r=this.cartManager.isCartValid();n.disabled=e===0||!r,n.style.opacity=n.disabled?"0.5":"1"}}showModal(){const e=l.el("cart-modal-backdrop"),t=l.el("cart-drawer"),n=l.el("cart-items-list");if(!n)return;const r=l.query(".cart-footer");r&&!l.el("cart-proceed-btn")&&(r.innerHTML=`
-            <div style="display:flex; justify-content:space-between; font-weight:900; font-size:1.2rem; margin-bottom:20px;"><span>Total</span><span id="cart-total-price">--</span></div>
-            <button class="v-btn active" id="cart-proceed-btn" onclick="AntinnaEngine.startCheckout()" style="width:100%; padding:18px; font-size:1.1rem; border-radius:12px;">Proceed</button>
-        `);const i=this.cartManager.getOrder(),o=a.getArray(i.orderedItem);n.innerHTML=o.map((s,d)=>{var S,L,A,O,E,T;const u=s.isUnavailable,g=a.extractAvailability((S=s.orderedItem)==null?void 0:S.offers),h=g==="https://schema.org/OutOfStock"||g==="https://schema.org/SoldOut",m=!u&&!h,p=this.cartManager.isItemQuantityValid(s),y=m&&p?"1":"0.5";let f="";u?f='<div style="color:red; font-size:0.7rem; font-weight:800;">Currently Unavailable</div>':h?f='<div style="color:orange; font-size:0.7rem; font-weight:800;">Out of Stock</div>':p||(f=`<div style="color:#ef4444; font-size:0.7rem; font-weight:800;">Minimum ${(L=s._constraints)==null?void 0:L.minValue} required</div>`);const{price:b,currency:x}=a.extractPrice((A=s.orderedItem)==null?void 0:A.offers),w=a.extractAdvanceBookingRequirement((O=s.orderedItem)==null?void 0:O.offers),I=a.getArray(s.addOns).map((M,N)=>{var z,B;const{price:Z,currency:ee}=a.extractPrice((z=M.orderedItem)==null?void 0:z.offers),V=this.cartManager.getAddOnLimits(s,M),te=V.minValue===null?M.orderQuantity>1:M.orderQuantity>V.minValue,ne=V.maxValue===null||M.orderQuantity<V.maxValue;return`
-            <div style="display:flex; align-items:center; gap:10px; padding:10px 0; border-top:1px dashed rgba(0,0,0,0.05); margin-top:10px; font-size:0.8rem;">
-               <div style="flex:1; opacity:0.8;">
-                  <div style="font-weight:600;">+ ${a.getFirst((B=M.orderedItem)==null?void 0:B.name)}</div>
-                  <div style="color:var(--accent); font-weight:700;">${a.getCurrencySymbol(ee)}${Z}</div>
-               </div>
-               <div style="display:flex; align-items:center; gap:8px;">
-                  <button class="qty-btn" style="width:20px; height:20px; font-size:0.7rem;" ${te?"":"disabled"} onclick="CartManager.updateAddOnQty(${d},${N},-1); CartRenderer.showModal();">-</button>
-                  <span style="font-weight:600;">${M.orderQuantity}</span>
-                  <button class="qty-btn" style="width:20px; height:20px; font-size:0.7rem;" ${ne?"":"disabled"} onclick="CartManager.updateAddOnQty(${d},${N},1); CartRenderer.showModal();">+</button>
-               </div>
-               <button onclick="CartManager.removeAddOn(${d},${N}); CartRenderer.showModal();" style="background:none;border:none;color:#ff3b30;cursor:pointer;font-size:1rem; padding:5px;">×</button>
-            </div>
-          `}).join("");return`
-        <div style="padding:15px; border-bottom:1px solid rgba(0,0,0,0.05); opacity:${y};">
-          <div style="display:flex; gap:15px; align-items:center;">
-             <img src="${this.getItemImage(s.orderedItem)}" style="width:60px; height:60px; border-radius:10px; object-fit:cover;"/>
-             <div style="flex:1;">
-                <div style="font-weight:700;font-size:0.9rem;">${a.getFirst((E=s.orderedItem)==null?void 0:E.name)}</div>
-                ${f}
-                ${w?`<div style="color:var(--accent); font-size:0.7rem; font-weight:700;">Booking: ${w}</div>`:""}
-                <div style="color:var(--accent); font-weight:800; font-size:0.85rem; margin-top:4px;">${a.getCurrencySymbol(x)}${b}</div>
-                <div style="display:flex; align-items:center; gap:12px; margin-top:10px;">
-                   <button class="qty-btn" style="width:24px; height:24px; font-size:0.8rem;" ${m?"":"disabled"} onclick="CartManager.updateQty(${d},-1); CartRenderer.showModal();">-</button>
-                   <span style="font-weight:800;">${s.orderQuantity||1}</span>
-                   <button class="qty-btn" style="width:24px; height:24px; font-size:0.8rem;" ${!m||((T=s._constraints)==null?void 0:T.maxValue)!==null&&(s.orderQuantity||1)>=s._constraints.maxValue?"disabled":""} onclick="CartManager.updateQty(${d},1); CartRenderer.showModal();">+</button>
-                </div>
-             </div>
-             <button onclick="CartManager.removeItem(${d}); CartRenderer.showModal();" style="background:none;border:none;color:#ff3b30;cursor:pointer;font-size:1.2rem; padding:10px;">×</button>
-          </div>
-          <div style="margin-left: 75px;">
-            ${I}
-          </div>
-        </div>
-      `}).join("")||'<div style="text-align:center; padding:50px; opacity:0.5; font-weight:700;">Bag is empty</div>';const c=l.el("cart-total-price");c&&(c.textContent=`${a.getCurrencySymbol(i.priceCurrency||"INR")}${i.totalPrice||0}`),e==null||e.classList.add("active"),t==null||t.classList.add("active"),this.updateUI()}hideModal(){var e,t;(e=l.el("cart-modal-backdrop"))==null||e.classList.remove("active"),(t=l.el("cart-drawer"))==null||t.classList.remove("active")}getItemImage(e){var t,n;return Array.isArray(e.image)?((t=e.image[0])==null?void 0:t.url)||e.image[0]||"":((n=e.image)==null?void 0:n.url)||e.image||""}}class K{constructor(e){this.locationManager=e}init(){const e=this.locationManager.getData();!e.pin&&!e.city&&setTimeout(()=>this.showModal(),2e3),this.updateUI()}showModal(){l.injectModalStyles();const e=l.el("loc-modal-backdrop");if(e){const t=this.locationManager.getData(),n=!!(t.pin||t.city);let r=l.el("modal-clear-loc-btn");if(!r){const i=e.querySelector(".antinna-geo-content")||e.querySelector(".modal-content");i&&(r=document.createElement("button"),r.id="modal-clear-loc-btn",r.className="btn-clear-loc",r.innerHTML="Clear Location",r.onclick=()=>this.handleClearLocation(),i.appendChild(r))}r&&(r.style.display=n?"block":"none"),e.classList.add("active")}}hideModal(){var e;(e=l.el("loc-modal-backdrop"))==null||e.classList.remove("active")}updateUI(){const e=this.locationManager.getData(),t=l.el("loc-display-v2"),n=l.el("modal-pin-input"),r=e.city?e.pin?`${e.city}, ${e.pin}`:e.city:e.pin||"";t&&(t.value=r),n&&(n.value=e.pin||"")}async handleRequestLocation(){if(!navigator.geolocation){l.showToast("Geolocation not supported","error");return}const e=l.query(".loc-btn");if(e&&(e.classList.add("loading"),!e.querySelector(".antinna-spinner"))){const t=document.createElement("span");t.className="antinna-spinner",e.appendChild(t)}navigator.geolocation.getCurrentPosition(async t=>{try{const{latitude:n,longitude:r}=t.coords,i=await this.locationManager.reverseGeocode(n,r);this.locationManager.setData({lat:n,lon:r,...i}),this.updateUI(),this.hideModal(),l.showToast(`Location set to ${i.city||"your area"}`,"success")}catch{l.showToast("Failed to resolve address","error")}finally{e==null||e.classList.remove("loading")}},t=>{l.showToast("Location access denied","error"),e==null||e.classList.remove("loading")})}async handleSetPin(){const e=l.el("modal-pin-input");if(e&&e.value.length===6){const t=e.value;l.showToast("Verifying PIN...","success");const n=await this.locationManager.lookupPin(t);this.locationManager.setData({pin:t,...n}),this.updateUI(),this.hideModal(),n.city?l.showToast(`Location set to ${n.city}`,"success"):l.showToast("Location updated!","success")}else l.showToast("Enter a valid 6-digit PIN","error")}handleClearLocation(){this.locationManager.clear(),this.updateUI(),this.hideModal(),l.showToast("Location cleared","success")}}const $=class ${constructor(){v(this,"mapUrl","https://script.google.com/macros/s/AKfycbyca4Xz_AE6Om1okIMf0TQ9EE9uIifQcVZhsDwnZK0K4weG7VD0w3jEzM0aCcuBeoWIIA/exec")}static getInstance(){return $.instance||($.instance=new $),$.instance}setMapUrl(e){this.mapUrl=e}async callAction(e,t={}){const n={action:e,params:t};try{const r=await fetch(this.mapUrl,{method:"POST",headers:{"Content-Type":"text/plain;charset=utf-8"},body:JSON.stringify(n)});if(!r.ok)throw new Error(`HTTP error! status: ${r.status}`);return await r.json()}catch(r){throw console.error(`AppsScriptService error [${e}]:`,r),r}}async getPlaceSuggestions(e){try{const t=await this.callAction("getPlaceSuggestions",{inputToken:e});return t.success?t.suggestions:[]}catch{return[]}}async processLocationAndMetrics(e,t,n){return this.callAction("processLocationAndMetrics",{originLat:e,originLng:t,destinationQuery:n})}async processPinDropMetrics(e,t,n,r){return this.callAction("processPinDropMetrics",{originLat:e,originLng:t,pinLat:n,pinLng:r})}};v($,"instance");let D=$;class _{constructor(e){v(this,"map");v(this,"targetMarker");v(this,"debounceTimer");v(this,"appsScriptService",D.getInstance());v(this,"currentDeviceLat",28.52785);v(this,"currentDeviceLng",76.08361);v(this,"isAddressModified",!1);const t=e.getData();t.lat&&(this.currentDeviceLat=t.lat),t.lon&&(this.currentDeviceLng=t.lon)}renderPopup(){let e=l.el("antinna-geo-modal");e||(e=document.createElement("div"),e.id="antinna-geo-modal",e.className="antinna-geo-backdrop",e.innerHTML=`
-        <div class="antinna-geo-content">
-          <div class="antinna-geo-header">
-            <h3>Destination Verification</h3>
-            <button class="antinna-geo-close" onclick="document.getElementById('antinna-geo-modal').classList.remove('active')">&times;</button>
-          </div>
-          <p class="antinna-geo-subtitle">
-            Type to search, choose from suggestions, <b>OR click directly on the map</b> to drop a custom pinpoint marker.
-          </p>
+  content: r"""let state = {
+  product: null,
+  service: null,
+  selected: {},
+  slide: 0
+};
 
-          <div class="antinna-geo-search-container">
-            <input id="antinna-geo-search" type="text" placeholder="Start typing address..." autocomplete="off">
-            <div id="antinna-geo-dropdown" class="antinna-geo-dropdown"></div>
-          </div>
+document.addEventListener('DOMContentLoaded', () => {
+  // Small timeout to ensure Blogger has finished its own internal rendering
+  setTimeout(() => {
+    if (document.getElementById('post-body-raw')) initItem();
+    if (document.getElementById('app-grid')) initGrid();
+  }, 100);
+});
 
-          <div id="antinna-geo-status" class="antinna-geo-status">Detecting position...</div>
+function initGrid() {
+  const cards = document.querySelectorAll('.card');
+  if (cards.length === 0) return;
 
-          <div id="antinna-geo-map-canvas"></div>
+  // Lazy load observer
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+         const img = e.target.querySelector('.card-img');
+         if (img && img.dataset.src) {
+            img.src = img.dataset.src;
+            delete img.dataset.src;
+         }
+         observer.unobserve(e.target);
+      }
+    });
+  });
+  cards.forEach(c => observer.observe(c));
 
-          <div id="antinna-geo-metrics" class="antinna-geo-metrics" style="display: none;">
-            <strong>Target Location Context:</strong><br>
-            <span id="antinna-geo-clean-address" style="font-weight: 600;"></span><br>
+  // Primary source: Attempt to use the full feed to bypass snippet limitations
+  const path = window.location.pathname;
+  let feedUrl = '/feeds/posts/default?alt=json&max-results=25';
+  if (path.includes('/search/label/')) {
+    const label = path.split('/').pop().split('?')[0];
+    feedUrl = `/feeds/posts/default/-/${label}?alt=json&max-results=25`;
+  }
 
-            <div style="margin-top:10px; display:grid; grid-template-columns: 1fr 1fr; gap:10px;">
-                <div>📍 Target: <span class="antinna-geo-tag" id="antinna-geo-tag-target">0.0, 0.0</span></div>
-                <div>📱 Current: <span class="antinna-geo-tag" id="antinna-geo-tag-current">0.0, 0.0</span></div>
-            </div>
-            <div style="margin-top:8px; font-weight:700; color:var(--accent);">
-                Distance: <span id="antinna-geo-dist">--</span> | Duration: <span id="antinna-geo-dur">--</span>
-            </div>
-          </div>
+  fetch(feedUrl)
+    .then(res => res.json())
+    .then(feedData => {
+       const entries = feedData.feed.entry || [];
+       cards.forEach(card => {
+         const cardUrl = card.href.split('?')[0].split('#')[0];
+         const entry = entries.find(e => e.link.some(l => l.rel === 'alternate' && l.href.includes(cardUrl)));
 
-          <div id="antinna-geo-address-form" style="display:none; margin-top:15px; border-top: 1px solid #eee; padding-top:15px;">
-              <div style="display:grid; grid-template-columns: 1fr 1fr; gap:10px;">
-                  <div class="v-group">
-                      <span class="v-label">Flat/Plot/Building</span>
-                      <input id="geo-extendedAddress" class="antinna-geo-input" placeholder="e.g. 3rd Floor, Plot 42"/>
-                  </div>
-                  <div class="v-group">
-                      <span class="v-label">Street/Sector</span>
-                      <input id="geo-streetAddress" class="antinna-geo-input" placeholder="e.g. Sector 14"/>
-                  </div>
-              </div>
-              <div style="display:grid; grid-template-columns: 1fr 1fr; gap:10px; margin-top:10px;">
-                  <div class="v-group">
-                      <span class="v-label">City</span>
-                      <input id="geo-locality" class="antinna-geo-input" readonly style="background:#f8f9fa;"/>
-                  </div>
-                  <div class="v-group">
-                      <span class="v-label">Postal Code</span>
-                      <input id="geo-postalCode" class="antinna-geo-input" placeholder="6-digit PIN"/>
-                  </div>
-              </div>
-          </div>
+         if (entry) {
+           const content = entry.content.$t;
+           const data = parseJSON(content);
+           if (data) renderCardData(card, data);
+         } else {
+           // Fallback to hidden grid-data if feed fetch fails or entry not found
+           const raw = card.querySelector('.grid-data');
+           if (raw) {
+             const data = parseJSON(raw.textContent);
+             if (data) renderCardData(card, data);
+           }
+         }
+       });
+    })
+    .catch(() => {
+       // Direct fallback on fetch error
+       cards.forEach(card => {
+         const raw = card.querySelector('.grid-data');
+         if (raw) {
+           const data = parseJSON(raw.textContent);
+           if (data) renderCardData(card, data);
+         }
+       });
+    });
+}
 
-          <button id="antinna-geo-finalize-btn" class="v-btn active" style="width:100%; margin-top:20px; display:none; align-items:center; justify-content:center; gap:10px;">
-            <span class="antinna-spinner"></span>
-            <span class="btn-text">Finalize Order</span>
-          </button>
-        </div>
-      `,document.body.appendChild(e),l.injectModalStyles(),this.setupListeners()),e.classList.add("active"),this.initMap()}setupListeners(){const e=l.el("antinna-geo-search");e&&(e.oninput=r=>this.handleTypeAhead(r.target.value)),["geo-extendedAddress","geo-streetAddress","geo-postalCode"].forEach(r=>{const i=l.el(r);i&&(i.oninput=()=>{r!=="geo-postalCode"&&(this.isAddressModified=!0),this.validateAddressForm()})}),document.addEventListener("click",r=>{const i=l.el("antinna-geo-dropdown");i&&r.target!==e&&(i.style.display="none")});const n=l.el("antinna-geo-finalize-btn");n&&(n.onclick=async()=>{try{this.setFinalizeLoading(!0),await new Promise(i=>setTimeout(i,800));const r=this.collectDeliveryData();window.AntinnaEngine.setOrderDelivery(r),this.setFinalizeLoading(!1),window.AntinnaEngine.showOrderSummary()}catch(r){console.error("Error in finalizeBtn.onclick:",r)}})}setFinalizeLoading(e){const t=l.el("antinna-geo-finalize-btn");t&&t.classList.toggle("loading",e)}validateAddressForm(){var i,o,c;const e=(i=l.el("geo-extendedAddress"))==null?void 0:i.value.trim(),t=(o=l.el("geo-streetAddress"))==null?void 0:o.value.trim(),n=(c=l.el("geo-postalCode"))==null?void 0:c.value.trim(),r=l.el("antinna-geo-finalize-btn");if(r){const s=!!(e&&t&&n&&n.length>=6);r.style.display=s?"flex":"none"}}collectDeliveryData(){var r,i,o,c,s,d,u,g,h;const e=(r=this.targetMarker)==null?void 0:r.getLatLng(),t=e?e.lat:((i=window.lastGeoResponse)==null?void 0:i.lat)||0,n=e?e.lng:((o=window.lastGeoResponse)==null?void 0:o.lng)||0;return{"@type":"ParcelDelivery",deliveryName:"Standard Handheld Delivery",deliveryAddress:{"@type":"PostalAddress",extendedAddress:(c=l.el("geo-extendedAddress"))==null?void 0:c.value,streetAddress:(s=l.el("geo-streetAddress"))==null?void 0:s.value,addressLocality:(d=l.el("geo-locality"))==null?void 0:d.value,addressRegion:((g=(u=window.lastGeoResponse)==null?void 0:u.addressDetails)==null?void 0:g.addressRegion)||"HR",postalCode:(h=l.el("geo-postalCode"))==null?void 0:h.value,addressCountry:"IN"},deliveryStatus:{"@type":"DeliveryEvent",name:"Final Destination Drop-off",location:{"@type":"Place",name:"Exact Delivery Coordinates",geo:{"@type":"GeoCoordinates",latitude:String(t),longitude:String(n)}}}}}async initMap(){await l.injectLeaflet();const e=window.L;if(!e)return;const t=[this.currentDeviceLat,this.currentDeviceLng];if(this.map)this.map.setView(t,13),this.targetMarker.setLatLng(t);else{const n=e.tileLayer("https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}",{attribution:"Tiles &copy; Esri"}),r=e.tileLayer("https://server.arcgisonline.com/ArcGIS/rest/services/Reference/World_Boundaries_and_Places/MapServer/tile/{z}/{y}/{x}"),i=e.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",{attribution:"© OpenStreetMap contributors"});this.map=e.map(l.el("antinna-geo-map-canvas"),{layers:[n,r]}).setView(t,13);const o={"Satellite Hybrid":e.layerGroup([n,r]),Streets:i};e.control.layers(o).addTo(this.map),this.targetMarker=e.marker(t,{draggable:!0,title:"Delivery Location"}).addTo(this.map),this.map.on("click",c=>{this.handleManualPinPosition(c.latlng.lat,c.latlng.lng)}),this.targetMarker.on("dragend",c=>{const s=c.target.getLatLng();this.handleManualPinPosition(s.lat,s.lng)})}navigator.geolocation&&navigator.geolocation.getCurrentPosition(n=>{this.currentDeviceLat=n.coords.latitude,this.currentDeviceLng=n.coords.longitude;const r=[this.currentDeviceLat,this.currentDeviceLng];this.map.setView(r,13),this.targetMarker.setLatLng(r),l.setContent("antinna-geo-status","Position synchronized.")})}async handleManualPinPosition(e,t){this.targetMarker&&this.targetMarker.setLatLng([e,t]),l.setContent("antinna-geo-status","Pin dropped. Computing metrics...");try{const n=await this.appsScriptService.processPinDropMetrics(this.currentDeviceLat,this.currentDeviceLng,e,t);this.updateTelemetryUI(n)}catch{l.setContent("antinna-geo-status","Error computing metrics.")}}handleTypeAhead(e){clearTimeout(this.debounceTimer);const t=l.el("antinna-geo-dropdown");if(t){if(e.length<3){t.innerHTML="",t.style.display="none";return}this.debounceTimer=setTimeout(async()=>{try{const n=await this.appsScriptService.getPlaceSuggestions(e);this.populateDropdown(n)}catch{}},400)}}populateDropdown(e){const t=l.el("antinna-geo-dropdown");if(t){if(t.innerHTML="",e.length===0){t.style.display="none";return}e.forEach(n=>{const r=document.createElement("div");r.className="antinna-geo-dropdown-item",r.innerText=n,r.onclick=async()=>{const i=l.el("antinna-geo-search");i&&(i.value=n),t.style.display="none",l.setContent("antinna-geo-status","Resolving coordinates...");try{this.isAddressModified=!1;const o=await this.appsScriptService.processLocationAndMetrics(this.currentDeviceLat,this.currentDeviceLng,n);if(o.success){const c=[o.lat,o.lng];this.map.setView(c,15),this.targetMarker.setLatLng(c),this.updateTelemetryUI(o)}}catch{}},t.appendChild(r)}),t.style.display="block"}}updateTelemetryUI(e){if(e.success){window.lastGeoResponse=e,l.setContent("antinna-geo-status","Location verified."),l.setContent("antinna-geo-clean-address",e.address),l.setContent("antinna-geo-dist",e.distance),l.setContent("antinna-geo-dur",e.duration);const t=Number(e.lat||0),n=Number(e.lng||e.lon||0);l.setContent("antinna-geo-tag-target",`${t.toFixed(4)}, ${n.toFixed(4)}`),l.setContent("antinna-geo-tag-current",`${this.currentDeviceLat.toFixed(4)}, ${this.currentDeviceLng.toFixed(4)}`),l.toggleClass("#antinna-geo-metrics","hidden",!1),l.el("antinna-geo-metrics").style.display="block";const r=l.el("antinna-geo-address-form");if(r){r.style.display="block";const i=e.addressDetails||{},o=l.el("geo-extendedAddress"),c=l.el("geo-streetAddress");this.isAddressModified||(o.value=i.extendedAddress||"",c.value=i.streetAddress||"");const s=l.el("geo-locality");s&&(s.value=i.addressLocality||e.city||e.addressLocality||"");const d=l.el("geo-postalCode");d&&(d.value=i.postalCode||e.pin||e.postalCode||""),this.validateAddressForm()}window.AntinnaEngine.setVerifiedLocation(e)}}}class J{constructor(e){this.cartManager=e}render(e,t){let n=l.el("antinna-summary-modal");n||(n=document.createElement("div"),n.id="antinna-summary-modal",n.className="antinna-geo-backdrop",document.body.appendChild(n),l.injectModalStyles());const r=this.cartManager.getOrder(),i=this.cartManager.getServiceabilityErrors(e),o=i.length===0,c=a.getArray(r.orderedItem).map(p=>{var L;const y=p.orderedItem||p.itemOffered||p,{price:f,currency:b}=a.extractPrice(y.offers||p.offers),x=a.getFirst(y.name)||"Unnamed Item",w=p.orderQuantity||((L=p.amount)==null?void 0:L.value)||1,I=a.extractAdvanceBookingRequirement(y.offers||p.offers),S=a.getArray(p.addOns).map(A=>{var T,M;const{price:O,currency:E}=a.extractPrice((T=A.orderedItem)==null?void 0:T.offers);return`
-                <div style="display:flex; justify-content:space-between; font-size:0.75rem; opacity:0.7; padding-left:15px; margin-top:4px;">
-                    <span>+ ${a.getFirst((M=A.orderedItem)==null?void 0:M.name)} <b>x${A.orderQuantity}</b></span>
-                    <span>${a.getCurrencySymbol(E)}${(parseFloat(O)*Number(A.orderQuantity)).toFixed(2)}</span>
-                </div>
-            `}).join("");return`
-            <div style="padding:10px 0; border-bottom:1px solid #eee; font-size:0.9rem;">
-                <div style="display:flex; justify-content:space-between;">
-                    <span style="flex:1;">${x} <b>x${w}</b></span>
-                    <span style="font-weight:700;">${a.getCurrencySymbol(b)}${(parseFloat(f)*Number(w)).toFixed(2)}</span>
-                </div>
-                ${S}
-                ${I?`<div style="font-size:0.75rem; color:var(--accent); margin-top:2px;">Booking: ${I}</div>`:""}
-            </div>
-        `}).join("");let s="";o||(s=`
-            <div style="margin-bottom:20px; padding:15px; background:#fff5f5; border:1px solid #feb2b2; border-radius:12px; color:#c53030; font-size:0.85rem;">
-                <div style="font-weight:800; margin-bottom:5px;">⚠️ Non-Serviceable Items</div>
-                <p style="margin:0;">The following items are not available in your area:</p>
-                <ul style="margin:5px 0 0 15px; padding:0;">
-                    ${i.map(p=>`<li>${p}</li>`).join("")}
-                </ul>
-                <div style="margin-top:10px; font-weight:700;">Please remove these from your cart to continue.</div>
-            </div>
-        `);const d=this.cartManager.getMaxLeadTime(),u=(e==null?void 0:e.duration)||"0 mins",h=(parseInt(u)||0)+d;let m=`${h} mins`;if(h>=60){const p=Math.floor(h/60),y=h%60;m=y>0?`${p}h ${y}m`:`${p}h`}n.innerHTML=`
-      <div class="antinna-geo-content">
-        <div class="antinna-geo-header">
-          <h3>Order Summary</h3>
-          <button class="antinna-geo-close" onclick="document.getElementById('antinna-summary-modal').classList.remove('active')">&times;</button>
-        </div>
+function renderCardData(card, data) {
+  const badge = card.querySelector('.card-badge');
+  const price = card.querySelector('.card-price');
+  const img = card.querySelector('.card-img');
 
-        ${s}
+  // Reset badges
+  badge.textContent = '';
+  badge.className = 'card-badge';
+  badge.style.display = 'inline-block';
 
-        <div style="margin-bottom:20px; padding:15px; background:var(--bg); border-radius:12px;">
-            <div style="font-size:0.75rem; text-transform:uppercase; color:#777; margin-bottom:5px; font-weight:800;">Delivery Destination</div>
-            <div style="font-weight:700; font-size:0.95rem;">
-                ${t?`${t.deliveryAddress.extendedAddress}, ${t.deliveryAddress.streetAddress}, ${t.deliveryAddress.addressLocality}`:(e==null?void 0:e.address)||"Verified Location"}
-            </div>
-            <div style="font-size:0.8rem; color:var(--accent); margin-top:4px;">
-                Distance: ${(e==null?void 0:e.distance)||"--"} | Est. Time: ${m}
-            </div>
-        </div>
+  if (data['@type'] === 'ProductGroup' || data['@type'] === 'Product') {
+    badge.textContent = 'Product';
+    const variants = data.hasVariant || [data];
+    const first = variants[0];
 
-        <div style="max-height:200px; overflow-y:auto; margin-bottom:20px;">
-            ${c}
-        </div>
+    if (first.offers) {
+      price.textContent = (first.offers.priceCurrency || '') + ' ' + (first.offers.price || '');
 
-        <div style="display:flex; justify-content:space-between; font-weight:900; font-size:1.2rem; margin:20px 0;">
-            <span>Grand Total</span>
-            <span>${a.getCurrencySymbol(r.priceCurrency||"INR")}${r.totalPrice||0}</span>
-        </div>
+      const isOut = first.offers.availability === 'https://schema.org/OutOfStock';
+      if (isOut) {
+        price.classList.add('blurry');
+        const outB = document.createElement('div');
+        outB.className = 'card-badge out-stock';
+        outB.style.marginLeft = '5px';
+        outB.textContent = 'Out of Stock';
+        badge.after(outB);
+      }
 
-        <div id="google-pay-button-container" style="display:flex; justify-content:center; margin-top:20px;"></div>
+      const seller = first.offers.seller;
+      if (seller && (seller.knowsAbout || seller.hasOfferCatalog)) {
+        const sBadge = document.createElement('div');
+        sBadge.className = 'card-badge';
+        sBadge.style.background = '#3498db';
+        sBadge.style.color = '#fff';
+        sBadge.style.marginLeft = '5px';
+        sBadge.textContent = '(* Optional Product Related Seller Service Paid Add-Ons available kind stuff)';
+        badge.after(sBadge);
+      }
+    }
+    // Prioritize ProductGroup images for Grid/Homepage view as requested
+    const imageSource = data.image || first.image || (data.hasVariant && data.hasVariant.find(v => v.image)?.image);
+    if (imageSource) img.src = Array.isArray(imageSource) ? imageSource[0] : (imageSource.url || imageSource);
 
-        <p style="font-size:0.7rem; text-align:center; opacity:0.5; margin-top:15px;">
-            By clicking Pay, you agree to our <a href="/p/terms-conditions.html" target="_blank" style="color:inherit; text-decoration:underline;">terms and conditions</a>.
-        </p>
-      </div>
-    `,n.classList.add("active"),this.renderGooglePayButton(r,e,o)}renderGooglePayButton(e,t,n){const r=l.el("google-pay-button-container");if(!r)return;if(r.innerHTML="",!n){r.innerHTML=`
-            <button class="v-btn" style="width:100%; opacity:0.5; cursor:not-allowed;" disabled>
-                Check Coverage to Pay
-            </button>
-          `;return}const i=document.documentElement.classList.contains("dark"),o=document.createElement("button");o.className=`gpay-button ${i?"white":"black"}`,o.style.cssText=`
-          background-image: url('https://www.gstatic.com/instantbuy/svg/dark_gpay.svg');
-          background-origin: content-box;
-          background-position: center;
-          background-repeat: no-repeat;
-          background-size: contain;
-          border: 0;
-          border-radius: 4px;
-          box-shadow: 0 1px 1px 0 rgba(60, 64, 67, 0.3), 0 1px 3px 1px rgba(60, 64, 67, 0.15);
-          cursor: pointer;
-          height: 48px;
-          min-width: 160px;
-          padding: 12px 24px;
-          width: 100%;
-          background-color: ${i?"#fff":"#000"};
-      `,i&&(o.style.backgroundImage="url('https://www.gstatic.com/instantbuy/svg/light_gpay.svg')"),o.onclick=()=>{window.GooglePayService.initPayment(e,t)},r.appendChild(o)}}class W{constructor(){v(this,"confirmationResult",null);v(this,"resendTimer",null);v(this,"countdown",60);v(this,"selectedCountry",{code:"+91",name:"India",flag:"🇮🇳"});v(this,"countries",[{code:"+91",name:"India",flag:"🇮🇳"},{code:"+1",name:"USA",flag:"🇺🇸"},{code:"+44",name:"UK",flag:"🇬🇧"},{code:"+971",name:"UAE",flag:"🇦🇪"},{code:"+65",name:"Singapore",flag:"🇸🇬"}])}render(){let e=l.el("antinna-phone-modal");e||(e=document.createElement("div"),e.id="antinna-phone-modal",e.className="antinna-geo-backdrop",l.injectModalStyles(),e.innerHTML=`
-        <div class="antinna-geo-content">
-          <div class="antinna-geo-header">
-            <h3>Phone Verification</h3>
-            <button class="antinna-geo-close" onclick="document.getElementById('antinna-phone-modal').classList.remove('active')">&times;</button>
-          </div>
-          <p class="antinna-geo-subtitle">
-            Please link your phone number to continue with the order.
-          </p>
+  } else if (data['@type'] === 'LocalBusiness' || data['@type'] === 'Service') {
+    badge.textContent = 'Service';
+    badge.style.background = '#3498db';
+    badge.style.color = '#fff';
 
-          <div id="phone-input-container">
-            <div class="antinna-geo-search-container antinna-input-prefixed">
-                <div id="antinna-country-trigger" class="antinna-country-selector">
-                    <span id="antinna-selected-flag">${this.selectedCountry.flag}</span>
-                    <span id="antinna-selected-code">${this.selectedCountry.code}</span>
-                    <span class="antinna-country-chevron"></span>
-                    <div id="antinna-country-list" class="antinna-country-list">
-                        ${this.countries.map(t=>`
-                            <div class="antinna-country-item" data-code="${t.code}">
-                                <span class="antinna-country-flag">${t.flag}</span>
-                                <span class="antinna-country-name">${t.name}</span>
-                                <span class="antinna-country-code">${t.code}</span>
-                            </div>
-                        `).join("")}
-                    </div>
-                </div>
-                <input id="antinna-phone-number" type="tel" placeholder="98765 43210" autocomplete="off">
-            </div>
-            <div id="recaptcha-container" style="margin-top:15px;"></div>
-            <button id="antinna-send-otp-btn" class="v-btn active" style="width:100%; margin-top:20px; display: flex; align-items: center; justify-content: center;">
-                <span class="antinna-spinner"></span>
-                <span class="btn-text">Send OTP</span>
-            </button>
-          </div>
+    // Check if standalone service provider also has general offerings
+    if (data.knowsAbout || (data.hasOfferCatalog && data.hasOfferCatalog.itemListElement && data.hasOfferCatalog.itemListElement.length > 1)) {
+      const sBadge = document.createElement('div');
+      sBadge.className = 'card-badge';
+      sBadge.style.background = '#27ae60';
+      sBadge.style.color = '#fff';
+      sBadge.style.marginLeft = '5px';
+      sBadge.textContent = '(Multi-Service)';
+      badge.after(sBadge);
+    }
 
-          <div id="otp-input-container" style="display:none;">
-            <div class="antinna-geo-search-container">
-                <input id="antinna-otp-code" type="text" placeholder="Enter 6-digit OTP" maxlength="6" autocomplete="off">
-            </div>
-            <div id="antinna-resend-container" style="margin-top:15px; font-size:0.85rem; text-align:center; color:#777;">
-                Didn't receive code? <button id="antinna-resend-btn" disabled style="background:none; border:none; color:var(--accent); font-weight:700; cursor:pointer; opacity:0.5;">Resend (<span id="antinna-countdown">60</span>s)</button>
-            </div>
-            <button id="antinna-verify-otp-btn" class="v-btn active" style="width:100%; margin-top:20px; display: flex; align-items: center; justify-content: center;">
-                <span class="antinna-spinner"></span>
-                <span class="btn-text">Verify & Link</span>
-            </button>
-            <button class="qty-btn" style="border:none; margin-top:10px; background:none; width:100%;" onclick="document.getElementById('phone-input-container').style.display='block'; document.getElementById('otp-input-container').style.display='none';">Back</button>
-          </div>
-        </div>
-      `,document.body.appendChild(e),this.setupListeners()),e.classList.add("active"),this.initRecaptcha()}setupListeners(){const e=l.el("antinna-send-otp-btn"),t=l.el("antinna-verify-otp-btn"),n=l.el("antinna-resend-btn"),r=l.el("antinna-country-trigger"),i=l.el("antinna-country-list");e&&(e.onclick=()=>this.handleSendOTP()),t&&(t.onclick=()=>this.handleVerifyOTP()),n&&(n.onclick=()=>this.handleSendOTP()),r&&(r.onclick=o=>{o.stopPropagation();const c=i==null?void 0:i.classList.toggle("active");r.classList.toggle("active",c)}),document.querySelectorAll(".antinna-country-item").forEach(o=>{o.onclick=c=>{c.stopPropagation();const s=o.dataset.code;s&&this.setCountry(s)}}),document.addEventListener("click",()=>{i==null||i.classList.remove("active")})}setCountry(e){const t=this.countries.find(n=>n.code===e);if(t){this.selectedCountry=t,l.setContent("antinna-selected-flag",t.flag),l.setContent("antinna-selected-code",t.code);const n=l.el("antinna-country-list"),r=l.el("antinna-country-trigger");n==null||n.classList.remove("active"),r==null||r.classList.remove("active")}}initRecaptcha(){if(window.firebaseAuth&&!window.recaptchaVerifier)try{const{RecaptchaVerifier:t}=window.firebaseAuthInternal||{};t&&console.log("RecaptchaVerifier ready")}catch{}}setBtnLoading(e,t){const n=l.el(e);n&&n.classList.toggle("loading",t)}startResendTimer(){this.resendTimer&&clearInterval(this.resendTimer),this.countdown=60,l.setHtml("antinna-resend-container",`Didn't receive code? <button id="antinna-resend-btn" disabled style="background:none; border:none; color:var(--accent); font-weight:700; cursor:pointer; opacity:0.5;">Resend (<span id="antinna-countdown">60</span>s)</button>`),l.el("antinna-resend-btn")&&console.log("Resend btn ready");const t=l.el("antinna-countdown");this.resendTimer=setInterval(()=>{if(this.countdown--,t&&(t.textContent=String(this.countdown)),this.countdown<=0&&(clearInterval(this.resendTimer),l.el("antinna-resend-container"))){l.setHtml("antinna-resend-container",`Didn't receive code? <button id="antinna-resend-btn" style="background:none; border:none; color:var(--accent); font-weight:700; cursor:pointer;">Resend Now</button>`);const r=l.el("antinna-resend-btn");r&&(r.onclick=()=>this.handleSendOTP())}},1e3)}async handleSendOTP(){const e=l.el("antinna-phone-number");let t=e==null?void 0:e.value.trim().replace(/\D/g,"");if(!t||t.length<7){l.showToast("Enter a valid phone number","error");return}t=this.selectedCountry.code+t;const n=window.firebaseAuth,r=n==null?void 0:n.currentUser;if(!r){l.showToast("Authentication required","error");return}const i=window.RecaptchaVerifier,o=window.linkWithPhoneNumber;if(!i||!o){l.showToast("Auth engine not fully loaded","error");return}const c=l.el("phone-input-container").style.display!=="none"?"antinna-send-otp-btn":"antinna-resend-btn";this.setBtnLoading(c,!0);try{window.recaptchaVerifier||(window.recaptchaVerifier=new i(n,"recaptcha-container",{size:"invisible"})),this.confirmationResult=await o(r,t,window.recaptchaVerifier),l.el("phone-input-container").style.display="none",l.el("otp-input-container").style.display="block",l.showToast("OTP sent successfully!","success"),this.startResendTimer()}catch(s){console.error("Phone linking failed",s),l.showToast(s.message||"Failed to send OTP","error")}finally{this.setBtnLoading(c,!1)}}async handleVerifyOTP(){var n;const e=l.el("antinna-otp-code"),t=e==null?void 0:e.value.trim();if(!t||t.length!==6){l.showToast("Enter a valid 6-digit OTP","error");return}if(this.confirmationResult){this.setBtnLoading("antinna-verify-otp-btn",!0);try{await this.confirmationResult.confirm(t),l.showToast("Phone linked successfully!","success"),(n=l.el("antinna-phone-modal"))==null||n.classList.remove("active"),window.hasPhoneLinked=!0,this.resendTimer&&clearInterval(this.resendTimer),window.AntinnaEngine.showGeoVerification()}catch(r){console.error("OTP Verification failed",r);const i=r.message||r.toString();l.showToast(`OTP Verification failed: ${i}`,"error")}finally{this.setBtnLoading("antinna-verify-otp-btn",!1)}}}}class Y{constructor(e,t){v(this,"dropdown",null);v(this,"selectedIndex",-1);v(this,"suggestions",[]);this.inputId=e,this.bloggerService=t,this.init()}init(){const e=l.el(this.inputId);if(!e)return;e.setAttribute("autocomplete","off"),this.dropdown=document.createElement("div"),this.dropdown.className="antinna-search-dropdown";const t=e.closest(".search-input-group")||e.parentElement;t&&(t.style.setProperty("position","relative","important"),t.appendChild(this.dropdown));let n;e.oninput=()=>{clearTimeout(n),n=setTimeout(()=>this.handleInput(e.value),300)},e.onkeydown=r=>this.handleKeydown(r),document.addEventListener("click",r=>{var i;!e.contains(r.target)&&!((i=this.dropdown)!=null&&i.contains(r.target))&&this.hide()})}async handleInput(e){if(e.length<2){this.hide();return}this.suggestions=await this.bloggerService.fetchSearchSuggestions(e),this.render()}render(){if(this.dropdown){if(this.suggestions.length===0){this.hide();return}this.dropdown.innerHTML=this.suggestions.map((e,t)=>`
-        <div class="antinna-search-item ${t===this.selectedIndex?"active":""}"
-             onclick="window.handleSuggestionClick('${e.replace(/'/g,"\\'")}')">
-            ${e}
-        </div>
-    `).join(""),window.handleSuggestionClick=e=>this.select(e),this.dropdown.style.display="block"}}handleKeydown(e){var t;((t=this.dropdown)==null?void 0:t.style.display)==="block"&&(e.key==="ArrowDown"?(e.preventDefault(),this.selectedIndex=(this.selectedIndex+1)%this.suggestions.length,this.render()):e.key==="ArrowUp"?(e.preventDefault(),this.selectedIndex=(this.selectedIndex-1+this.suggestions.length)%this.suggestions.length,this.render()):e.key==="Enter"&&this.selectedIndex>=0?(e.preventDefault(),this.select(this.suggestions[this.selectedIndex])):e.key==="Escape"&&this.hide())}select(e){var n;const t=l.el(this.inputId);t&&(t.value=e,this.hide(),(n=t.form)==null||n.dispatchEvent(new Event("submit",{cancelable:!0,bubbles:!0})))}hide(){this.dropdown&&(this.dropdown.style.display="none",this.selectedIndex=-1)}}class Q{constructor(){v(this,"state",{product:null,selectedVariants:{},currentSlide:0,quantity:1,lastClickedAttribute:null,selectedPackage:null,verifiedLocation:null,orderDelivery:null});v(this,"gridPageSize",20);v(this,"gridStartIndex",1);v(this,"currentLabels",[]);v(this,"currentSearchQuery","");v(this,"displaySearchQuery","");v(this,"searchKeywordsOnly","");v(this,"CartManager",new F);v(this,"LocationManager",new q);v(this,"BloggerDataService",new j);v(this,"GooglePayService",new U);v(this,"ProductRenderer",new H);v(this,"CartRenderer",new G(this.CartManager));v(this,"LocationRenderer",new K(this.LocationManager));v(this,"GeoVerificationRenderer",new _(this.LocationManager));v(this,"OrderSummaryRenderer",new J(this.CartManager));v(this,"PhoneVerificationRenderer",new W);v(this,"SearchAutocompleteRenderer");this.detectContext(),this.exposeGlobals(),this.init()}detectContext(){const e=window.location.pathname,t=new URLSearchParams(window.location.search);if(e.includes("/search/label/")){const r=e.split("/search/label/")[1].split("?")[0];r&&this.currentLabels.push(decodeURIComponent(r))}const n=t.get("q");if(n){this.currentSearchQuery=n;const r=[/"postalCode":\s*"([^"]+)"/,/postalCode:\s*([^|\s]+)/,/"addressLocality":\s*"([^"]+)"/,/addressLocality:\s*([^|\s]+)/];let i=n;r.forEach(s=>{i=i.replace(s,"").trim()}),this.displaySearchQuery=i,this.searchKeywordsOnly=i.replace(/label:[^|\s]+/g,"").trim();const o=/label:([^|\s]+)/g;let c;for(;(c=o.exec(n))!==null;)if(c[1]){const s=decodeURIComponent(c[1].replace(/_/g," "));this.currentLabels.includes(s)||this.currentLabels.push(s)}}}formatLocationQuery(){const e=this.LocationManager.getData();return e.pin?`"postalCode": "${e.pin}"`:e.city?`"addressLocality": "${e.city}"`:""}exposeGlobals(){window.AntinnaEngine=this,window.CartManager=this.CartManager,window.LocationManager=this.LocationManager,window.CartRenderer=this.CartRenderer,window.LocationRenderer=this.LocationRenderer,window.GooglePayService=this.GooglePayService,window.GeoVerificationRenderer=this.GeoVerificationRenderer,window.UIManager=l,window.nextSlide=()=>this.goToSlide(this.state.currentSlide+1),window.prevSlide=()=>this.goToSlide(this.state.currentSlide-1),window.goToSlide=e=>this.goToSlide(e),window.syncDots=e=>this.syncDots(e),window.showToast=(e,t)=>l.showToast(e,t),window.loadMorePosts=()=>this.loadMorePosts(),window.refreshCartData=()=>this.refreshCartData(),window.startCheckout=()=>this.startCheckout(),window.showOrderSummary=()=>this.showOrderSummary(),window.showGeoVerification=()=>this.showGeoVerification(),window.handleClearLocation=()=>this.LocationRenderer.handleClearLocation(),window.handleAddToCart=()=>this.handleAddToCart(),window.setQuantity=e=>{this.state.quantity=e},window.loadProductData=()=>this.loadProductData()}init(){document.addEventListener("DOMContentLoaded",()=>{this.LocationRenderer.init(),this.CartRenderer.renderFab(),this.setupEventListeners(),this.loadProductData(),this.loadGridData(),this.updateCategoryLinks(),this.highlightActiveLabels(),this.initSearchInput(),this.SearchAutocompleteRenderer=new Y("search-q",this.BloggerDataService)})}initSearchInput(){const e=l.el("search-q");e&&this.displaySearchQuery&&(e.value=this.displaySearchQuery)}updateCategoryLinks(){const e=this.searchKeywordsOnly.trim(),t=this.formatLocationQuery();if(!e&&!t)return;document.querySelectorAll(".cat-link").forEach(r=>{var s;const i=((s=r.textContent)==null?void 0:s.trim())||"";let o="";i.toUpperCase()==="ALL"?o=`${e} ${t}`.trim():o=`label:${i} ${e} ${t}`.trim();const c=encodeURIComponent(o).replace(/%20/g," ").replace(/%3A/g,":");r.href=`/search?q=${c}`})}highlightActiveLabels(){const e=document.querySelectorAll(".cat-link");this.currentLabels.length>0&&e.forEach(t=>{var i;const n=(i=t.textContent)==null?void 0:i.trim();if((n==null?void 0:n.toUpperCase())==="ALL"){t.classList.remove("active");return}this.currentLabels.some(o=>n===o)&&t.classList.add("active")})}setupEventListeners(){const e=l.el("qty-plus"),t=l.el("qty-minus"),n=l.el("add-to-cart-btn"),r=l.el("search-form");e&&(e.onclick=()=>{const i=window.currentQuantityLimits;if((i==null?void 0:i.maxValue)!==null&&this.state.quantity>=i.maxValue){l.showToast(`Maximum limit of ${i.maxValue} reached`,"error");return}this.state.quantity++,l.setContent("qty-val",String(this.state.quantity)),this.ProductRenderer.updateQtyButtons()}),t&&(t.onclick=()=>{this.state.quantity>1&&(this.state.quantity--,l.setContent("qty-val",String(this.state.quantity)),this.ProductRenderer.updateQtyButtons())}),n&&(n.onclick=()=>{this.handleAddToCart(),this.ProductRenderer.render(this.state.product,this.state,(i,o)=>{this.state.selectedVariants[i]=o,this.state.lastClickedAttribute=i,this.ProductRenderer.render(this.state.product,this.state,()=>{})})}),r&&(r.onsubmit=i=>{i.preventDefault();const o=l.el("search-q");if(!o)return;const c=o.value.trim(),s=this.formatLocationQuery();if(!c&&!s){l.showToast("Please enter a query or select location","error");return}const d=s&&!c.includes(s)?`${c} ${s}`.trim():c,u=r.getAttribute("action")||"/search";let g=encodeURIComponent(d).replace(/%3A/g,":").replace(/%7C/g,"|");window.location.href=`${u}?q=${g}`})}loadProductData(){setTimeout(()=>{var t,n;const e=l.el("post-body-raw");if(e){const r=a.extractJsonLd(e.textContent||"");r&&(this.state.product=r,this.ProductRenderer.render(r,this.state,(i,o)=>{this.state.selectedVariants[i]=o,this.state.lastClickedAttribute=i,this.ProductRenderer.render(this.state.product,this.state,()=>{})}),((t=r.offers)!=null&&t.seller||r.seller||r.provider)&&this.ProductRenderer.renderSeller(((n=r.offers)==null?void 0:n.seller)||r.seller||r.provider))}l.toggleClass("#initializing-state","hidden",!0),l.toggleClass("#carousel-section","hidden",!1),l.toggleClass("#details-section","hidden",!1)},100)}async loadGridData(){const e=l.el("app-grid");if(!e)return;const{entries:t}=await this.BloggerDataService.fetchFeedData(50,1,this.currentLabels,this.currentSearchQuery);e.children.length===0?this.renderEntriesToGrid(t,e):e.querySelectorAll(".card").forEach(r=>{var s;const i=r.href.split("?")[0].split("#")[0],o=t.find(d=>{var g;return(((g=d.link.find(h=>h.rel==="alternate"))==null?void 0:g.href)||"").toLowerCase().includes(i.toLowerCase())}),c=o?this.BloggerDataService.extractSchemaFromEntry(o):a.extractJsonLd(((s=r.querySelector(".grid-data"))==null?void 0:s.textContent)||"");c&&this.renderGridCard(r,c)})}async loadMorePosts(){var r;const e=l.el("app-grid");if(!e)return;this.gridStartIndex+=this.gridPageSize;const{entries:t,totalResults:n}=await this.BloggerDataService.fetchFeedData(this.gridPageSize,this.gridStartIndex,this.currentLabels,this.currentSearchQuery);this.renderEntriesToGrid(t,e),this.gridStartIndex+this.gridPageSize>n&&((r=l.el("load-more-btn"))==null||r.classList.add("hidden"))}renderEntriesToGrid(e,t){e.forEach(n=>{var i;const r=this.BloggerDataService.extractSchemaFromEntry(n);if(r){const o=((i=n.link.find(u=>u.rel==="alternate"))==null?void 0:i.href)||"#",c=document.createElement("a");c.className="card",c.href=o;const s=a.getFirst(r.image),d=(s==null?void 0:s.url)||s||"https://via.placeholder.com/400x300?text=Antinna";c.innerHTML=`
-            <div class="card-img-wrapper">
-               <div class="card-img-scroll" onscroll="AntinnaEngine.syncDots(this)">
-                  <img class="card-img" src="${d}" loading="lazy"/>
-               </div>
-               <div class="card-dots"></div>
-            </div>
-            <div class="card-body">
-              <div class="card-badge">Loading...</div>
-              <h3 class="card-title">${a.getFirst(r.name)||"Untitled"}</h3>
-              <div class="card-price">--</div>
-            </div>
-          `,t.appendChild(c),this.renderGridCard(c,r)}})}async refreshCartData(){this.CartRenderer.setLoading(!0);try{const e=this.CartManager.getOrder(),{entries:t}=await this.BloggerDataService.fetchFeedData(100,1);a.getArray(e.orderedItem).forEach((n,r)=>{var s;const i=a.getFirst((s=n.orderedItem)==null?void 0:s.url);if(!i)return;const o=t.find(d=>{var g;return(((g=d.link.find(h=>h.rel==="alternate"))==null?void 0:g.href)||"").toLowerCase().includes(i.toLowerCase().split("?")[0].split("#")[0])}),c=o?this.BloggerDataService.extractSchemaFromEntry(o):null;this.CartManager.updateItemDetails(r,c)})}catch(e){console.error("Refresh failed",e)}finally{this.CartRenderer.setLoading(!1),this.CartRenderer.showModal()}}renderGridCard(e,t){const n=e.querySelector(".card-badge"),r=e.querySelector(".card-price"),i=e.querySelector(".card-img-scroll"),o=e.querySelector(".card-dots"),c=a.getArray(t["@type"]),s=c.some(u=>u==="LocalBusiness"||u==="Store"||u==="Organization");if(n&&(s?n.textContent="Business":c.some(u=>u==="ProductGroup"||u==="Product")?n.textContent="Product":n.textContent="Service"),r)if(s)r.textContent=a.getFirst(t.telephone)||"Contact Us";else{const u=a.getArray(t.hasVariant),g=u.length>0?u[0]:t,{price:h,currency:m}=a.extractPrice(g.offers||g),p=a.getCurrencySymbol(m);r.textContent=`${p}${h}`}const d=a.getArray(t.image);d[0]&&i&&(i.innerHTML=d.map(u=>`<img class="card-img" src="${u.url||u}" loading="lazy"/>`).join(""),o&&d.length>1&&(o.innerHTML=d.map((u,g)=>`<div class="dot ${g===0?"active":""}"></div>`).join("")))}handleAddToCart(){var i,o;const e=this.state.product;if(!e)return;let t=a.findMatchingVariant(e,this.state.selectedVariants,this.state.lastClickedAttribute);this.state.selectedPackage&&(t={...t,name:((i=this.state.selectedPackage.itemOffered)==null?void 0:i.name)||this.state.selectedPackage.name,offers:{price:this.state.selectedPackage.price,priceCurrency:this.state.selectedPackage.priceCurrency}});const n={...t,url:window.location.href.split("?")[0].split("#")[0]},r=a.getFirst((o=n.offers)==null?void 0:o.seller)||a.getFirst(e.seller)||e.provider;this.CartManager.addItem(n,r,this.state.selectedVariants,this.state.quantity),this.CartRenderer.updateUI(),l.showToast("Added to Bag","success")}goToSlide(e){const t=l.el("carousel-inner"),n=document.querySelectorAll(".carousel-item");!t||n.length===0||(e<0&&(e=n.length-1),e>=n.length&&(e=0),this.state.currentSlide=e,t.style.transform=`translateX(-${e*100}%)`,document.querySelectorAll(".thumb").forEach((r,i)=>r.classList.toggle("active",i===e)))}syncDots(e){var r;const t=Math.round(e.scrollLeft/e.offsetWidth),n=(r=e.parentElement)==null?void 0:r.querySelectorAll(".dot");n==null||n.forEach((i,o)=>i.classList.toggle("active",o===t))}startCheckout(){if(this.CartRenderer.hideModal(),!window.isLoggedIn){this.showLoginPrompt();return}if(!window.hasPhoneLinked){this.PhoneVerificationRenderer.render();return}this.showGeoVerification()}showGeoVerification(){this.GeoVerificationRenderer.renderPopup()}setVerifiedLocation(e){this.state.verifiedLocation=e}setOrderDelivery(e){this.state.orderDelivery=e}showOrderSummary(){var e;if(!window.isLoggedIn){this.showLoginPrompt();return}(e=l.el("antinna-geo-modal"))==null||e.classList.remove("active"),this.OrderSummaryRenderer.render(this.state.verifiedLocation,this.state.orderDelivery)}showLoginPrompt(){let e=l.el("antinna-login-modal");if(!e){e=document.createElement("div"),e.id="antinna-login-modal",e.className="antinna-geo-backdrop",l.injectModalStyles(),e.innerHTML=`
-            <div class="antinna-geo-content" style="text-align:center;">
-                <div class="antinna-geo-header">
-                    <h3>Sign in Required</h3>
-                    <button class="antinna-geo-close" onclick="document.getElementById('antinna-login-modal').classList.remove('active')">&times;</button>
-                </div>
-                <p style="margin-bottom:30px; opacity:0.8;">Please sign in to your account to finalize your order and proceed to payment.</p>
-                <div style="display:flex; justify-content:center;">
-                    <button class="g-signin-button" id="google-login-btn-checkout">
-                        <div class="g-icon-wrapper">
-                            <svg viewBox="0 0 18 18" width="18px" height="18px" xmlns="http://www.w3.org/2000/svg">
-                                <path fill="#4285F4" d="M17.64 9.2c0-.63-.06-1.25-.16-1.84H9v3.47h4.84c-.21 1.12-.83 2.07-1.79 2.73v2.27h2.9c1.7-1.57 2.69-3.87 2.69-6.63z"/>
-                                <path fill="#34A853" d="M9 18c2.43 0 4.47-.8 5.96-2.18l-2.9-2.27c-.8.54-1.83.86-3.06.86-2.33 0-4.3-1.58-5-3.7H.9v2.33C2.38 16.03 5.46 18 9 18z"/>
-                                <path fill="#FBBC05" d="M4 10.71a4.99 4.99 0 010-3.42V4.96H.9a8.99 8.99 0 000 8.08L4 10.71z"/>
-                                <path fill="#EA4335" d="M9 3.58c1.32 0 2.5.45 3.44 1.35L15 2.22C13.46.79 11.43 0 9 0 5.46 0 2.38 1.97.9 4.96L4 7.29c.7-2.12 2.67-3.71 5-3.71z"/>
-                            </svg>
-                        </div>
-                        <span class="g-text">Sign in with Google</span>
-                    </button>
-                </div>
-            </div>
-          `,document.body.appendChild(e);const n=l.el("google-login-btn-checkout");n&&(n.onclick=()=>{const r=l.el("google-login-btn-sidebar");r?r.click():window.handleLogin&&window.handleLogin()})}e.classList.add("active");const t=setInterval(()=>{window.isLoggedIn&&(clearInterval(t),e==null||e.classList.remove("active"),this.startCheckout())},1e3)}}new Q;const P=class P{constructor(){v(this,"baseUrl","https://api.antinna.in")}static getInstance(){return P.instance||(P.instance=new P),P.instance}async request(e,t,n=null){var o,c;const r={"Content-Type":"application/json","X-Antinna-Client-Id":localStorage.getItem("antinna_client_id")||"",Authorization:`Bearer ${window.firebaseAuthToken||((c=(o=window.firebaseAuth)==null?void 0:o.currentUser)==null?void 0:c.accessToken)||""}`},i={method:e,headers:r};n&&(i.body=JSON.stringify(n));try{const s=await fetch(`${this.baseUrl}${t}`,i);if(!s.ok)throw new Error(`API error! status: ${s.status}`);return await s.json()}catch(s){throw console.error(`ProductionApiService error [${t}]:`,s),s}}async createOrder(e){return this.request("POST","/orders",e)}async recordPayment(e){return this.request("POST","/payments",e)}async isOrderPaid(e){return this.request("GET",`/orders/${e}/status`)}async listNotifications(e=1,t=20){return this.request("GET",`/notifications?page=${e}&pageSize=${t}`)}};v(P,"instance");let R=P;const X=Object.freeze(Object.defineProperty({__proto__:null,ProductionApiService:R},Symbol.toStringTag,{value:"Module"}));return k.App=Q,Object.defineProperty(k,Symbol.toStringTag,{value:"Module"}),k}({});
-""",
+    if (data.hasOfferCatalog && data.hasOfferCatalog.itemListElement) {
+      const off = data.hasOfferCatalog.itemListElement[0];
+      price.textContent = 'Starts ' + (off.priceCurrency || '') + ' ' + (off.price || '');
+    } else if (data.offers) {
+      price.textContent = (data.offers.priceCurrency || '') + ' ' + (data.offers.price || '');
+    }
+    if (data.image) img.src = Array.isArray(data.image) ? data.image[0] : (data.image.url || data.image);
+  }
+}
+
+function initItem() {
+  const rawEl = document.getElementById('post-body-raw');
+  if (!rawEl) {
+    console.warn("Element post-body-raw not found");
+    return;
+  }
+
+  let data = parseJSON(rawEl.textContent);
+
+  // If parsing failed, try finding any script tag in the whole document as a last resort
+  if (!data) {
+    const allScripts = document.querySelectorAll('script[type="application/ld+json"]');
+    for (let s of allScripts) {
+      data = parseJSON(s.textContent);
+      if (data && (data['@type'] === 'ProductGroup' || data['@type'] === 'Service' || data['@type'] === 'LocalBusiness')) break;
+    }
+  }
+
+  if (!data) {
+    const initEl = document.getElementById('initializing-state');
+    if (initEl) initEl.innerHTML = '<div style="color:red; font-weight:bold;">Error: No valid Product or Service data found in this post.</div>';
+    return;
+  }
+
+  if (data['@type'] === 'ProductGroup') {
+    state.product = data;
+    renderProduct();
+  } else if (data['@type'] === 'LocalBusiness' || data['@type'] === 'Service' || data['@type'] === 'Product') {
+    state.service = data;
+    renderService();
+  }
+
+  const init = document.getElementById('initializing-state');
+  if (init) init.classList.add('hidden');
+  document.getElementById('carousel-section')?.classList.remove('hidden');
+  document.getElementById('details-section')?.classList.remove('hidden');
+}
+
+function decodeEntities(text) {
+  const textArea = document.createElement('textarea');
+  textArea.innerHTML = text;
+  return textArea.value;
+}
+
+function parseJSON(text) {
+  if (!text) return null;
+
+  // Try to find JSON-LD in a script tag using regex first (more robust against Blogger wrapping)
+  const scriptMatch = text.match(/<script[^>]*type=["']application\/ld\+json["'][^>]*>([\s\S]*?)<\/script>/i);
+  let jsonStr = scriptMatch ? scriptMatch[1] : text;
+
+  // Decode entities multiple times if needed (Blogger sometimes double-escapes)
+  let decoded = decodeEntities(jsonStr);
+  if (decoded.includes('&quot;')) decoded = decodeEntities(decoded);
+
+  try {
+    // Remove comments that might be inside the script
+    const cleanJson = decoded.replace(/\/\*[\s\S]*?\*\/|([^\\:]|^)\/\/.*$/gm, '$1').trim();
+    return JSON.parse(cleanJson);
+  } catch (e) {
+    // Final fallback: try to find the largest JSON-like block { ... }
+    const jsonBlock = decoded.match(/\{[\s\S]*\}/);
+    if (jsonBlock) {
+      try {
+        return JSON.parse(jsonBlock[0]);
+      } catch (e2) {}
+    }
+    console.error("Failed to parse JSON-LD:", e, "Original text snippet:", text.substring(0, 100));
+    return null;
+  }
+}
+
+function renderProduct() {
+  const p = state.product;
+  document.getElementById('p-name').textContent = p.name;
+  document.getElementById('p-desc').textContent = p.description;
+
+  // Handle Brand if present
+  const brandDiv = document.createElement('div');
+  brandDiv.style.color = '#777';
+  brandDiv.style.marginTop = '-10px';
+  brandDiv.textContent = typeof p.brand === 'string' ? p.brand : (p.brand?.name || '');
+  document.getElementById('p-name').after(brandDiv);
+
+  const vars = document.getElementById('p-variants');
+  vars.innerHTML = '';
+
+  if (p.variesBy) {
+    p.variesBy.forEach(vUrl => {
+      const attr = vUrl.split(/[\/#]/).pop();
+      const values = [...new Set(p.hasVariant.map(v => v[attr]).filter(Boolean))];
+
+      const group = document.createElement('div');
+      group.className = 'v-group';
+      group.innerHTML = `<span class="v-label">Select ${attr}:</span>`;
+      const opts = document.createElement('div');
+      opts.className = 'v-options';
+
+      values.forEach(val => {
+        const btn = document.createElement('button');
+        btn.className = 'v-btn';
+        btn.dataset.attr = attr;
+        btn.dataset.val = val;
+
+        if (attr.toLowerCase() === 'color') {
+          btn.classList.add('v-color');
+          btn.style.backgroundColor = val;
+          btn.title = val;
+        } else {
+          btn.textContent = val;
+        }
+        btn.onclick = () => {
+          state.selected[attr] = val;
+          updateProductView(attr);
+          checkAvailability();
+        };
+        opts.appendChild(btn);
+      });
+      group.appendChild(opts);
+      vars.appendChild(group);
+      state.selected[attr] = values[0];
+    });
+  }
+  updateProductView();
+  checkAvailability();
+}
+
+function checkAvailability() {
+  const p = state.product;
+  const allBtns = document.querySelectorAll('.v-btn[data-attr]');
+
+  allBtns.forEach(btn => {
+    const attr = btn.dataset.attr;
+    const val = btn.dataset.val;
+
+    // A button is always "possible" if ANY variant has this value.
+    // This prevents deadlocks in mutually exclusive attribute sets.
+    const globalPossible = p.hasVariant.some(v => v[attr] === val);
+
+    // Check if it's compatible with CURRENT selection (excluding itself)
+    const testSelected = { ...state.selected, [attr]: val };
+    const matchingVariant = p.hasVariant.find(v =>
+      Object.entries(testSelected).every(([k, vVal]) => !v[k] || v[k] === vVal)
+    );
+
+    const outOfStock = matchingVariant && matchingVariant.offers && matchingVariant.offers.availability === 'https://schema.org/OutOfStock';
+
+    btn.disabled = !globalPossible;
+    // Visual cue for incompatible but selectable: dashed border or lower opacity
+    btn.style.opacity = !matchingVariant ? '0.4' : (outOfStock ? '0.6' : '1');
+    btn.style.borderStyle = !matchingVariant ? 'dashed' : 'solid';
+
+    if (outOfStock) btn.title = val + ' (Out of Stock)';
+    else btn.title = val;
+  });
+}
+
+function formatValue(v) {
+  if (!v) return '';
+  if (typeof v === 'string') return v;
+  if (v['@type'] === 'QuantitativeValue') return `${v.value} ${v.unitCode || v.unitText || ''}`;
+  return v.value || '';
+}
+
+function updateProductView(pivotAttr) {
+  const p = state.product;
+  if (!p.hasVariant || p.hasVariant.length === 0) return;
+
+  let variant = p.hasVariant.find(v =>
+    Object.entries(state.selected).every(([key, val]) => v[key] === val)
+  );
+
+  // If no perfect match, pivot based on the last clicked attribute
+  if (!variant) {
+     variant = p.hasVariant.find(v => v[pivotAttr] === state.selected[pivotAttr]) || p.hasVariant[0];
+     // Sync selected state to this new variant
+     if (p.variesBy) {
+       p.variesBy.forEach(vUrl => {
+         const attr = vUrl.split(/[\/#]/).pop();
+         if (variant[attr]) state.selected[attr] = variant[attr];
+       });
+     }
+  }
+
+  // Display SKU
+  const skuEl = document.getElementById('p-sku');
+  if (skuEl) skuEl.textContent = variant.sku ? 'SKU: ' + variant.sku : '';
+
+  if (variant.offers) {
+    const off = variant.offers;
+    const priceEl = document.getElementById('p-price');
+    priceEl.textContent = (off.priceCurrency || '') + ' ' + (off.price || '');
+
+    // Advanced Availability Logic
+    priceEl.classList.toggle('blurry', off.availability === 'https://schema.org/OutOfStock');
+
+    let badge = document.getElementById('stock-indicator');
+    if (!badge) {
+      badge = document.createElement('span');
+      badge.id = 'stock-indicator';
+      badge.className = 'stock-badge';
+      priceEl.after(badge);
+    }
+
+    let av = off.availability;
+    if (av === 'https://schema.org/InStock') {
+      badge.textContent = 'In Stock';
+      badge.className = 'stock-badge in-stock';
+    } else if (av === 'https://schema.org/OutOfStock') {
+      badge.textContent = 'Out of Stock';
+      badge.className = 'stock-badge out-stock';
+    } else if (av === 'https://schema.org/InStoreOnly') {
+      badge.textContent = 'In-Store Only';
+      badge.className = 'stock-badge instore-only';
+    } else if (av === 'https://schema.org/PreOrder') {
+      badge.textContent = 'Pre-Order';
+      if (off.availabilityStarts) badge.textContent += ' (from ' + off.availabilityStarts.split('T')[0] + ')';
+      badge.className = 'stock-badge pre-order';
+    }
+
+    // Order Info Section
+    const orderSection = document.getElementById('p-order-info');
+    const orderList = document.getElementById('order-info-list');
+    let orderHtml = '';
+
+    if (off.deliveryLeadTime) orderHtml += `<div>&#128666; <b>Delivery:</b> ~${formatValue(off.deliveryLeadTime)}</div>`;
+    if (off.eligibleQuantity && off.eligibleQuantity.minValue) orderHtml += `<div>&#128230; <b>Min Order:</b> ${off.eligibleQuantity.minValue} units</div>`;
+    if (off.acceptedPaymentMethod) {
+      const payments = Array.isArray(off.acceptedPaymentMethod) ? off.acceptedPaymentMethod : [off.acceptedPaymentMethod];
+      orderHtml += `<div>&#128179; <b>Payments:</b> ${payments.map(p => p.split('/').pop()).join(', ')}</div>`;
+    }
+    if (off.availableDeliveryMethod) orderHtml += `<div>&#128230; <b>Method:</b> ${off.availableDeliveryMethod.split('/').pop()}</div>`;
+
+    if (orderHtml) {
+      orderSection.style.display = 'block';
+      orderList.innerHTML = orderHtml;
+    } else {
+      orderSection.style.display = 'none';
+    }
+
+    // Resolve Seller
+    renderSeller(off.seller);
+  }
+
+  // Single view: Prioritize Variant images as requested. Fallback to group images only if variant has none.
+  let vImgs = Array.isArray(variant.image) ? variant.image : (variant.image ? [variant.image] : []);
+  let pImgs = Array.isArray(p.image) ? p.image : (p.image ? [p.image] : []);
+  let allImgs = vImgs.length > 0 ? vImgs : pImgs;
+
+  renderCarousel(allImgs);
+
+  // Render Specifications
+  const specs = document.getElementById('p-specs');
+  const list = document.getElementById('specs-list');
+  const fields = {
+    'Model': variant.model || p.model,
+    'Material': variant.material || p.material,
+    'Condition': (variant.itemCondition || variant.offers?.itemCondition)?.split('/').pop() || '',
+    'GTIN': variant.gtin13 || variant.gtin8 || '',
+    'MPN': variant.mpn || '',
+    'Weight': formatValue(variant.weight || p.weight),
+    'Height': formatValue(variant.height || p.height),
+    'Width': formatValue(variant.width || p.width),
+    'Depth': formatValue(variant.depth || p.depth),
+    'Color': variant.color || p.color
+  };
+
+  let specsHtml = '';
+  for (let [label, val] of Object.entries(fields)) {
+    if (val) specsHtml += `<div style="display:flex; justify-content:space-between; padding:4px 0; border-bottom:1px dashed #f0f0f0;">
+                              <span style="color:#888;">${label}</span>
+                              <span style="font-weight:600;">${val}</span>
+                           </div>`;
+  }
+
+  if (specsHtml) {
+    specs.style.display = 'block';
+    list.innerHTML = specsHtml;
+  } else {
+    specs.style.display = 'none';
+  }
+
+  // Highlight buttons
+  document.querySelectorAll('.v-btn').forEach(btn => {
+    const val = btn.textContent || btn.title;
+    const isSelected = Object.values(state.selected).some(v => v === val);
+    btn.classList.toggle('active', isSelected);
+  });
+}
+
+function renderService() {
+  const s = state.service;
+  document.getElementById('p-name').textContent = s.name;
+  document.getElementById('p-desc').textContent = s.description;
+
+  // Handle Area Served
+  if (s.areaServed) {
+    const area = typeof s.areaServed === 'string' ? s.areaServed : (s.areaServed.name || s.areaServed['@type']);
+    const badge = document.createElement('div');
+    badge.className = 'geo-badge';
+    badge.style.background = '#e8f5e9';
+    badge.style.color = '#2e7d32';
+    badge.innerHTML = '&#127760; <b>Area Served:</b> ' + area;
+    document.getElementById('p-desc').after(badge);
+  }
+
+  const vars = document.getElementById('p-variants');
+  vars.innerHTML = s.hasOfferCatalog ? '<h4>Available Options</h4>' : '';
+
+  if (s.hasOfferCatalog) {
+    const opts = document.createElement('div');
+    opts.className = 'v-options';
+    s.hasOfferCatalog.itemListElement.forEach(offer => {
+      const btn = document.createElement('button');
+      btn.className = 'v-btn';
+      btn.innerHTML = `${offer.itemOffered.name} <br/> <b>${offer.priceCurrency} ${offer.price}</b>`;
+      btn.onclick = () => {
+        document.getElementById('p-price').textContent = `${offer.priceCurrency} ${offer.price}`;
+        document.querySelectorAll('.v-btn').forEach(b => b.classList.remove("active"));
+        btn.classList.add('active');
+      };
+      opts.appendChild(btn);
+    });
+    vars.appendChild(opts);
+    opts.firstChild.click();
+  }
+
+  renderCarousel(s.image);
+  renderSeller(s.provider || s);
+}
+
+function renderCarousel(images) {
+  const inner = document.getElementById('carousel-inner');
+  const thumbRow = document.getElementById('thumbnail-row');
+  if (!inner) return;
+
+  inner.innerHTML = '';
+  if (thumbRow) thumbRow.innerHTML = '';
+
+  state.slide = 0;
+  inner.style.transform = `translateX(0)`;
+
+  let list = Array.isArray(images) ? images : [images];
+  list = list.filter(Boolean);
+
+  list.forEach((src, idx) => {
+    const imgUrl = src.url || src;
+
+    // Main slide
+    const div = document.createElement('div');
+    div.className = 'carousel-item';
+    div.innerHTML = `<img src="${imgUrl}"/>`;
+    inner.appendChild(div);
+
+    // Thumbnail
+    if (thumbRow && list.length > 1) {
+      const thumb = document.createElement('img');
+      thumb.className = 'thumb' + (idx === 0 ? ' active' : '');
+      thumb.src = imgUrl;
+      thumb.onclick = () => goToSlide(idx);
+      thumbRow.appendChild(thumb);
+    }
+  });
+}
+
+window.goToSlide = (idx) => {
+  const inner = document.getElementById('carousel-inner');
+  const thumbs = document.querySelectorAll('.thumb');
+  const count = document.querySelectorAll('.carousel-item').length;
+  if (idx < 0) idx = count - 1;
+  if (idx >= count) idx = 0;
+
+  state.slide = idx;
+  if (inner) inner.style.transform = `translateX(-${idx * 100}%)`;
+  thumbs.forEach((t, i) => t.classList.toggle('active', i === idx));
+};
+
+window.nextSlide = () => {
+  const count = document.querySelectorAll('.carousel-item').length;
+  if (count > 1) {
+    goToSlide(state.slide + 1);
+  }
+};
+
+window.prevSlide = () => {
+  const count = document.querySelectorAll('.carousel-item').length;
+  if (count > 1) {
+    goToSlide(state.slide - 1);
+  }
+};
+
+function renderSeller(seller) {
+  if (!seller) return;
+  const info = document.getElementById('seller-info');
+
+  let contactHtml = `<strong>${seller.name}</strong><br/>`;
+  if (seller.telephone) contactHtml += `&#128222; ${seller.telephone}<br/>`;
+  if (seller.email) contactHtml += `&#128231; <a href="mailto:${seller.email}" style="color:inherit;">${seller.email}</a><br/>`;
+  if (seller.address) {
+    const addr = seller.address;
+    contactHtml += `&#128205; ${addr.streetAddress || ''} ${addr.addressLocality || ''} ${addr.addressCountry || ''}`;
+  }
+
+  // Social Links
+  if (seller.sameAs) {
+    contactHtml += `<div class="social-row">`;
+    const links = Array.isArray(seller.sameAs) ? seller.sameAs : [seller.sameAs];
+    links.forEach(url => {
+      let label = 'Link';
+      if (url.includes('facebook.com')) label = 'Facebook';
+      else if (url.includes('instagram.com')) label = 'Instagram';
+      else if (url.includes('twitter.com') || url.includes('x.com')) label = 'Twitter';
+      else if (url.includes('linkedin.com')) label = 'LinkedIn';
+      contactHtml += `<a href="${url}" class="social-link" target="_blank">${label}</a>`;
+    });
+    contactHtml += `</div>`;
+  }
+
+  info.innerHTML = contactHtml;
+
+  if (seller.geo && seller.geo.latitude && seller.geo.longitude) {
+    document.getElementById('geo-info').style.display = 'inline-flex';
+    const lat = seller.geo.latitude;
+    const lon = seller.geo.longitude;
+    document.getElementById('geo-text').textContent = lat + ', ' + lon;
+
+    const mapsLink = document.getElementById('maps-link');
+    if (mapsLink) {
+      const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
+      mapsLink.href = isMobile ? `geo:${lat},${lon}` : `https://www.google.com/maps/search/?api=1&query=${lat},${lon}`;
+      mapsLink.style.display = 'inline-block';
+    }
+  } else {
+    document.getElementById('geo-info').style.display = 'none';
+    const mapsLink = document.getElementById('maps-link');
+    if (mapsLink) mapsLink.style.display = 'none';
+  }
+
+  // Handle "Other Services"
+  let services = [];
+  if (seller.hasOfferCatalog && seller.hasOfferCatalog.itemListElement) {
+    services = seller.hasOfferCatalog.itemListElement;
+  } else if (seller.knowsAbout) {
+    services = Array.isArray(seller.knowsAbout) ? seller.knowsAbout : [seller.knowsAbout];
+  }
+
+  const otherSection = document.getElementById('other-services');
+  const list = document.getElementById('other-services-list');
+
+  if (services.length > 0) {
+    otherSection.style.display = 'block';
+    list.innerHTML = '';
+    services.forEach(ser => {
+      let name = '';
+      let price = '';
+
+      if (typeof ser === 'string') name = ser;
+      else {
+        name = ser.name || (ser.itemOffered ? ser.itemOffered.name : '');
+        if (ser.price) price = `${ser.priceCurrency || ''} ${ser.price}`;
+      }
+
+      if (name) {
+        const div = document.createElement("div");
+        div.className = "h-card";
+        div.innerHTML = `<strong>${name}</strong>${price ? `<br/><span style="color:var(--accent); font-weight:700;">${price}</span>` : ''}`;
+        list.appendChild(div);
+      }
+    });
+  } else {
+    otherSection.style.display = 'none';
+  }
+}""",
 );
