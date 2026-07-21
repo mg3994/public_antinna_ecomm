@@ -6,15 +6,19 @@ import 'core/parser.dart';
 import 'core/schema_resolver.dart';
 import 'core/location_manager.dart';
 import 'core/cart_manager.dart';
+import 'infrastructure/production_api_service.dart';
+import 'infrastructure/apps_script_service.dart';
 import 'presentation/grid_renderer.dart';
 import 'presentation/carousel_renderer.dart';
 import 'presentation/product_renderer.dart';
 import 'presentation/service_renderer.dart';
 
 void main() {
-  // Instantiate core managers
+  // Instantiate core managers and services
   final loc = LocationManager();
   final cart = CartManager();
+  final api = ProductionApiService();
+  final gas = AppsScriptService();
 
   // Expose LocationManager with a highly compatible JS-wrapper
   final jsLoc = js.JsObject.jsify({
@@ -71,6 +75,41 @@ void main() {
     'clear': js.allowInterop(cart.clear),
   });
   js.context['CartManager'] = jsCart;
+
+  // Expose ProductionApiService with highly compatible JS-wrapper
+  final jsApi = js.JsObject.jsify({
+    'createOrder': js.allowInterop((js.JsObject order) async {
+      final orderJson = js.context['JSON'].callMethod('stringify', [order]) as String;
+      final orderMap = json.decode(orderJson) as Map<String, dynamic>;
+      final result = await api.createOrder(orderMap);
+      return js.JsObject.jsify(result);
+    }),
+    'recordPayment': js.allowInterop((js.JsObject paymentData) async {
+      final paymentJson = js.context['JSON'].callMethod('stringify', [paymentData]) as String;
+      final paymentMap = json.decode(paymentJson) as Map<String, dynamic>;
+      final result = await api.recordPayment(paymentMap);
+      return js.JsObject.jsify(result);
+    }),
+    'isOrderPaid': js.allowInterop((String orderId) async {
+      final result = await api.isOrderPaid(orderId);
+      return js.JsObject.jsify(result);
+    }),
+  });
+  js.context['ProductionApiService'] = jsApi;
+
+  // Expose AppsScriptService with highly compatible JS-wrapper
+  final jsGas = js.JsObject.jsify({
+    'setMapUrl': js.allowInterop(gas.setMapUrl),
+    'getPlaceSuggestions': js.allowInterop((String token) async {
+      final result = await gas.getPlaceSuggestions(token);
+      return js.JsObject.jsify(result);
+    }),
+    'processLocationAndMetrics': js.allowInterop((double originLat, double originLng, String destination) async {
+      final result = await gas.processLocationAndMetrics(originLat, originLng, destination);
+      return js.JsObject.jsify(result);
+    }),
+  });
+  js.context['AppsScriptService'] = jsGas;
 
   document.addEventListener('DOMContentLoaded', (event) {
     window.animationFrame.then((_) {
