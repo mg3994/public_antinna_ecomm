@@ -8,6 +8,7 @@ import 'core/location_manager.dart';
 import 'core/cart_manager.dart';
 import 'infrastructure/production_api_service.dart';
 import 'infrastructure/apps_script_service.dart';
+import 'infrastructure/blogger_data_service.dart';
 import 'presentation/grid_renderer.dart';
 import 'presentation/carousel_renderer.dart';
 import 'presentation/product_renderer.dart';
@@ -19,6 +20,7 @@ void main() {
   final cart = CartManager();
   final api = ProductionApiService();
   final gas = AppsScriptService();
+  final blogger = BloggerDataService();
 
   // Expose LocationManager with a highly compatible JS-wrapper
   final jsLoc = js.JsObject.jsify({
@@ -110,6 +112,24 @@ void main() {
     }),
   });
   js.context['AppsScriptService'] = jsGas;
+
+  // Expose BloggerDataService with highly compatible JS-wrapper
+  final jsBlogger = js.JsObject.jsify({
+    'fetchFeedData': js.allowInterop(({int? maxResults, int? startIndex, dynamic labels, String? searchQuery}) async {
+      final result = await blogger.fetchFeedData(
+        maxResults: maxResults ?? 50,
+        startIndex: startIndex ?? 1,
+        labels: labels ?? '',
+        searchQuery: searchQuery ?? '',
+      );
+      return js.JsObject.jsify(result);
+    }),
+    'fetchSearchSuggestions': js.allowInterop((String query) async {
+      final result = await blogger.fetchSearchSuggestions(query);
+      return js.JsObject.jsify(result);
+    }),
+  });
+  js.context['BloggerDataService'] = jsBlogger;
 
   document.addEventListener('DOMContentLoaded', (event) {
     window.animationFrame.then((_) {
