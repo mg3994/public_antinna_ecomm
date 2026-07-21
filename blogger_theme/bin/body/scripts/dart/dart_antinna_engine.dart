@@ -1,14 +1,77 @@
 import 'dart:html';
+import 'dart:convert';
 import 'dart:js' as js;
 import 'core/state.dart';
 import 'core/parser.dart';
 import 'core/schema_resolver.dart';
+import 'core/location_manager.dart';
+import 'core/cart_manager.dart';
 import 'presentation/grid_renderer.dart';
 import 'presentation/carousel_renderer.dart';
 import 'presentation/product_renderer.dart';
 import 'presentation/service_renderer.dart';
 
 void main() {
+  // Instantiate core managers
+  final loc = LocationManager();
+  final cart = CartManager();
+
+  // Expose LocationManager with a highly compatible JS-wrapper
+  final jsLoc = js.JsObject.jsify({
+    'getData': js.allowInterop(() {
+      return js.JsObject.jsify({
+        'lat': loc.data.lat,
+        'lon': loc.data.lon,
+        'pin': loc.data.pin,
+        'city': loc.data.city,
+      });
+    }),
+    'setData': js.allowInterop((js.JsObject partial) {
+      loc.setData(
+        lat: partial['lat'] != null ? double.tryParse(partial['lat'].toString()) : null,
+        lon: partial['lon'] != null ? double.tryParse(partial['lon'].toString()) : null,
+        pin: partial['pin']?.toString(),
+        city: partial['city']?.toString(),
+      );
+    }),
+    'clear': js.allowInterop(loc.clear),
+  });
+  js.context['LocationManager'] = jsLoc;
+
+  // Expose CartManager with a highly compatible JS-wrapper
+  final jsCart = js.JsObject.jsify({
+    'getOrder': js.allowInterop(() {
+      return js.JsObject.jsify(cart.order);
+    }),
+    'addItem': js.allowInterop((js.JsObject item, [js.JsObject? seller, js.JsObject? variants, int? quantity]) {
+      final itemJson = js.context['JSON'].callMethod('stringify', [item]) as String;
+      final itemMap = json.decode(itemJson) as Map<String, dynamic>;
+
+      Map<String, dynamic>? sellerMap;
+      if (seller != null) {
+        final sellerJson = js.context['JSON'].callMethod('stringify', [seller]) as String;
+        sellerMap = json.decode(sellerJson) as Map<String, dynamic>;
+      }
+
+      Map<String, dynamic>? variantsMap;
+      if (variants != null) {
+        final variantsJson = js.context['JSON'].callMethod('stringify', [variants]) as String;
+        variantsMap = json.decode(variantsJson) as Map<String, dynamic>;
+      }
+
+      return cart.addItem(
+        itemMap,
+        seller: sellerMap,
+        selectedVariants: variantsMap,
+        quantity: quantity ?? 1,
+      );
+    }),
+    'removeItem': js.allowInterop(cart.removeItem),
+    'updateQty': js.allowInterop(cart.updateQty),
+    'clear': js.allowInterop(cart.clear),
+  });
+  js.context['CartManager'] = jsCart;
+
   document.addEventListener('DOMContentLoaded', (event) {
     window.animationFrame.then((_) {
       Future.delayed(const Duration(milliseconds: 100), () {
