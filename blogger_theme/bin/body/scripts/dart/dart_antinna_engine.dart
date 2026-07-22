@@ -9,6 +9,7 @@ import 'core/cart_manager.dart';
 import 'infrastructure/production_api_service.dart';
 import 'infrastructure/apps_script_service.dart';
 import 'infrastructure/blogger_data_service.dart';
+import 'infrastructure/google_pay_service.dart';
 import 'presentation/grid_renderer.dart';
 import 'presentation/carousel_renderer.dart';
 import 'presentation/product_renderer.dart';
@@ -21,6 +22,7 @@ void main() {
   final api = ProductionApiService();
   final gas = AppsScriptService();
   final blogger = BloggerDataService();
+  final gpay = GooglePayService();
 
   // Expose LocationManager with a highly compatible JS-wrapper
   final jsLoc = js.JsObject.jsify({
@@ -130,6 +132,23 @@ void main() {
     }),
   });
   js.context['BloggerDataService'] = jsBlogger;
+
+  // Expose GooglePayService with highly compatible JS-wrapper
+  final jsGpay = js.JsObject.jsify({
+    'initPayment': js.allowInterop((js.JsObject order, [js.JsObject? verifiedLocation]) async {
+      final orderJson = js.context['JSON'].callMethod('stringify', [order]) as String;
+      final orderMap = json.decode(orderJson) as Map<String, dynamic>;
+
+      Map<String, dynamic>? locationMap;
+      if (verifiedLocation != null) {
+        final locJson = js.context['JSON'].callMethod('stringify', [verifiedLocation]) as String;
+        locationMap = json.decode(locJson) as Map<String, dynamic>;
+      }
+
+      await gpay.initPayment(orderMap, verifiedLocation: locationMap);
+    }),
+  });
+  js.context['GooglePayService'] = jsGpay;
 
   document.addEventListener('DOMContentLoaded', (event) {
     window.animationFrame.then((_) {
