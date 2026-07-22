@@ -4,6 +4,7 @@ import { cors } from 'hono/cors';
 export interface Env {
   DB: D1Database;
   SESSIONS: KVNamespace;
+  FIREBASE_PROJECT_ID: string;
 }
 
 const app = new Hono<{ Bindings: Env }>();
@@ -38,6 +39,41 @@ function decodeJwt(token: string): any {
   }
 }
 
+// Enterprise-grade Firebase ID Token claims verification
+function verifyFirebaseIdToken(token: string, projectId: string): any | null {
+  const decoded = decodeJwt(token);
+  if (!decoded) return null;
+
+  const now = Math.floor(Date.now() / 1000);
+
+  // 1. Verify token is not expired
+  if (decoded.exp && now >= decoded.exp) {
+    console.error('ID Token expired. exp:', decoded.exp, 'now:', now);
+    return null;
+  }
+
+  // 2. Verify audience matches the target Firebase Project ID
+  if (decoded.aud !== projectId) {
+    console.error('ID Token audience mismatch. aud:', decoded.aud, 'expected:', projectId);
+    return null;
+  }
+
+  // 3. Verify issuer matches the expected secure token URL
+  const expectedIssuer = `https://securetoken.google.com/${projectId}`;
+  if (decoded.iss !== expectedIssuer) {
+    console.error('ID Token issuer mismatch. iss:', decoded.iss, 'expected:', expectedIssuer);
+    return null;
+  }
+
+  return {
+    uid: decoded.sub,
+    email: decoded.email,
+    name: decoded.name,
+    picture: decoded.picture,
+    phoneNumber: decoded.phone_number
+  };
+}
+
 // Auto-bootstrap tables inside Cloudflare D1 Database if they do not exist
 async function bootstrapDatabase(db: D1Database) {
   await db.batch([
@@ -61,9 +97,19 @@ async function bootstrapDatabase(db: D1Database) {
   ]);
 }
 
+// Helper to extract Bearer token from header
+function getBearerToken(authHeader: string | undefined): string | null {
+  if (authHeader && authHeader.startsWith('Bearer ')) {
+    return authHeader.substring(7);
+  }
+  return null;
+}
+
 // 1. POST /orders: Create a new order record
 app.post('/orders', async (c) => {
   const db = c.env.DB;
+  const projectId = c.env.FIREBASE_PROJECT_ID || 'antinnamain';
+
   if (!db) {
     return c.json({ error: 'Database binding "DB" is missing.' }, 500);
   }
@@ -73,22 +119,12 @@ app.post('/orders', async (c) => {
     const order = await c.req.json();
     const orderId = order.id || `ord_${Date.now()}_${Math.random().toString(36).substring(2, 7)}`;
 
-    // Parse Authorization header for Firebase ID token
-    const authHeader = c.req.header('Authorization');
+    // Parse and verify Authorization header for claims enrichment
+    const token = getBearerToken(c.req.header('Authorization'));
     let userDetails: any = null;
 
-    if (authHeader && authHeader.startsWith('Bearer ')) {
-      const token = authHeader.substring(7);
-      const decoded = decodeJwt(token);
-      if (decoded) {
-        userDetails = {
-          uid: decoded.sub,
-          email: decoded.email,
-          name: decoded.name,
-          picture: decoded.picture,
-          phoneNumber: decoded.phone_number
-        };
-      }
+    if (token) {
+      userDetails = verifyFirebaseIdToken(token, projectId);
     }
 
     // Rich Schema-LD enrichment: map userDetails as Person onto the order customer field
@@ -177,16 +213,28 @@ app.get('/orders/:id/status', async (c) => {
   }
 });
 
-// 4. POST /payments: Record a payment (idempotent payment processor)
+// 4. POST /payments: Record a payment (requires verified firebase ID Token + idempotent checkout)
 app.post('/payments', async (c) => {
   const db = c.env.DB;
   const kv = c.env.SESSIONS;
+  const projectId = c.env.FIREBASE_PROJECT_ID || 'antinnamain';
 
   if (!db) {
     return c.json({ error: 'Database binding "DB" is missing.' }, 500);
   }
   if (!kv) {
     return c.json({ error: 'KV Namespace binding "SESSIONS" is missing.' }, 500);
+  }
+
+  // Mandatory Token Verification Check
+  const token = getBearerToken(c.req.header('Authorization'));
+  if (!token) {
+    return c.json({ error: 'Unauthorized: Missing Authorization Bearer ID Token.' }, 401);
+  }
+
+  const verifiedUser = verifyFirebaseIdToken(token, projectId);
+  if (!verifiedUser) {
+    return c.json({ error: 'Unauthorized: Firebase ID Token is invalid, expired, or project ID mismatches.' }, 401);
   }
 
   try {
@@ -298,7 +346,7 @@ app.get('/notifications/:id', async (c) => {
   }
 });
 
-// 7. POST /sessions: Store or update user session data inside KV (Prefix key to avoid overlapping)
+// 7. POST /sessions: Store or update user session data inside KV (using browserClientId)
 app.post('/sessions', async (c) => {
   const kv = c.env.SESSIONS;
   if (!kv) {
@@ -306,52 +354,52 @@ app.post('/sessions', async (c) => {
   }
 
   try {
-    const { userId, sessionData } = await c.req.json();
-    if (!userId || !sessionData) {
-      return c.json({ error: 'Missing required fields: userId or sessionData' }, 400);
+    const { browserClientId, sessionData } = await c.req.json();
+    if (!browserClientId || !sessionData) {
+      return c.json({ error: 'Missing required fields: browserClientId or sessionData' }, 400);
     }
 
     // Persist session to KV with optional 7 days expiration (604800 seconds)
-    await kv.put(`session:${userId}`, JSON.stringify(sessionData), { expirationTtl: 604800 });
-    return c.json({ success: true, userId, message: 'User session stored successfully inside KV.' });
+    await kv.put(`session:${browserClientId}`, JSON.stringify(sessionData), { expirationTtl: 604800 });
+    return c.json({ success: true, browserClientId, message: 'User browser session stored successfully inside KV.' });
   } catch (err: any) {
     return c.json({ error: 'Failed to store user session', details: err.message }, 500);
   }
 });
 
-// 8. GET /sessions/:userId: Retrieve user session data from KV
-app.get('/sessions/:userId', async (c) => {
+// 8. GET /sessions/:browserClientId: Retrieve user session data from KV
+app.get('/sessions/:browserClientId', async (c) => {
   const kv = c.env.SESSIONS;
   if (!kv) {
     return c.json({ error: 'KV Namespace binding "SESSIONS" is missing.' }, 500);
   }
 
-  const userId = c.req.param('userId');
+  const browserClientId = c.req.param('browserClientId');
 
   try {
-    const savedSession = await kv.get(`session:${userId}`);
+    const savedSession = await kv.get(`session:${browserClientId}`);
     if (!savedSession) {
       return c.json({ error: 'Session not found or expired' }, 404);
     }
 
-    return c.json({ userId, sessionData: JSON.parse(savedSession) });
+    return c.json({ browserClientId, sessionData: JSON.parse(savedSession) });
   } catch (err: any) {
     return c.json({ error: 'Failed to retrieve session data', details: err.message }, 500);
   }
 });
 
-// 9. DELETE /sessions/:userId: Delete user session data from KV
-app.delete('/sessions/:userId', async (c) => {
+// 9. DELETE /sessions/:browserClientId: Delete user session data from KV
+app.delete('/sessions/:browserClientId', async (c) => {
   const kv = c.env.SESSIONS;
   if (!kv) {
     return c.json({ error: 'KV Namespace binding "SESSIONS" is missing.' }, 500);
   }
 
-  const userId = c.req.param('userId');
+  const browserClientId = c.req.param('browserClientId');
 
   try {
-    await kv.delete(`session:${userId}`);
-    return c.json({ success: true, userId, message: 'User session terminated and removed from KV.' });
+    await kv.delete(`session:${browserClientId}`);
+    return c.json({ success: true, browserClientId, message: 'User session terminated and removed from KV.' });
   } catch (err: any) {
     return c.json({ error: 'Failed to terminate session', details: err.message }, 500);
   }
