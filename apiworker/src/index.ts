@@ -57,14 +57,6 @@ async function bootstrapDatabase(db: D1Database) {
         created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
         FOREIGN KEY(order_id) REFERENCES orders(id)
       )
-    `),
-    db.prepare(`
-      CREATE TABLE IF NOT EXISTS notifications (
-        id INTEGER PRIMARY KEY AUTOINCREMENT,
-        title TEXT NOT NULL,
-        body TEXT NOT NULL,
-        created_at DATETIME DEFAULT CURRENT_TIMESTAMP
-      )
     `)
   ]);
 }
@@ -188,8 +180,13 @@ app.get('/orders/:id/status', async (c) => {
 // 4. POST /payments: Record a payment (idempotent payment processor)
 app.post('/payments', async (c) => {
   const db = c.env.DB;
+  const kv = c.env.SESSIONS;
+
   if (!db) {
     return c.json({ error: 'Database binding "DB" is missing.' }, 500);
+  }
+  if (!kv) {
+    return c.json({ error: 'KV Namespace binding "SESSIONS" is missing.' }, 500);
   }
 
   try {
@@ -224,10 +221,17 @@ app.post('/payments', async (c) => {
         .bind(orderId)
     ]);
 
-    // Insert auto-notification on payment success
-    await db.prepare('INSERT INTO notifications (title, body) VALUES (?, ?)')
-      .bind('Payment Success', `Payment for Order ${orderId} has been successfully recorded.`)
-      .run();
+    // Store notification inside KV Namespace (Reverse chronological key suffix)
+    const reverseTimeKey = (9999999999999 - Date.now()).toString();
+    const notificationKey = `notification:${reverseTimeKey}`;
+    const notificationObj = {
+      id: reverseTimeKey,
+      title: 'Payment Success',
+      body: `Payment for Order ${orderId} has been successfully recorded.`,
+      created_at: new Date().toISOString()
+    };
+
+    await kv.put(notificationKey, JSON.stringify(notificationObj));
 
     return c.json({ success: true, paymentId, message: 'Payment recorded and order status set to PAID.' }, 201);
   } catch (err: any) {
@@ -235,11 +239,11 @@ app.post('/payments', async (c) => {
   }
 });
 
-// 5. GET /notifications: List paginated notifications
+// 5. GET /notifications: List paginated notifications from KV Namespace SESSIONS
 app.get('/notifications', async (c) => {
-  const db = c.env.DB;
-  if (!db) {
-    return c.json({ error: 'Database binding "DB" is missing.' }, 500);
+  const kv = c.env.SESSIONS;
+  if (!kv) {
+    return c.json({ error: 'KV Namespace binding "SESSIONS" is missing.' }, 500);
   }
 
   const page = parseInt(c.req.query('page') || '1') || 1;
@@ -247,52 +251,54 @@ app.get('/notifications', async (c) => {
   const offset = (page - 1) * pageSize;
 
   try {
-    await bootstrapDatabase(db);
+    // List keys starting with prefix 'notification:'
+    const listResult = await kv.list({ prefix: 'notification:' });
+    const keys = listResult.keys;
 
-    const { results } = await db.prepare('SELECT * FROM notifications ORDER BY created_at DESC LIMIT ? OFFSET ?')
-      .bind(pageSize, offset)
-      .all();
+    // Slice based on pagination requirements
+    const paginatedKeys = keys.slice(offset, offset + pageSize);
+    const notificationsList: any[] = [];
 
-    const countResult = await db.prepare('SELECT COUNT(*) as count FROM notifications').first<{ count: number }>();
-    const totalResults = countResult?.count ?? 0;
+    for (const key of paginatedKeys) {
+      const val = await kv.get(key.name);
+      if (val) {
+        notificationsList.push(JSON.parse(val));
+      }
+    }
 
     return c.json({
-      notifications: results,
-      totalResults,
+      notifications: notificationsList,
+      totalResults: keys.length,
       page,
       pageSize,
     });
   } catch (err: any) {
-    return c.json({ error: 'Failed to retrieve notifications', details: err.message }, 500);
+    return c.json({ error: 'Failed to retrieve notifications from KV', details: err.message }, 500);
   }
 });
 
-// 6. GET /notifications/:id: Read specific notification by ID
+// 6. GET /notifications/:id: Read specific notification by ID from KV Namespace SESSIONS
 app.get('/notifications/:id', async (c) => {
-  const db = c.env.DB;
-  if (!db) {
-    return c.json({ error: 'Database binding "DB" is missing.' }, 500);
+  const kv = c.env.SESSIONS;
+  if (!kv) {
+    return c.json({ error: 'KV Namespace binding "SESSIONS" is missing.' }, 500);
   }
 
   const notificationId = c.req.param('id');
 
   try {
-    await bootstrapDatabase(db);
-    const result = await db.prepare('SELECT * FROM notifications WHERE id = ?')
-      .bind(notificationId)
-      .first();
-
-    if (!result) {
+    const val = await kv.get(`notification:${notificationId}`);
+    if (!val) {
       return c.json({ error: 'Notification not found' }, 404);
     }
 
-    return c.json(result);
+    return c.json(JSON.parse(val));
   } catch (err: any) {
-    return c.json({ error: 'Failed to retrieve notification', details: err.message }, 500);
+    return c.json({ error: 'Failed to retrieve notification from KV', details: err.message }, 500);
   }
 });
 
-// 7. POST /sessions: Store or update user session data inside KV
+// 7. POST /sessions: Store or update user session data inside KV (Prefix key to avoid overlapping)
 app.post('/sessions', async (c) => {
   const kv = c.env.SESSIONS;
   if (!kv) {
@@ -306,7 +312,7 @@ app.post('/sessions', async (c) => {
     }
 
     // Persist session to KV with optional 7 days expiration (604800 seconds)
-    await kv.put(userId, JSON.stringify(sessionData), { expirationTtl: 604800 });
+    await kv.put(`session:${userId}`, JSON.stringify(sessionData), { expirationTtl: 604800 });
     return c.json({ success: true, userId, message: 'User session stored successfully inside KV.' });
   } catch (err: any) {
     return c.json({ error: 'Failed to store user session', details: err.message }, 500);
@@ -323,7 +329,7 @@ app.get('/sessions/:userId', async (c) => {
   const userId = c.req.param('userId');
 
   try {
-    const savedSession = await kv.get(userId);
+    const savedSession = await kv.get(`session:${userId}`);
     if (!savedSession) {
       return c.json({ error: 'Session not found or expired' }, 404);
     }
@@ -344,7 +350,7 @@ app.delete('/sessions/:userId', async (c) => {
   const userId = c.req.param('userId');
 
   try {
-    await kv.delete(userId);
+    await kv.delete(`session:${userId}`);
     return c.json({ success: true, userId, message: 'User session terminated and removed from KV.' });
   } catch (err: any) {
     return c.json({ error: 'Failed to terminate session', details: err.message }, 500);
