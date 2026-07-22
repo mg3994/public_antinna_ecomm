@@ -27,5 +27,11 @@
 			"database_name": "antinna-db",
 			"database_id": "8c01d4a0-7b24-4f0f-8c31-9a74c35e5812"
 		}
+	],
+	"kv_namespaces": [
+		{
+			"binding": "SESSIONS",
+			"id": "a90df7ba-512c-4eef-b12a-7e04f128cbe9"
+		}
 	]
 }

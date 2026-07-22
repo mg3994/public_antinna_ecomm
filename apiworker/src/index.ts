@@ -3,6 +3,7 @@ import { cors } from 'hono/cors';
 
 export interface Env {
   DB: D1Database;
+  SESSIONS: KVNamespace;
 }
 
 const app = new Hono<{ Bindings: Env }>();
@@ -14,6 +15,28 @@ app.use('*', cors({
   allowHeaders: ['Content-Type', 'Authorization', 'X-Antinna-Client-Id'],
   maxAge: 86400,
 }));
+
+// Utility to decode JWT claims from Firebase ID Token without external dependencies
+function decodeJwt(token: string): any {
+  try {
+    const parts = token.split('.');
+    if (parts.length !== 3) return null;
+    const payload = parts[1];
+
+    // Base64URL decode compliant with Cloudflare Workers environment
+    const base64 = payload.replace(/-/g, '+').replace(/_/g, '/');
+    const jsonPayload = decodeURIComponent(
+      atob(base64)
+        .split('')
+        .map((c) => '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2))
+        .join('')
+    );
+    return JSON.parse(jsonPayload);
+  } catch (e) {
+    console.error('Failed to decode JWT payload:', e);
+    return null;
+  }
+}
 
 // Auto-bootstrap tables inside Cloudflare D1 Database if they do not exist
 async function bootstrapDatabase(db: D1Database) {
@@ -58,18 +81,86 @@ app.post('/orders', async (c) => {
     const order = await c.req.json();
     const orderId = order.id || `ord_${Date.now()}_${Math.random().toString(36).substring(2, 7)}`;
 
+    // Parse Authorization header for Firebase ID token
+    const authHeader = c.req.header('Authorization');
+    let userDetails: any = null;
+
+    if (authHeader && authHeader.startsWith('Bearer ')) {
+      const token = authHeader.substring(7);
+      const decoded = decodeJwt(token);
+      if (decoded) {
+        userDetails = {
+          uid: decoded.sub,
+          email: decoded.email,
+          name: decoded.name,
+          picture: decoded.picture,
+          phoneNumber: decoded.phone_number
+        };
+      }
+    }
+
+    // Rich Schema-LD enrichment: map userDetails as Person onto the order customer field
+    if (userDetails) {
+      order.customer = {
+        "@type": "Person",
+        "identifier": userDetails.uid,
+        "name": userDetails.name || undefined,
+        "email": userDetails.email || undefined,
+        "telephone": userDetails.phoneNumber || undefined,
+        "image": userDetails.picture || undefined
+      };
+    }
+
     // Store full stringified JSON-LD payload of order
     await db.prepare('INSERT OR REPLACE INTO orders (id, payload) VALUES (?, ?)')
       .bind(orderId, JSON.stringify(order))
       .run();
 
-    return c.json({ success: true, orderId, message: 'Order created successfully.' }, 201);
+    return c.json({ success: true, orderId, order, message: 'Order created and customer claims linked successfully.' }, 201);
   } catch (err: any) {
     return c.json({ error: 'Failed to create order', details: err.message }, 500);
   }
 });
 
-// 2. GET /orders/:id/status: Check order payment status
+// 2. GET /orders: List paginated orders
+app.get('/orders', async (c) => {
+  const db = c.env.DB;
+  if (!db) {
+    return c.json({ error: 'Database binding "DB" is missing.' }, 500);
+  }
+
+  const page = parseInt(c.req.query('page') || '1') || 1;
+  const pageSize = parseInt(c.req.query('pageSize') || '20') || 20;
+  const offset = (page - 1) * pageSize;
+
+  try {
+    await bootstrapDatabase(db);
+
+    const { results } = await db.prepare('SELECT * FROM orders ORDER BY created_at DESC LIMIT ? OFFSET ?')
+      .bind(pageSize, offset)
+      .all();
+
+    // Map payload strings back to JS objects dynamically for ease of use
+    const parsedOrders = results.map((row: any) => ({
+      ...row,
+      payload: JSON.parse(row.payload)
+    }));
+
+    const countResult = await db.prepare('SELECT COUNT(*) as count FROM orders').first<{ count: number }>();
+    const totalResults = countResult?.count ?? 0;
+
+    return c.json({
+      orders: parsedOrders,
+      totalResults,
+      page,
+      pageSize,
+    });
+  } catch (err: any) {
+    return c.json({ error: 'Failed to retrieve orders', details: err.message }, 500);
+  }
+});
+
+// 3. GET /orders/:id/status: Check order payment status
 app.get('/orders/:id/status', async (c) => {
   const db = c.env.DB;
   if (!db) {
@@ -94,7 +185,7 @@ app.get('/orders/:id/status', async (c) => {
   }
 });
 
-// 3. POST /payments: Record a payment (idempotent payment processor)
+// 4. POST /payments: Record a payment (idempotent payment processor)
 app.post('/payments', async (c) => {
   const db = c.env.DB;
   if (!db) {
@@ -144,7 +235,7 @@ app.post('/payments', async (c) => {
   }
 });
 
-// 4. GET /notifications: List paginated notifications
+// 5. GET /notifications: List paginated notifications
 app.get('/notifications', async (c) => {
   const db = c.env.DB;
   if (!db) {
@@ -173,6 +264,90 @@ app.get('/notifications', async (c) => {
     });
   } catch (err: any) {
     return c.json({ error: 'Failed to retrieve notifications', details: err.message }, 500);
+  }
+});
+
+// 6. GET /notifications/:id: Read specific notification by ID
+app.get('/notifications/:id', async (c) => {
+  const db = c.env.DB;
+  if (!db) {
+    return c.json({ error: 'Database binding "DB" is missing.' }, 500);
+  }
+
+  const notificationId = c.req.param('id');
+
+  try {
+    await bootstrapDatabase(db);
+    const result = await db.prepare('SELECT * FROM notifications WHERE id = ?')
+      .bind(notificationId)
+      .first();
+
+    if (!result) {
+      return c.json({ error: 'Notification not found' }, 404);
+    }
+
+    return c.json(result);
+  } catch (err: any) {
+    return c.json({ error: 'Failed to retrieve notification', details: err.message }, 500);
+  }
+});
+
+// 7. POST /sessions: Store or update user session data inside KV
+app.post('/sessions', async (c) => {
+  const kv = c.env.SESSIONS;
+  if (!kv) {
+    return c.json({ error: 'KV Namespace binding "SESSIONS" is missing.' }, 500);
+  }
+
+  try {
+    const { userId, sessionData } = await c.req.json();
+    if (!userId || !sessionData) {
+      return c.json({ error: 'Missing required fields: userId or sessionData' }, 400);
+    }
+
+    // Persist session to KV with optional 7 days expiration (604800 seconds)
+    await kv.put(userId, JSON.stringify(sessionData), { expirationTtl: 604800 });
+    return c.json({ success: true, userId, message: 'User session stored successfully inside KV.' });
+  } catch (err: any) {
+    return c.json({ error: 'Failed to store user session', details: err.message }, 500);
+  }
+});
+
+// 8. GET /sessions/:userId: Retrieve user session data from KV
+app.get('/sessions/:userId', async (c) => {
+  const kv = c.env.SESSIONS;
+  if (!kv) {
+    return c.json({ error: 'KV Namespace binding "SESSIONS" is missing.' }, 500);
+  }
+
+  const userId = c.req.param('userId');
+
+  try {
+    const savedSession = await kv.get(userId);
+    if (!savedSession) {
+      return c.json({ error: 'Session not found or expired' }, 404);
+    }
+
+    return c.json({ userId, sessionData: JSON.parse(savedSession) });
+  } catch (err: any) {
+    return c.json({ error: 'Failed to retrieve session data', details: err.message }, 500);
+  }
+});
+
+// 9. DELETE /sessions/:userId: Delete user session data from KV
+app.delete('/sessions/:userId', async (c) => {
+  const kv = c.env.SESSIONS;
+  if (!kv) {
+    return c.json({ error: 'KV Namespace binding "SESSIONS" is missing.' }, 500);
+  }
+
+  const userId = c.req.param('userId');
+
+  try {
+    await kv.delete(userId);
+    return c.json({ success: true, userId, message: 'User session terminated and removed from KV.' });
+  } catch (err: any) {
+    return c.json({ error: 'Failed to terminate session', details: err.message }, 500);
   }
 });
 
