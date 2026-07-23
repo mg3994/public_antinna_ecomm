@@ -90,7 +90,7 @@ class PhoneVerificationRenderer {
         </div>
       ''', treeSanitizer: NodeTreeSanitizer.trusted);
 
-      document.body.append(modal);
+      document.body?.append(modal);
       setupListeners();
     }
 
