@@ -14,6 +14,7 @@ import 'presentation/grid_renderer.dart';
 import 'presentation/carousel_renderer.dart';
 import 'presentation/product_renderer.dart';
 import 'presentation/service_renderer.dart';
+import 'presentation/phone_verification_renderer.dart';
 
 void main() {
   // Instantiate core managers and services
@@ -23,6 +24,7 @@ void main() {
   final gas = AppsScriptService();
   final blogger = BloggerDataService();
   final gpay = GooglePayService();
+  final phoneVerify = PhoneVerificationRenderer();
 
   // Expose LocationManager with a highly compatible JS-wrapper
   final jsLoc = js.JsObject.jsify({
@@ -149,6 +151,12 @@ void main() {
     }),
   });
   js.context['GooglePayService'] = jsGpay;
+
+  // Expose PhoneVerificationRenderer with highly compatible JS-wrapper
+  final jsPhoneVerify = js.JsObject.jsify({
+    'render': js.allowInterop(phoneVerify.render),
+  });
+  js.context['PhoneVerificationRenderer'] = jsPhoneVerify;
 
   document.addEventListener('DOMContentLoaded', (event) {
     window.animationFrame.then((_) {

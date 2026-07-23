@@ -39,10 +39,27 @@ function decodeJwt(token: string): any {
   }
 }
 
-// Enterprise-grade Firebase ID Token claims verification
-function verifyFirebaseIdToken(token: string, projectId: string): any | null {
-  const decoded = decodeJwt(token);
-  if (!decoded) return null;
+// Convert Base64URL token signature to Uint8Array for Web Crypto verification
+function base64UrlToUint8Array(str: string): Uint8Array {
+  const base64 = str.replace(/-/g, '+').replace(/_/g, '/');
+  const pad = base64.length % 4;
+  const padded = pad ? base64 + '='.repeat(4 - pad) : base64;
+  const binary = atob(padded);
+  const bytes = new Uint8Array(binary.length);
+  for (let i = 0; i < binary.length; i++) {
+    bytes[i] = binary.charCodeAt(i);
+  }
+  return bytes;
+}
+
+// Enterprise-grade Firebase ID Token cryptographic RS256 claims verification
+async function verifyFirebaseIdToken(token: string, projectId: string, kv: KVNamespace): Promise<any | null> {
+  const parts = token.split('.');
+  if (parts.length !== 3) return null;
+
+  const header = decodeJwt(parts[0]);
+  const decoded = decodeJwt(parts[1]);
+  if (!header || !decoded) return null;
 
   const now = Math.floor(Date.now() / 1000);
 
@@ -65,13 +82,74 @@ function verifyFirebaseIdToken(token: string, projectId: string): any | null {
     return null;
   }
 
-  return {
-    uid: decoded.sub,
-    email: decoded.email,
-    name: decoded.name,
-    picture: decoded.picture,
-    phoneNumber: decoded.phone_number
-  };
+  // 4. Verify Cryptographic RS256 Signature using Google JWK cached in KV
+  try {
+    const kid = header.kid;
+    if (!kid) {
+      console.error('Missing kid claim in JWT header.');
+      return null;
+    }
+
+    // Cache Google JWK certificates in SESSIONS KV Namespace to reduce network requests
+    const cacheKey = 'firebase_public_jwks';
+    let jwksStr = await kv.get(cacheKey);
+    let jwks: any;
+
+    if (jwksStr) {
+      jwks = JSON.parse(jwksStr);
+    } else {
+      const jwksUrl = 'https://www.googleapis.com/service_accounts/v1/jwk/securetoken@system.gserviceaccount.com';
+      const res = await fetch(jwksUrl);
+      if (!res.ok) throw new Error('Failed to fetch Google JWKs.');
+      jwks = await res.json();
+
+      // Cache Google JWKs for 1 hour (3600 seconds) in KV Namespace
+      await kv.put(cacheKey, JSON.stringify(jwks), { expirationTtl: 3600 });
+    }
+
+    const keysList = jwks.keys || [];
+    const targetJwk = keysList.find((key: any) => key.kid === kid);
+    if (!targetJwk) {
+      console.error('No matching JWK found for kid:', kid);
+      return null;
+    }
+
+    // Import JWK natively into browser Web Crypto object
+    const cryptoKey = await crypto.subtle.importKey(
+      'jwk',
+      targetJwk,
+      { name: 'RSASSA-PKCS1-v1_5', hash: 'SHA-256' },
+      false,
+      ['verify']
+    );
+
+    // Verify RSASSA-PKCS1-v1_5 signature against signed JWT content
+    const dataBytes = new TextEncoder().encode(`${parts[0]}.${parts[1]}`);
+    const signatureBytes = base64UrlToUint8Array(parts[2]);
+
+    const verified = await crypto.subtle.verify(
+      'RSASSA-PKCS1-v1_5',
+      cryptoKey,
+      signatureBytes,
+      dataBytes
+    );
+
+    if (!verified) {
+      console.error('RS256 signature verification failed!');
+      return null;
+    }
+
+    return {
+      uid: decoded.sub,
+      email: decoded.email,
+      name: decoded.name,
+      picture: decoded.picture,
+      phoneNumber: decoded.phone_number
+    };
+  } catch (err) {
+    console.error('Cryptographic signature verification threw exception:', err);
+    return null;
+  }
 }
 
 // Auto-bootstrap tables inside Cloudflare D1 Database if they do not exist
@@ -108,10 +186,14 @@ function getBearerToken(authHeader: string | undefined): string | null {
 // 1. POST /orders: Create a new order record
 app.post('/orders', async (c) => {
   const db = c.env.DB;
+  const kv = c.env.SESSIONS;
   const projectId = c.env.FIREBASE_PROJECT_ID || 'antinnamain';
 
   if (!db) {
     return c.json({ error: 'Database binding "DB" is missing.' }, 500);
+  }
+  if (!kv) {
+    return c.json({ error: 'KV Namespace binding "SESSIONS" is missing.' }, 500);
   }
 
   try {
@@ -124,7 +206,7 @@ app.post('/orders', async (c) => {
     let userDetails: any = null;
 
     if (token) {
-      userDetails = verifyFirebaseIdToken(token, projectId);
+      userDetails = await verifyFirebaseIdToken(token, projectId, kv);
     }
 
     // Rich Schema-LD enrichment: map userDetails as Person onto the order customer field
@@ -232,9 +314,9 @@ app.post('/payments', async (c) => {
     return c.json({ error: 'Unauthorized: Missing Authorization Bearer ID Token.' }, 401);
   }
 
-  const verifiedUser = verifyFirebaseIdToken(token, projectId);
+  const verifiedUser = await verifyFirebaseIdToken(token, projectId, kv);
   if (!verifiedUser) {
-    return c.json({ error: 'Unauthorized: Firebase ID Token is invalid, expired, or project ID mismatches.' }, 401);
+    return c.json({ error: 'Unauthorized: Firebase ID Token signature is invalid, expired, or project ID mismatches.' }, 401);
   }
 
   try {
