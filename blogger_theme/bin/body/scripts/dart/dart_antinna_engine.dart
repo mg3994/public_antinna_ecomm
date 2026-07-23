@@ -17,6 +17,7 @@ import 'presentation/service_renderer.dart';
 import 'presentation/phone_verification_renderer.dart';
 import 'presentation/geo_verification_renderer.dart';
 import 'presentation/order_summary_renderer.dart';
+import 'presentation/search_autocomplete_renderer.dart';
 
 void main() {
   // Instantiate core managers and services
@@ -184,6 +185,14 @@ void main() {
     }),
   });
   js.context['OrderSummaryRenderer'] = jsSummary;
+
+  // Expose SearchAutocompleteRenderer with highly compatible JS-wrapper
+  final jsSearchAutocomplete = js.JsObject.jsify({
+    'init': js.allowInterop((String id) {
+      SearchAutocompleteRenderer(id);
+    }),
+  });
+  js.context['SearchAutocompleteRenderer'] = jsSearchAutocomplete;
 
   document.addEventListener('DOMContentLoaded', (event) {
     window.animationFrame.then((_) {
