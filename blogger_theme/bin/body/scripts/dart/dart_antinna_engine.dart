@@ -16,6 +16,7 @@ import 'presentation/product_renderer.dart';
 import 'presentation/service_renderer.dart';
 import 'presentation/phone_verification_renderer.dart';
 import 'presentation/geo_verification_renderer.dart';
+import 'presentation/order_summary_renderer.dart';
 
 void main() {
   // Instantiate core managers and services
@@ -27,6 +28,7 @@ void main() {
   final gpay = GooglePayService();
   final phoneVerify = PhoneVerificationRenderer();
   final geoVerify = GeoVerificationRenderer();
+  final summaryVerify = OrderSummaryRenderer();
 
   // Expose LocationManager with a highly compatible JS-wrapper
   final jsLoc = js.JsObject.jsify({
@@ -165,6 +167,23 @@ void main() {
     'renderPopup': js.allowInterop(geoVerify.renderPopup),
   });
   js.context['GeoVerificationRenderer'] = jsGeoVerify;
+
+  // Expose OrderSummaryRenderer with highly compatible JS-wrapper
+  final jsSummary = js.JsObject.jsify({
+    'render': js.allowInterop((js.JsObject verifiedLocation, [js.JsObject? orderDelivery]) {
+      final locJson = js.context['JSON'].callMethod('stringify', [verifiedLocation]) as String;
+      final locMap = json.decode(locJson) as Map<String, dynamic>;
+
+      Map<String, dynamic>? deliveryMap;
+      if (orderDelivery != null) {
+        final delJson = js.context['JSON'].callMethod('stringify', [orderDelivery]) as String;
+        deliveryMap = json.decode(delJson) as Map<String, dynamic>;
+      }
+
+      summaryVerify.render(locMap, deliveryMap);
+    }),
+  });
+  js.context['OrderSummaryRenderer'] = jsSummary;
 
   document.addEventListener('DOMContentLoaded', (event) {
     window.animationFrame.then((_) {
