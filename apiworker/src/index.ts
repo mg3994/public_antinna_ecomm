@@ -52,7 +52,7 @@ function base64UrlToUint8Array(str: string): Uint8Array {
   return bytes;
 }
 
-// Enterprise-grade Firebase ID Token cryptographic RS256 claims verification
+// Enterprise-grade Firebase ID Token cryptographic RS256 claims verification with RBAC
 async function verifyFirebaseIdToken(token: string, projectId: string, kv: KVNamespace): Promise<any | null> {
   const parts = token.split('.');
   if (parts.length !== 3) return null;
@@ -90,7 +90,6 @@ async function verifyFirebaseIdToken(token: string, projectId: string, kv: KVNam
       return null;
     }
 
-    // Cache Google JWK certificates in SESSIONS KV Namespace to reduce network requests
     const cacheKey = 'firebase_public_jwks';
     let jwksStr = await kv.get(cacheKey);
     let jwks: any;
@@ -103,7 +102,6 @@ async function verifyFirebaseIdToken(token: string, projectId: string, kv: KVNam
       if (!res.ok) throw new Error('Failed to fetch Google JWKs.');
       jwks = await res.json();
 
-      // Cache Google JWKs for 1 hour (3600 seconds) in KV Namespace
       await kv.put(cacheKey, JSON.stringify(jwks), { expirationTtl: 3600 });
     }
 
@@ -114,7 +112,6 @@ async function verifyFirebaseIdToken(token: string, projectId: string, kv: KVNam
       return null;
     }
 
-    // Import JWK natively into browser Web Crypto object
     const cryptoKey = await crypto.subtle.importKey(
       'jwk',
       targetJwk,
@@ -123,7 +120,6 @@ async function verifyFirebaseIdToken(token: string, projectId: string, kv: KVNam
       ['verify']
     );
 
-    // Verify RSASSA-PKCS1-v1_5 signature against signed JWT content
     const dataBytes = new TextEncoder().encode(`${parts[0]}.${parts[1]}`);
     const signatureBytes = base64UrlToUint8Array(parts[2]);
 
@@ -171,6 +167,14 @@ async function bootstrapDatabase(db: D1Database) {
         created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
         FOREIGN KEY(order_id) REFERENCES orders(id)
       )
+    `),
+    db.prepare(`
+      CREATE TABLE IF NOT EXISTS user_claims (
+        uid TEXT PRIMARY KEY,
+        owners TEXT NOT NULL,
+        moderators TEXT NOT NULL,
+        staffs TEXT NOT NULL
+      )
     `)
   ]);
 }
@@ -181,6 +185,36 @@ function getBearerToken(authHeader: string | undefined): string | null {
     return authHeader.substring(7);
   }
   return null;
+}
+
+// Retrieve custom business claims securely from the server-side D1 DB using the verified UID
+async function getUserClaims(db: D1Database, uid: string): Promise<any> {
+  const result = await db.prepare('SELECT * FROM user_claims WHERE uid = ?')
+    .bind(uid)
+    .first<any>();
+
+  if (result) {
+    return {
+      owners: JSON.parse(result.owners) as string[],
+      moderators: JSON.parse(result.moderators) as string[],
+      staffs: JSON.parse(result.staffs) as string[]
+    };
+  }
+
+  // Fallback defaults
+  return { owners: [], moderators: [], staffs: [] };
+}
+
+// Helper to determine if a user has access to a store/business under a required role
+function hasStoreAccess(userClaims: any, storeId: string, requiredRoles: ('o' | 'm' | 's')[]): boolean {
+  if (!userClaims) return false;
+
+  return requiredRoles.some((role) => {
+    if (role === 'o' && userClaims.owners.includes(storeId)) return true;
+    if (role === 'm' && userClaims.moderators.includes(storeId)) return true;
+    if (role === 's' && userClaims.staffs.includes(storeId)) return true;
+    return false;
+  });
 }
 
 // 1. POST /orders: Create a new order record
@@ -232,35 +266,60 @@ app.post('/orders', async (c) => {
   }
 });
 
-// 2. GET /orders: List paginated orders
+// 2. GET /orders: List paginated orders (Tenant-aware filter checking database-backed claims)
 app.get('/orders', async (c) => {
   const db = c.env.DB;
+  const kv = c.env.SESSIONS;
+  const projectId = c.env.FIREBASE_PROJECT_ID || 'antinnamain';
+
   if (!db) {
     return c.json({ error: 'Database binding "DB" is missing.' }, 500);
+  }
+  if (!kv) {
+    return c.json({ error: 'KV Namespace binding "SESSIONS" is missing.' }, 500);
+  }
+
+  // Enforce authentication check for listing orders
+  const token = getBearerToken(c.req.header('Authorization'));
+  if (!token) {
+    return c.json({ error: 'Unauthorized: Missing Authorization Bearer ID Token.' }, 401);
+  }
+
+  const verifiedUser = await verifyFirebaseIdToken(token, projectId, kv);
+  if (!verifiedUser) {
+    return c.json({ error: 'Unauthorized: Invalid Firebase ID Token.' }, 401);
   }
 
   const page = parseInt(c.req.query('page') || '1') || 1;
   const pageSize = parseInt(c.req.query('pageSize') || '20') || 20;
-  const offset = (page - 1) * pageSize;
 
   try {
     await bootstrapDatabase(db);
 
-    const { results } = await db.prepare('SELECT * FROM orders ORDER BY created_at DESC LIMIT ? OFFSET ?')
-      .bind(pageSize, offset)
-      .all();
+    // Fetch user claims securely from D1 matching verified uid
+    const claims = await getUserClaims(db, verifiedUser.uid);
 
-    // Map payload strings back to JS objects dynamically for ease of use
+    // Retrieve all order payloads to filter multi-vendor tenants dynamically
+    const { results } = await db.prepare('SELECT * FROM orders ORDER BY created_at DESC').all();
+
+    // Map payload strings back to JS objects and filter based on custom claims access
     const parsedOrders = results.map((row: any) => ({
       ...row,
       payload: JSON.parse(row.payload)
-    }));
+    })).filter((order: any) => {
+      // Find businessId of order to check if staff/owner/moderator has access
+      const sellerId = order.payload.seller?.id || order.payload.seller?.identifier || '';
+      if (!sellerId) return true; // Global/unassigned orders are visible
 
-    const countResult = await db.prepare('SELECT COUNT(*) as count FROM orders').first<{ count: number }>();
-    const totalResults = countResult?.count ?? 0;
+      return hasStoreAccess(claims, sellerId, ['o', 'm', 's']);
+    });
+
+    const totalResults = parsedOrders.length;
+    const offset = (page - 1) * pageSize;
+    const paginatedOrders = parsedOrders.slice(offset, offset + pageSize);
 
     return c.json({
-      orders: parsedOrders,
+      orders: paginatedOrders,
       totalResults,
       page,
       pageSize,
@@ -295,7 +354,7 @@ app.get('/orders/:id/status', async (c) => {
   }
 });
 
-// 4. POST /payments: Record a payment (requires verified firebase ID Token + idempotent checkout)
+// 4. POST /payments: Record a payment (requires verified Owner/Moderator claims + idempotent checkout)
 app.post('/payments', async (c) => {
   const db = c.env.DB;
   const kv = c.env.SESSIONS;
@@ -330,12 +389,24 @@ app.post('/payments', async (c) => {
     }
 
     // Safety check: verify order exists
-    const orderExists = await db.prepare('SELECT id, status FROM orders WHERE id = ?')
+    const orderExists = await db.prepare('SELECT id, status, payload FROM orders WHERE id = ?')
       .bind(orderId)
-      .first<{ id: string; status: string }>();
+      .first<{ id: string; status: string; payload: string }>();
 
     if (!orderExists) {
       return c.json({ error: 'Order ID does not exist in records' }, 400);
+    }
+
+    // Parse order to check associated business/seller ID
+    const orderPayload = JSON.parse(orderExists.payload);
+    const sellerId = orderPayload.seller?.id || orderPayload.seller?.identifier || '';
+
+    // If order has an assigned business/seller ID, verify the user is an Owner or Moderator in DB claims matching their UID
+    if (sellerId) {
+      const claims = await getUserClaims(db, verifiedUser.uid);
+      if (!hasStoreAccess(claims, sellerId, ['o', 'm'])) {
+        return c.json({ error: 'Forbidden: You do not have sufficient permissions (Owner/Moderator) to record payments for this store.' }, 403);
+      }
     }
 
     // Idempotency check: reject duplicate payments if already paid
