@@ -51,11 +51,6 @@ export class BloggerDataService {
             labels.push(decodeURIComponent(match[1].trim().replace(/_/g, ' ')));
         }
 
-        // Prefix for suggestions should maintain the labels but clean up the keyword part
-        const lastLabelIndex = query.lastIndexOf('|') > query.lastIndexOf('label:')
-            ? query.lastIndexOf('|') + 1
-            : query.lastIndexOf('label:');
-
         // Find if there's a following label after the last pipe
         const matches = Array.from(query.matchAll(labelRegex));
         if (matches.length > 0) {

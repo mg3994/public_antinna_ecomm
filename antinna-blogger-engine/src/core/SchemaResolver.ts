@@ -1,5 +1,4 @@
 import { BloggerDataService } from '../infrastructure/BloggerDataService';
-import { SchemaExtractor } from './SchemaExtractor';
 
 export class SchemaResolver {
   private cache: Map<string, Promise<any>> = new Map();
