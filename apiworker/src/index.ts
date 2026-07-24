@@ -7,6 +7,7 @@ import { OrderRepository } from './infrastructure/OrderRepository';
 import { PaymentRepository } from './infrastructure/PaymentRepository';
 import { NotificationRepository } from './infrastructure/NotificationRepository';
 import { SessionRepository } from './infrastructure/SessionRepository';
+import { UserClaimsRepository } from './infrastructure/UserClaimsRepository';
 
 import {
   CreateOrderUseCase,
@@ -17,7 +18,8 @@ import {
   GetNotificationByIdUseCase,
   SaveSessionUseCase,
   GetSessionUseCase,
-  DeleteSessionUseCase
+  DeleteSessionUseCase,
+  ManageUserClaimsUseCase
 } from './application/usecases';
 
 import { configureRoutes, Env } from './presentation/controllers';
@@ -39,17 +41,19 @@ const orderRepository = new OrderRepository();
 const paymentRepository = new PaymentRepository();
 const notificationRepository = new NotificationRepository();
 const sessionRepository = new SessionRepository();
+const userClaimsRepository = new UserClaimsRepository();
 
 // Instantiate Use Cases
 const createOrderUseCase = new CreateOrderUseCase(authService, orderRepository);
-const getOrdersUseCase = new GetOrdersUseCase(authService, orderRepository);
+const getOrdersUseCase = new GetOrdersUseCase(authService, orderRepository, userClaimsRepository);
 const getOrderStatusUseCase = new GetOrderStatusUseCase(orderRepository);
-const recordPaymentUseCase = new RecordPaymentUseCase(authService, orderRepository, paymentRepository, notificationRepository);
+const recordPaymentUseCase = new RecordPaymentUseCase(authService, orderRepository, paymentRepository, notificationRepository, userClaimsRepository);
 const getNotificationsUseCase = new GetNotificationsUseCase(notificationRepository);
 const getNotificationByIdUseCase = new GetNotificationByIdUseCase(notificationRepository);
 const saveSessionUseCase = new SaveSessionUseCase(sessionRepository);
 const getSessionUseCase = new GetSessionUseCase(sessionRepository);
 const deleteSessionUseCase = new DeleteSessionUseCase(sessionRepository);
+const manageUserClaimsUseCase = new ManageUserClaimsUseCase(authService, userClaimsRepository);
 
 // Wire Presentation and Routing Layers
 configureRoutes(
@@ -63,7 +67,8 @@ configureRoutes(
   getNotificationByIdUseCase,
   saveSessionUseCase,
   getSessionUseCase,
-  deleteSessionUseCase
+  deleteSessionUseCase,
+  manageUserClaimsUseCase
 );
 
 // Favicon redirect

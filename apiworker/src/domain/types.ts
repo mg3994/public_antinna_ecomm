@@ -7,6 +7,7 @@ export interface VerifiedUser {
 }
 
 export interface UserClaims {
+  uid: string;
   owners: string[];
   moderators: string[];
   staffs: string[];
@@ -41,8 +42,6 @@ export interface Session {
 // Ports / Interfaces for repositories and services
 export interface IAuthService {
   verifyIdToken(token: string, projectId: string, kv: any): Promise<VerifiedUser | null>;
-  getUserClaims(db: any, uid: string): Promise<UserClaims>;
-  hasStoreAccess(claims: UserClaims, storeId: string, requiredRoles: ('o' | 'm' | 's')[]): boolean;
 }
 
 export interface IDatabaseBootstrapper {
@@ -69,4 +68,9 @@ export interface ISessionRepository {
   saveSession(kv: any, browserClientId: string, sessionData: any, ttlSeconds: number): Promise<void>;
   getSession(kv: any, browserClientId: string): Promise<any | null>;
   deleteSession(kv: any, browserClientId: string): Promise<void>;
+}
+
+export interface IUserClaimsRepository {
+  getUserClaims(db: any, uid: string): Promise<UserClaims>;
+  saveUserClaims(db: any, claims: UserClaims): Promise<void>;
 }

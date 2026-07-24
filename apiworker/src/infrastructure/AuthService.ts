@@ -1,4 +1,4 @@
-import { IAuthService, UserClaims, VerifiedUser } from '../domain/types';
+import { IAuthService, VerifiedUser } from '../domain/types';
 
 export class AuthService implements IAuthService {
   private decodeJwt(token: string): any {
@@ -126,32 +126,5 @@ export class AuthService implements IAuthService {
       console.error('Cryptographic signature verification threw exception:', err);
       return null;
     }
-  }
-
-  async getUserClaims(db: any, uid: string): Promise<UserClaims> {
-    const result = await db.prepare('SELECT * FROM user_claims WHERE uid = ?')
-      .bind(uid)
-      .first() as any;
-
-    if (result) {
-      return {
-        owners: JSON.parse(result.owners) as string[],
-        moderators: JSON.parse(result.moderators) as string[],
-        staffs: JSON.parse(result.staffs) as string[]
-      };
-    }
-
-    return { owners: [], moderators: [], staffs: [] };
-  }
-
-  hasStoreAccess(claims: UserClaims, storeId: string, requiredRoles: ('o' | 'm' | 's')[]): boolean {
-    if (!claims) return false;
-
-    return requiredRoles.some((role) => {
-      if (role === 'o' && claims.owners.includes(storeId)) return true;
-      if (role === 'm' && claims.moderators.includes(storeId)) return true;
-      if (role === 's' && claims.staffs.includes(storeId)) return true;
-      return false;
-    });
   }
 }

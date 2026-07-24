@@ -8,7 +8,8 @@ import {
   GetNotificationByIdUseCase,
   SaveSessionUseCase,
   GetSessionUseCase,
-  DeleteSessionUseCase
+  DeleteSessionUseCase,
+  ManageUserClaimsUseCase
 } from '../application/usecases';
 import { IDatabaseBootstrapper } from '../domain/types';
 
@@ -29,10 +30,10 @@ export function configureRoutes(
   getNotificationByIdUseCase: GetNotificationByIdUseCase,
   saveSessionUseCase: SaveSessionUseCase,
   getSessionUseCase: GetSessionUseCase,
-  deleteSessionUseCase: DeleteSessionUseCase
+  deleteSessionUseCase: DeleteSessionUseCase,
+  manageUserClaimsUseCase: ManageUserClaimsUseCase
 ): void {
 
-  // Helper middleware/callback to check and bootstrap DB
   const ensureDb = async (c: any) => {
     const db = c.env.DB;
     if (!db) {
@@ -235,6 +236,35 @@ export function configureRoutes(
       });
     } catch (err: any) {
       return c.json({ error: 'Failed to terminate session', details: err.message }, 500);
+    }
+  });
+
+  // 10. POST /claims/manage: Manage moderators and staff securely (Owner only check on specific store/business)
+  app.post('/claims/manage', async (c) => {
+    const db = c.env.DB;
+    const kv = c.env.SESSIONS;
+    const projectId = c.env.FIREBASE_PROJECT_ID || 'antinnamain';
+
+    if (!db) return c.json({ error: 'Database binding "DB" is missing.' }, 500);
+    if (!kv) return c.json({ error: 'KV Namespace binding "SESSIONS" is missing.' }, 500);
+
+    const authHeader = c.req.header('Authorization');
+
+    try {
+      await ensureDb(c);
+      const params = await c.req.json();
+      const result = await manageUserClaimsUseCase.execute(db, kv, projectId, authHeader, params);
+      return c.json(result, 200);
+    } catch (err: any) {
+      let status: any = 500;
+      if (err.message.startsWith('Unauthorized')) {
+        status = 401;
+      } else if (err.message.startsWith('Forbidden')) {
+        status = 403;
+      } else if (err.message.startsWith('Missing') || err.message.startsWith('Invalid')) {
+        status = 400;
+      }
+      return c.json({ error: err.message }, status);
     }
   });
 }
