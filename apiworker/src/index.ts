@@ -422,11 +422,11 @@ app.post('/payments', async (c) => {
         .bind(orderId)
     ]);
 
-    // Store notification inside KV Namespace (Reverse chronological key suffix)
-    const reverseTimeKey = (9999999999999 - Date.now()).toString();
-    const notificationKey = `notification:${reverseTimeKey}`;
+    // Store notification inside KV Namespace using the unique Firebase Notification ID directly
+    const fcmNotificationId = paymentData.notificationId || paymentId;
+    const notificationKey = `notification:${fcmNotificationId}`;
     const notificationObj = {
-      id: reverseTimeKey,
+      id: fcmNotificationId,
       title: 'Payment Success',
       body: `Payment for Order ${orderId} has been successfully recorded.`,
       created_at: new Date().toISOString()
