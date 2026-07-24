@@ -26,8 +26,26 @@ export class SchemaExtractor {
     if (!input) return null;
 
     try {
-      const scriptMatch = input.match(/<script[^>]*type=["']application\/ld\+json["'][^>]*>([\s\S]*?)<\/script>/i);
-      let jsonContent = scriptMatch ? scriptMatch[1] : input;
+      let decodedInput = this.decodeEntities(input);
+
+      // Attempt parsing via native browser DOMParser for 100% reliability
+      if (typeof DOMParser !== 'undefined') {
+          try {
+              const parser = new DOMParser();
+              const doc = parser.parseFromString(decodedInput, "text/html");
+              const script = doc.querySelector('script[type="application/ld+json"]');
+              if (script && script.textContent) {
+                  const cleaned = this.decodeEntities(script.textContent)
+                      .replace(/\/\*[\s\S]*?\*\/|([^\\:]|^)\/\/.*$/gm, "$1")
+                      .trim();
+                  return JSON.parse(cleaned) as T;
+              }
+          } catch (domErr) {}
+      }
+
+      // Fallback to regex matching if DOMParser is unavailable (e.g. in basic unit test runners)
+      const scriptMatch = decodedInput.match(/<script[^>]*type=["']application\/ld\+json["'][^>]*>([\s\S]*?)<\/script>/i);
+      let jsonContent = scriptMatch ? scriptMatch[1] : decodedInput;
 
       let decoded = this.decodeEntities(jsonContent);
 

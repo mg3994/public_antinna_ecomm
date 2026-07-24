@@ -44,7 +44,7 @@ export class GeoVerificationRenderer {
 
           <div id="antinna-geo-metrics" class="antinna-geo-metrics" style="display: none;">
             <strong>Target Location Context:</strong><br>
-            <span id="antinna-geo-clean-address" style="color: #202124; font-weight: 600;"></span><br>
+            <span id="antinna-geo-clean-address" style="font-weight: 600;"></span><br>
 
             <div style="margin-top:10px; display:grid; grid-template-columns: 1fr 1fr; gap:10px;">
                 <div>📍 Target: <span class="antinna-geo-tag" id="antinna-geo-tag-target">0.0, 0.0</span></div>
@@ -330,18 +330,23 @@ export class GeoVerificationRenderer {
       const form = UIManager.el("antinna-geo-address-form");
       if (form) {
           form.style.display = "block";
-          if (response.addressDetails) {
-              const d = response.addressDetails;
-              const extInput = UIManager.el<HTMLInputElement>('geo-extendedAddress')!;
-              const streetInput = UIManager.el<HTMLInputElement>('geo-streetAddress')!;
+          const d = response.addressDetails || {};
+          const extInput = UIManager.el<HTMLInputElement>('geo-extendedAddress')!;
+          const streetInput = UIManager.el<HTMLInputElement>('geo-streetAddress')!;
 
-              if (!this.isAddressModified) {
-                  extInput.value = d.extendedAddress || "";
-                  streetInput.value = d.streetAddress || "";
-              }
+          if (!this.isAddressModified) {
+              extInput.value = d.extendedAddress || "";
+              streetInput.value = d.streetAddress || "";
+          }
 
-              UIManager.el<HTMLInputElement>('geo-locality')!.value = d.addressLocality || "";
-              UIManager.el<HTMLInputElement>('geo-postalCode')!.value = d.postalCode || "";
+          const localityInput = UIManager.el<HTMLInputElement>('geo-locality')!;
+          if (localityInput) {
+              localityInput.value = d.addressLocality || response.city || response.addressLocality || "";
+          }
+
+          const pinInput = UIManager.el<HTMLInputElement>('geo-postalCode')!;
+          if (pinInput) {
+              pinInput.value = d.postalCode || response.pin || response.postalCode || "";
           }
           this.validateAddressForm();
       }

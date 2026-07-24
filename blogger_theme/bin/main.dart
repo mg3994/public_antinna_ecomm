@@ -26,7 +26,7 @@ Future<void> fetchAntinnaEngine() async {
           '''import 'package:blogger_theme/blogger_theme.dart';
 
 final antinna_engine_script = Script(
-  type: 'text/javascript',
+  type: 'module',
   contentInCDATA: true,
   content: r"""$jsContentClean""",
 );

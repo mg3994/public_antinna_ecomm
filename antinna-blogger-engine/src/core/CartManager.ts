@@ -150,7 +150,7 @@ export class CartManager {
 
   addAddOn(parentItemKey: string, addon: Product | Service, quantity: number = 1): void {
     const orderedItems = SchemaExtractor.getArray(this.order.orderedItem);
-    const parent = orderedItems.find((oi: any) => oi.itemKey === parentItemKey);
+    const parent = orderedItems.find((oi: any) => oi.itemKey === parentItemKey) as any;
 
     if (!parent) {
       const UIManager = (window as any).UIManager;

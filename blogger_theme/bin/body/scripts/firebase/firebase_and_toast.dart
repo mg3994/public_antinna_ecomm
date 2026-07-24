@@ -348,7 +348,8 @@ final firebase_and_toast = Script(
         showToast("Failed to safely terminate session data flow.", "error");
       }
     }
-      window.handleLogout = handleLogout;
+    window.handleLogout = handleLogout;
+
     /**
      * Copy User Unique ID context string buffer to clipboard securely
      */
@@ -476,9 +477,8 @@ final firebase_and_toast = Script(
       if (linkedPhoneNumber) {
         if (modalPhone) modalPhone.textContent = linkedPhoneNumber;
         if (modalPhoneContainer) modalPhoneContainer.classList.remove('ui-hidden');
-      
 
-       // Dynamically append an unlinking management interface state if configured
+        // Dynamically append an unlinking management interface state if configured
         if (modalUnlinkContainer) {
           modalUnlinkContainer.classList.remove('ui-hidden');
           modalUnlinkContainer.innerHTML = `
@@ -512,15 +512,11 @@ final firebase_and_toast = Script(
                 
                 window.showToast("Phone number association removed successfully.", "success");
                 
-                // Instantly clean up UI variants without breaking modal visibility context
-                if (modalPhoneContainer) modalPhoneContainer.classList.add('ui-hidden');
-                if (modalUnlinkContainer) {
-                  modalUnlinkContainer.classList.add('ui-hidden');
-                  modalUnlinkContainer.innerHTML = '';
-                }
-                
                 // Update global tracking context indicators
                 window.hasPhoneLinked = false;
+
+                // Re-render auth state to instantly show the linking form again
+                renderAuthState(auth.currentUser);
 
               } catch (err) {
                 console.error("Provider mutation failed:", err);
@@ -538,17 +534,146 @@ final firebase_and_toast = Script(
       } else {
         if (modalPhoneContainer) modalPhoneContainer.classList.add('ui-hidden');
         if (modalUnlinkContainer) {
-          modalUnlinkContainer.classList.add('ui-hidden');
-          modalUnlinkContainer.innerHTML = '';
+          modalUnlinkContainer.classList.remove('ui-hidden');
+          modalUnlinkContainer.innerHTML = `
+            <div class="link-action-row" style="margin-top: 12px; padding-top: 12px; border-top: 1px dashed var(--border-ui); display: flex; flex-direction: column; gap: 8px;">
+              <span style="font-size: 0.85rem; color: var(--text-muted); font-weight: 600;">Link Phone Number</span>
+
+              <div id="modal-link-phone-input-group" style="display: flex; flex-wrap: wrap; gap: 8px; align-items: center; border: 1px solid var(--border-ui); border-radius: 12px; background: var(--bg-surface); padding: 4px;">
+                <div style="display: flex; flex: 2; min-width: 160px; align-items: center;">
+                  <div id="modal-country-trigger" style="position: relative; display: flex; align-items: center; gap: 6px; padding: 8px 12px; cursor: pointer; border-right: 1px solid var(--border-ui); font-weight: 700; font-size: 0.85rem; color: var(--text-main);">
+                      <span id="modal-selected-flag">🇮🇳</span>
+                      <span id="modal-selected-code">+91</span>
+                      <span style="font-size: 0.6rem; opacity: 0.7;">▼</span>
+                      <div id="modal-country-list-dropdown" class="ui-hidden" style="position: absolute; top: calc(100% + 8px); left: 0; width: 200px; background: var(--card); border: 1px solid var(--border-ui); border-radius: 10px; box-shadow: 0 10px 25px rgba(0,0,0,0.15); z-index: 10000; max-height: 200px; overflow-y: auto;">
+                          <div class="modal-country-item" data-code="+91" data-flag="🇮🇳" style="display: flex; align-items: center; gap: 8px; padding: 8px 12px; font-size: 0.8rem; cursor: pointer;"><span>🇮🇳</span><span>India (+91)</span></div>
+                          <div class="modal-country-item" data-code="+1" data-flag="🇺🇸" style="display: flex; align-items: center; gap: 8px; padding: 8px 12px; font-size: 0.8rem; cursor: pointer;"><span>🇺🇸</span><span>USA (+1)</span></div>
+                          <div class="modal-country-item" data-code="+44" data-flag="🇬🇧" style="display: flex; align-items: center; gap: 8px; padding: 8px 12px; font-size: 0.8rem; cursor: pointer;"><span>🇬🇧</span><span>UK (+44)</span></div>
+                          <div class="modal-country-item" data-code="+971" data-flag="🇦🇪" style="display: flex; align-items: center; gap: 8px; padding: 8px 12px; font-size: 0.8rem; cursor: pointer;"><span>🇦🇪</span><span>UAE (+971)</span></div>
+                          <div class="modal-country-item" data-code="+65" data-flag="🇸🇬" style="display: flex; align-items: center; gap: 8px; padding: 8px 12px; font-size: 0.8rem; cursor: pointer;"><span>🇸🇬</span><span>Singapore (+65)</span></div>
+                      </div>
+                  </div>
+                  <input id="modal-phone-input-field" type="tel" placeholder="9876543210" style="flex: 1; min-width: 0; border: none; background: transparent; outline: none; padding: 8px; font-size: 0.85rem; color: var(--text-main);" />
+                </div>
+                <button id="modal-send-otp-btn" style="background: var(--color-accent); color: white; border: none; padding: 10px 16px; border-radius: 8px; font-size: 0.8rem; cursor: pointer; font-weight: 700; white-space: nowrap; flex: 1; min-width: 100px;">
+                  Send OTP
+                </button>
+              </div>
+
+              <div id="modal-link-otp-group" class="ui-hidden" style="display: flex; flex-direction: column; gap: 8px;">
+                <input id="modal-otp-input-field" type="text" placeholder="Enter 6-digit OTP" maxlength="6" style="padding: 8px 12px; border: 1px solid var(--border-ui); border-radius: 8px; font-size: 0.85rem; background: var(--bg-surface); color: var(--text-main);" />
+                <button id="modal-verify-otp-btn" style="background: #10b981; color: white; border: none; padding: 8px; border-radius: 8px; font-size: 0.85rem; cursor: pointer; font-weight: 600;">
+                  Verify & Link Phone
+                </button>
+              </div>
+
+              <div id="modal-recaptcha-container" style="margin-top: 5px;"></div>
+            </div>
+          `;
+
+          let confirmationResult = null;
+          let selectedCountryCode = "+91";
+
+          const countryTrigger = document.getElementById('modal-country-trigger');
+          const countryDropdown = document.getElementById('modal-country-list-dropdown');
+          const sendOtpBtn = document.getElementById('modal-send-otp-btn');
+          const verifyOtpBtn = document.getElementById('modal-verify-otp-btn');
+
+          countryTrigger?.addEventListener('click', (e) => {
+            e.stopPropagation();
+            countryDropdown?.classList.toggle('ui-hidden');
+          });
+
+          document.querySelectorAll('.modal-country-item').forEach(item => {
+            item.addEventListener('click', (e) => {
+              e.stopPropagation();
+              const code = item.getAttribute('data-code');
+              const flag = item.getAttribute('data-flag');
+              selectedCountryCode = code;
+
+              const flagEl = document.getElementById('modal-selected-flag');
+              const codeEl = document.getElementById('modal-selected-code');
+              if (flagEl) flagEl.textContent = flag;
+              if (codeEl) codeEl.textContent = code;
+
+              countryDropdown?.classList.add('ui-hidden');
+            });
+          });
+
+          document.addEventListener('click', () => {
+            countryDropdown?.classList.add('ui-hidden');
+          });
+
+          sendOtpBtn?.addEventListener('click', async () => {
+            const phoneInput = document.getElementById('modal-phone-input-field');
+            const rawPhone = phoneInput ? phoneInput.value.trim().replace(/\D/g, '') : '';
+
+            if (!rawPhone || rawPhone.length < 7) {
+              window.showToast("Please enter a valid phone number", "error");
+              return;
+            }
+
+            const phoneNumber = selectedCountryCode + rawPhone;
+
+            try {
+              sendOtpBtn.disabled = true;
+              sendOtpBtn.textContent = "Sending...";
+
+              // Initialize recaptcha if not already
+              window.modalRecaptchaVerifier = new RecaptchaVerifier(auth, 'modal-recaptcha-container', {
+                size: 'invisible'
+              });
+
+              confirmationResult = await linkWithPhoneNumber(user, phoneNumber, window.modalRecaptchaVerifier);
+
+              window.showToast("OTP sent successfully!", "success");
+
+              // Toggle visibility of input fields
+              document.getElementById('modal-link-phone-input-group')?.classList.add('ui-hidden');
+              document.getElementById('modal-link-otp-group')?.classList.remove('ui-hidden');
+
+            } catch (err) {
+              console.error("Failed to send OTP:", err);
+              window.showToast(err.message || "Failed to send OTP. Make sure country code is correct.", "error");
+              sendOtpBtn.disabled = false;
+              sendOtpBtn.textContent = "Send OTP";
+            }
+          });
+
+          verifyOtpBtn?.addEventListener('click', async () => {
+            const otpInput = document.getElementById('modal-otp-input-field');
+            const code = otpInput ? otpInput.value.trim() : '';
+
+            if (!code || code.length !== 6) {
+              window.showToast("Please enter a valid 6-digit OTP", "error");
+              return;
+            }
+
+            try {
+              verifyOtpBtn.disabled = true;
+              verifyOtpBtn.textContent = "Verifying...";
+
+              await confirmationResult.confirm(code);
+              window.showToast("Phone number linked successfully!", "success");
+
+              // Force update window & session auth indicators
+              window.hasPhoneLinked = true;
+
+              // Close settings modal & refresh UI
+              window.closeSettingsModal();
+
+              // Trigger auth change to repaint
+              renderAuthState(auth.currentUser);
+
+            } catch (err) {
+              console.error("Failed to verify OTP:", err);
+              window.showToast(err.message || "OTP verification failed.", "error");
+              verifyOtpBtn.disabled = false;
+              verifyOtpBtn.textContent = "Verify & Link Phone";
+            }
+          });
         }
       }
-
-
-
-
-      
-
-      
     }
 
     // Modal Copy UID button binding

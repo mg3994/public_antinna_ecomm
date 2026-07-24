@@ -1,45 +1,79 @@
-/**
- * Welcome to Cloudflare Workers!
- *
- * This is a template for a Scheduled Worker: a Worker that can run on a
- * configurable interval:
- * https://developers.cloudflare.com/workers/platform/triggers/cron-triggers/
- *
- * - Run `npm run dev` in your terminal to start a development server
- * - Run `curl "http://localhost:8787/__scheduled?cron=*+*+*+*+*"` to see your Worker in action
- * - Run `npm run deploy` to publish your Worker
- *
- * Bind resources to your Worker in `wrangler.jsonc`. After adding bindings, a type definition for the
- * `Env` object can be regenerated with `npm run cf-typegen`.
- *
- * Learn more at https://developers.cloudflare.com/workers/
- */
-
 import { Hono } from 'hono';
+import { cors } from 'hono/cors';
 
-// export interface Env {
-// 	// Example binding to a KV namespace:
-// 	// MY_KV_NAMESPACE: KVNamespace;
+import { AuthService } from './infrastructure/AuthService';
+import { DatabaseBootstrapper } from './infrastructure/DatabaseBootstrapper';
+import { OrderRepository } from './infrastructure/OrderRepository';
+import { PaymentRepository } from './infrastructure/PaymentRepository';
+import { NotificationRepository } from './infrastructure/NotificationRepository';
+import { SessionRepository } from './infrastructure/SessionRepository';
 
-// 	// Example binding to a Durable Object:
-// 	// MY_DURABLE_OBJECT: DurableObjectNamespace;
+import {
+  CreateOrderUseCase,
+  GetOrdersUseCase,
+  GetOrderStatusUseCase,
+  RecordPaymentUseCase,
+  GetNotificationsUseCase,
+  GetNotificationByIdUseCase,
+  SaveSessionUseCase,
+  GetSessionUseCase,
+  DeleteSessionUseCase
+} from './application/usecases';
 
-// 	// Example binding to a R2 bucket:
-// 	// MY_R2_BUCKET: R2Bucket;
-
-// 	// Example binding to a Queue:
-// 	// MY_QUEUE: Queue;
-
-// 	// Example binding to a D1 database:
-// 	// MY_D1_DATABASE: D1Database;
-// }
+import { configureRoutes, Env } from './presentation/controllers';
 
 const app = new Hono<{ Bindings: Env }>();
 
-// 		if (url.pathname === '/favicon.ico') {
-// 			return Response.redirect('https://www.antinna.in/favicon.ico', 301);
-// 		}
+// Enable CORS for custom domain and Blogger subdomain compatibility
+app.use('*', cors({
+  origin: '*',
+  allowMethods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+  allowHeaders: ['Content-Type', 'Authorization', 'X-Antinna-Client-Id'],
+  maxAge: 86400,
+}));
 
-// app.get('/', (c) => c.text('Hello Hono!'));
+// Instantiate Core Services & Repositories
+const authService = new AuthService();
+const bootstrapper = new DatabaseBootstrapper();
+const orderRepository = new OrderRepository();
+const paymentRepository = new PaymentRepository();
+const notificationRepository = new NotificationRepository();
+const sessionRepository = new SessionRepository();
+
+// Instantiate Use Cases
+const createOrderUseCase = new CreateOrderUseCase(authService, orderRepository);
+const getOrdersUseCase = new GetOrdersUseCase(authService, orderRepository);
+const getOrderStatusUseCase = new GetOrderStatusUseCase(orderRepository);
+const recordPaymentUseCase = new RecordPaymentUseCase(authService, orderRepository, paymentRepository, notificationRepository);
+const getNotificationsUseCase = new GetNotificationsUseCase(notificationRepository);
+const getNotificationByIdUseCase = new GetNotificationByIdUseCase(notificationRepository);
+const saveSessionUseCase = new SaveSessionUseCase(sessionRepository);
+const getSessionUseCase = new GetSessionUseCase(sessionRepository);
+const deleteSessionUseCase = new DeleteSessionUseCase(sessionRepository);
+
+// Wire Presentation and Routing Layers
+configureRoutes(
+  app,
+  bootstrapper,
+  createOrderUseCase,
+  getOrdersUseCase,
+  getOrderStatusUseCase,
+  recordPaymentUseCase,
+  getNotificationsUseCase,
+  getNotificationByIdUseCase,
+  saveSessionUseCase,
+  getSessionUseCase,
+  deleteSessionUseCase
+);
+
+// Favicon redirect
+app.get('/favicon.ico', (c) => {
+  return c.redirect('https://www.antinna.in/favicon.ico', 301);
+});
+
+// Root welcome message
+app.get('/', (c) => {
+  return c.text('Welcome to Antinna Ecommerce API Server powered by Hono on Cloudflare Workers!');
+});
 
 export default app;

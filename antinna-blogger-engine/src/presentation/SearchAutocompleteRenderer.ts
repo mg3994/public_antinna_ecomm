@@ -24,7 +24,7 @@ export class SearchAutocompleteRenderer {
     this.dropdown.className = 'antinna-search-dropdown';
 
     // Find a suitable parent that spans the search bar
-    const group = input.closest('.search-input-group') || input.parentElement;
+    const group = (input.closest('.search-input-group') || input.parentElement) as HTMLElement | null;
     if (group) {
         group.style.setProperty('position', 'relative', 'important');
         group.appendChild(this.dropdown);
