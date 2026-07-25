@@ -19,7 +19,7 @@ Future<void> fetchAntinnaEngine() async {
       final jsContent = utf8.decode(bytes);
       final jsContentClean = jsContent.replaceAll(
         '"""',
-        '\"\"\"',
+        '"""',
       ); // Clean up any triple quotes
 
       final dartContent =
