@@ -1,5 +1,7 @@
 import { Hono } from 'hono';
 import { cors } from 'hono/cors';
+import { logger } from 'hono/logger';
+import { secureHeaders } from 'hono/secure-headers';
 
 import { AuthService } from './infrastructure/AuthService';
 import { DatabaseBootstrapper } from './infrastructure/DatabaseBootstrapper';
@@ -25,6 +27,12 @@ import {
 import { configureRoutes, Env } from './presentation/controllers';
 
 const app = new Hono<{ Bindings: Env }>();
+
+// Enable Logger Middleware for clean, structured request auditing
+app.use('*', logger());
+
+// Enable Secure Headers Middleware for robust security profiles (XSS protection, Clickjacking prevention, etc.)
+app.use('*', secureHeaders());
 
 // Enable CORS for custom domain and Blogger subdomain compatibility
 app.use('*', cors({
