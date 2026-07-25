@@ -1,5 +1,4 @@
 import 'dart:html';
-import '../core/parser.dart';
 
 class SellerRenderer {
   static void renderSeller(Map<String, dynamic>? seller) {

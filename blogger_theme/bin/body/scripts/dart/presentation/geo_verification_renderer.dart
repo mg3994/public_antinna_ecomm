@@ -271,19 +271,17 @@ class GeoVerificationRenderer {
       targetMarker.callMethod('setLatLng', [center]);
     }
 
-    if (window.navigator.geolocation != null) {
-      window.navigator.geolocation.getCurrentPosition().then((pos) {
-        final coords = pos.coords;
-        if (coords != null && coords.latitude != null && coords.longitude != null) {
-          currentDeviceLat = coords.latitude!.toDouble();
-          currentDeviceLng = coords.longitude!.toDouble();
-          final loc = js.JsObject.jsify([currentDeviceLat, currentDeviceLng]);
-          map.callMethod('setView', [loc, 13]);
-          targetMarker.callMethod('setLatLng', [loc]);
-          document.getElementById('antinna-geo-status')?.text = 'Position synchronized.';
-        }
-      });
-    }
+    window.navigator.geolocation.getCurrentPosition().then((pos) {
+      final coords = pos.coords;
+      if (coords != null && coords.latitude != null && coords.longitude != null) {
+        currentDeviceLat = coords.latitude!.toDouble();
+        currentDeviceLng = coords.longitude!.toDouble();
+        final loc = js.JsObject.jsify([currentDeviceLat, currentDeviceLng]);
+        map.callMethod('setView', [loc, 13]);
+        targetMarker.callMethod('setLatLng', [loc]);
+        document.getElementById('antinna-geo-status')?.text = 'Position synchronized.';
+      }
+    });
   }
 
   Future<void> handleManualPinPosition(double lat, double lng) async {

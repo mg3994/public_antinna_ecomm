@@ -1,5 +1,4 @@
 import 'dart:html';
-import 'dart:convert';
 import 'parser.dart';
 
 class SchemaResolver {

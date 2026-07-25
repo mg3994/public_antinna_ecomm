@@ -115,16 +115,14 @@ class PhoneVerificationRenderer {
     });
 
     document.querySelectorAll('.antinna-country-item').forEach((item) {
-      if (item is Element) {
-        item.onClick.listen((e) {
-          e.stopPropagation();
-          final code = item.getAttribute('data-code');
-          if (code != null) {
-            setCountry(code);
-          }
-          if (list != null) list.style.display = 'none';
-        });
-      }
+      item.onClick.listen((e) {
+        e.stopPropagation();
+        final code = item.getAttribute('data-code');
+        if (code != null) {
+          setCountry(code);
+        }
+        if (list != null) list.style.display = 'none';
+      });
     });
 
     document.onClick.listen((_) {
