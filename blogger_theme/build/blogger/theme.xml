@@ -9229,8 +9229,7 @@ o.q("control",[A.w(A.q(["layers",A.w(A.q(["Satellite Hybrid",o.q("layerGroup",[A
 p.b=o.q("marker",[n,A.w(A.q(["draggable",!0,"title","Delivery Location"],m,t.K))]).q("addTo",[p.a])
 p.a.q("on",A.r(["click",A.S(new A.fh(p))],l))
 p.b.q("on",A.r(["dragend",A.S(new A.fi(p))],l))}else{m.q("setView",A.r([n,13],l))
-p.b.q("setLatLng",A.r([n],t.w))}window.navigator.geolocation
-B.v.cm(window.navigator.geolocation).aQ(new A.fj(p),t.a)
+p.b.q("setLatLng",A.r([n],t.w))}B.v.cm(window.navigator.geolocation).aQ(new A.fj(p),t.a)
 case 1:return A.O(q,r)}})
 return A.P($async$aN,r)},
 aB(a,b){return this.dN(a,b)},

@@ -12,6 +12,12 @@ import {
   ManageUserClaimsUseCase
 } from '../application/usecases';
 import { IDatabaseBootstrapper } from '../domain/types';
+import {
+  UnauthorizedError,
+  ForbiddenError,
+  NotFoundError,
+  ValidationError
+} from '../domain/exceptions';
 
 export interface Env {
   DB: D1Database;
@@ -42,6 +48,21 @@ export function configureRoutes(
     await bootstrapper.bootstrap(db);
   };
 
+  // Helper to map Domain exceptions to HTTP response codes dynamically
+  const handleError = (c: any, err: any) => {
+    let status: any = 500;
+    if (err instanceof UnauthorizedError) {
+      status = 401;
+    } else if (err instanceof ForbiddenError) {
+      status = 403;
+    } else if (err instanceof NotFoundError) {
+      status = 404;
+    } else if (err instanceof ValidationError) {
+      status = 400;
+    }
+    return c.json({ error: err.message }, status);
+  };
+
   // 1. POST /orders: Create a new order record
   app.post('/orders', async (c) => {
     const db = c.env.DB;
@@ -64,7 +85,7 @@ export function configureRoutes(
         message: 'Order created and customer claims linked successfully.'
       }, 201);
     } catch (err: any) {
-      return c.json({ error: 'Failed to create order', details: err.message }, 500);
+      return handleError(c, err);
     }
   });
 
@@ -91,8 +112,7 @@ export function configureRoutes(
         pageSize,
       });
     } catch (err: any) {
-      const status = err.message.startsWith('Unauthorized') ? 401 : 500;
-      return c.json({ error: err.message }, status);
+      return handleError(c, err);
     }
   });
 
@@ -108,8 +128,7 @@ export function configureRoutes(
       const status = await getOrderStatusUseCase.execute(db, orderId);
       return c.json({ orderId, status });
     } catch (err: any) {
-      const status = err.message === 'Order not found' ? 404 : 500;
-      return c.json({ error: err.message }, status);
+      return handleError(c, err);
     }
   });
 
@@ -136,15 +155,7 @@ export function configureRoutes(
         message: result.message
       }, statusCode);
     } catch (err: any) {
-      let status: any = 500;
-      if (err.message.startsWith('Unauthorized')) {
-        status = 401;
-      } else if (err.message.startsWith('Forbidden')) {
-        status = 403;
-      } else if (err.message.startsWith('Missing') || err.message.includes('exist')) {
-        status = 400;
-      }
-      return c.json({ error: err.message }, status);
+      return handleError(c, err);
     }
   });
 
@@ -165,7 +176,7 @@ export function configureRoutes(
         pageSize,
       });
     } catch (err: any) {
-      return c.json({ error: 'Failed to retrieve notifications from KV', details: err.message }, 500);
+      return handleError(c, err);
     }
   });
 
@@ -180,8 +191,7 @@ export function configureRoutes(
       const notification = await getNotificationByIdUseCase.execute(kv, notificationId);
       return c.json(notification);
     } catch (err: any) {
-      const status = err.message === 'Notification not found' ? 404 : 500;
-      return c.json({ error: err.message }, status);
+      return handleError(c, err);
     }
   });
 
@@ -199,8 +209,7 @@ export function configureRoutes(
         message: 'User browser session stored successfully inside KV.'
       });
     } catch (err: any) {
-      const status = err.message.startsWith('Missing') ? 400 : 500;
-      return c.json({ error: err.message }, status);
+      return handleError(c, err);
     }
   });
 
@@ -215,8 +224,7 @@ export function configureRoutes(
       const sessionData = await getSessionUseCase.execute(kv, browserClientId);
       return c.json({ browserClientId, sessionData });
     } catch (err: any) {
-      const status = err.message.includes('not found') ? 404 : 500;
-      return c.json({ error: err.message }, status);
+      return handleError(c, err);
     }
   });
 
@@ -235,7 +243,7 @@ export function configureRoutes(
         message: 'User session terminated and removed from KV.'
       });
     } catch (err: any) {
-      return c.json({ error: 'Failed to terminate session', details: err.message }, 500);
+      return handleError(c, err);
     }
   });
 
@@ -256,15 +264,7 @@ export function configureRoutes(
       const result = await manageUserClaimsUseCase.execute(db, kv, projectId, authHeader, params);
       return c.json(result, 200);
     } catch (err: any) {
-      let status: any = 500;
-      if (err.message.startsWith('Unauthorized')) {
-        status = 401;
-      } else if (err.message.startsWith('Forbidden')) {
-        status = 403;
-      } else if (err.message.startsWith('Missing') || err.message.startsWith('Invalid')) {
-        status = 400;
-      }
-      return c.json({ error: err.message }, status);
+      return handleError(c, err);
     }
   });
 }
