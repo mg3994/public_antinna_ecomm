@@ -30,6 +30,34 @@ export class CreateOrderUseCase {
     order: any,
     authHeader?: string
   ): Promise<{ orderId: string; order: any }> {
+    // 1. Strict Payload Structural Validation
+    if (!order || typeof order !== 'object') {
+      throw new ValidationError('Invalid order payload: must be a valid JSON object.');
+    }
+
+    if (order['@type'] !== 'Order') {
+      throw new ValidationError('Invalid order payload: "@type" must be "Order".');
+    }
+
+    if (!order.orderedItem) {
+      throw new ValidationError('Invalid order payload: "orderedItem" is required.');
+    }
+
+    const items = Array.isArray(order.orderedItem) ? order.orderedItem : [order.orderedItem];
+    if (items.length === 0) {
+      throw new ValidationError('Invalid order payload: "orderedItem" must contain at least one item.');
+    }
+
+    for (const item of items) {
+      if (!item.orderedItem) {
+        throw new ValidationError('Invalid order item: each item must reference a product or service ("orderedItem").');
+      }
+      const quantity = item.orderQuantity;
+      if (quantity === undefined || quantity === null || Number(quantity) <= 0) {
+        throw new ValidationError('Invalid order item quantity: must be greater than zero.');
+      }
+    }
+
     const orderId = order.id || `ord_${Date.now()}_${Math.random().toString(36).substring(2, 7)}`;
 
     let token: string | null = null;
@@ -146,11 +174,16 @@ export class RecordPaymentUseCase {
       throw new UnauthorizedError('Firebase ID Token signature is invalid, expired, or project ID mismatches.');
     }
 
+    // Strict Payment Payload Validation
+    if (!paymentData || typeof paymentData !== 'object') {
+      throw new ValidationError('Invalid payment payload: must be a valid JSON object.');
+    }
+
     const orderId = paymentData.orderId;
     const paymentId = paymentData.id || `pay_${Date.now()}`;
 
-    if (!orderId) {
-      throw new ValidationError('Missing required field: orderId');
+    if (!orderId || typeof orderId !== 'string' || orderId.trim() === '') {
+      throw new ValidationError('Missing or invalid required field: orderId');
     }
 
     const order = await this.orderRepository.getOrderById(db, orderId);
