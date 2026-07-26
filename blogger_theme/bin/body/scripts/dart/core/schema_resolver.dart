@@ -10,12 +10,24 @@ class SchemaResolver {
     final scripts = document.querySelectorAll('script[type="application/ld+json"]');
     for (var s in scripts) {
       final parsed = SchemaParser.parseJSON(s.text);
-      if (parsed != null) {
-        final id = parsed['@id']?.toString();
-        if (id != null && id.isNotEmpty) {
-          _cache[id] = parsed;
+      if (parsed == null) continue;
+
+      if (parsed is Map<String, dynamic>) {
+        _registerEntity(parsed);
+      } else if (parsed is List) {
+        for (var item in parsed) {
+          if (item is Map<String, dynamic>) {
+            _registerEntity(item);
+          }
         }
       }
+    }
+  }
+
+  static void _registerEntity(Map<String, dynamic> entity) {
+    final id = entity['@id']?.toString();
+    if (id != null && id.isNotEmpty) {
+      _cache[id] = entity;
     }
   }
 
@@ -90,10 +102,28 @@ class SchemaResolver {
       final response = await HttpRequest.getString(id);
       final parsed = SchemaParser.parseJSON(response);
       if (parsed != null) {
-        _cache[id] = parsed;
-        final fullyResolved = await resolve(parsed);
-        _cache[id] = fullyResolved;
-        return fullyResolved;
+        if (parsed is Map<String, dynamic>) {
+          _registerEntity(parsed);
+          final fullyResolved = await resolve(parsed);
+          _cache[id] = fullyResolved;
+          return fullyResolved;
+        } else if (parsed is List) {
+          Map<String, dynamic>? targetEntity;
+          for (var item in parsed) {
+            if (item is Map<String, dynamic>) {
+              _registerEntity(item);
+              final itemId = item['@id']?.toString();
+              if (itemId == id) {
+                targetEntity = item;
+              }
+            }
+          }
+          if (targetEntity != null) {
+            final fullyResolved = await resolve(targetEntity);
+            _cache[id] = fullyResolved;
+            return fullyResolved;
+          }
+        }
       }
     } catch (e) {
       print("Warning: Failed to fetch external schema reference for $id: $e");

@@ -7,7 +7,9 @@ class SchemaParser {
     return textArea.value ?? '';
   }
 
-  static Map<String, dynamic>? parseJSON(String? text) {
+  /// Parses a text payload which may contain standard JSON-LD script blocks or raw JSON.
+  /// Decodes HTML entities, strips comments, and handles both `Map<String, dynamic>` and `List<dynamic>` roots.
+  static dynamic parseJSON(String? text) {
     if (text == null || text.trim().isEmpty) return null;
 
     final regex = RegExp(
@@ -29,13 +31,13 @@ class SchemaParser {
           .replaceAll(RegExp(r'\/\*[\s\S]*?\/'), '')
           .replaceAll(RegExp(r'([^\\:]|^)\/\/.*$'), '')
           .trim();
-      return json.decode(cleanJson) as Map<String, dynamic>;
+      return json.decode(cleanJson);
     } catch (e) {
-      final braceRegex = RegExp(r'\{[\s\S]*\}');
+      final braceRegex = RegExp(r'\{[\s\S]*\}|\[[\s\S]*\]');
       final braceMatch = braceRegex.firstMatch(decoded);
       if (braceMatch != null) {
         try {
-          return json.decode(braceMatch.group(0)!) as Map<String, dynamic>;
+          return json.decode(braceMatch.group(0)!);
         } catch (_) {}
       }
       print("Failed to parse JSON-LD: $e");
