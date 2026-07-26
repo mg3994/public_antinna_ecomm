@@ -19,14 +19,14 @@ Future<void> fetchAntinnaEngine() async {
       final jsContent = utf8.decode(bytes);
       final jsContentClean = jsContent.replaceAll(
         '"""',
-        '\"\"\"',
+        '"""',
       ); // Clean up any triple quotes
 
       final dartContent =
           '''import 'package:blogger_theme/blogger_theme.dart';
 
 final antinna_engine_script = Script(
-  type: 'text/javascript',
+  type: 'module',
   contentInCDATA: true,
   content: r"""$jsContentClean""",
 );

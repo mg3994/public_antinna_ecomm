@@ -16,21 +16,7 @@ export class CartRenderer {
       fab.className = "cart-fab";
       fab.onclick = () => (window as any).AntinnaEngine.refreshCartData();
 
-      const style = document.createElement('style');
-      style.textContent = `
-        .cart-fab { position: fixed; bottom: 30px; right: 30px; z-index: 1000; transition: transform 0.3s; cursor: pointer; display: flex; align-items: center; justify-content: center; }
-        .cart-fab.loading { pointer-events: none; opacity: 0.8; }
-        .cart-spinner {
-            display: none; width: 24px; height: 24px; border: 3px solid rgba(255,255,255,.3);
-            border-radius: 50%; border-top-color: #fff; animation: cart-spin 1s ease-in-out infinite;
-        }
-        .cart-fab.loading .cart-spinner { display: block; }
-        .cart-fab.loading .cart-icon { display: none; }
-        .cart-fab.loading .cart-count { display: none; }
-        @keyframes cart-spin { to { transform: rotate(360deg); } }
-      `;
-      document.head.appendChild(style);
-
+      // Cart FAB & spinner styles are now fully pre-compiled in css.dart to optimize minified script size
       fab.innerHTML = `<span class="cart-icon">🛒</span><span class="cart-spinner"></span><span class="cart-count">0</span>`;
       container.appendChild(fab);
     }

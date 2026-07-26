@@ -3,10 +3,10 @@ import 'package:blogger_theme/blogger_theme.dart';
 final theme_mode_sync_script = Script(
   contentInCDATA: true,
   content: ''' 
-           /**
+        /**
          * Toggles responsive state for the mobile drawer container panel.
          */
-        function toggleSidebarDrawer() {
+        window.toggleSidebarDrawer = function() {
             const sidebar = document.getElementById('sidebar-drawer');
             const backdrop = document.getElementById('sidebar-backdrop');
             
@@ -14,13 +14,13 @@ final theme_mode_sync_script = Script(
                 sidebar.classList.toggle('drawer-open');
                 backdrop.classList.toggle('backdrop-active');
             }
-        }
+        };
 
         /**
          * Handles module option dropdown panel expansion and triggers smooth arrow transforms dynamically.
          * @param {string} moduleId - Target DOM container node identifier token string.
          */
-        function toggleModuleDropdown(moduleId) {
+        window.toggleModuleDropdown = function(moduleId) {
             const targetModule = document.getElementById(moduleId);
             const arrowIndicator = document.getElementById(moduleId + '-arrow');
             
@@ -39,13 +39,13 @@ final theme_mode_sync_script = Script(
                     }
                 }
             }
-        }
+        };
 
         /**
          * Global Routing Logic Engine: Automatically scans, parses, and assigns 
          * active highlight states based on browser route path locations.
          */
-        function highlightActivePathsByRoute() {
+        window.highlightActivePathsByRoute = function() {
             const currentSystemPathname = window.location.pathname;
             const structuralNavLinks = document.querySelectorAll('.nav-route-link');
             
@@ -63,7 +63,7 @@ final theme_mode_sync_script = Script(
                     }
                 }
             });
-        }
+        };
 
         /**
          * Global Workspace Listeners Initializer Pipeline.
@@ -91,7 +91,7 @@ final theme_mode_sync_script = Script(
             syncThemeIconDisplays();
             
             // Automatically match, map, and highlight routes across navigation groups
-            highlightActivePathsByRoute();
+            window.highlightActivePathsByRoute();
 
             if (themeBtn) {
                 themeBtn.addEventListener('click', () => {
@@ -120,6 +120,40 @@ final theme_mode_sync_script = Script(
                         sunIcon.classList.add('ui-hidden');
                     }
                 }
+            }
+
+            // 3. Mobile Header Hide/Show on Scroll inside scrollable-main-content
+            const scrollLayer = document.querySelector('.scrollable-main-content');
+            const headerEl = document.querySelector('.top-navbar-header');
+            const catSectionEl = document.querySelector('.category-section-wrapper');
+
+            if (scrollLayer && headerEl) {
+                let lastScrollTop = 0;
+                const scrollThreshold = 10; // Scroll threshold to trigger hide/show
+
+                scrollLayer.addEventListener('scroll', () => {
+                    // Check if width is mobile (<= 992px)
+                    if (window.innerWidth <= 992) {
+                        const scrollTop = scrollLayer.scrollTop;
+
+                        if (Math.abs(lastScrollTop - scrollTop) <= scrollThreshold) {
+                            return;
+                        }
+
+                        if (scrollTop > lastScrollTop && scrollTop > 64) {
+                            // Scrolling Down - hide header, slide category bar up
+                            headerEl.classList.add('header-hidden');
+                            if (catSectionEl) catSectionEl.classList.add('header-hidden');
+                            scrollLayer.classList.add('header-hidden-padding');
+                        } else {
+                            // Scrolling Up - show header, slide category bar down
+                            headerEl.classList.remove('header-hidden');
+                            if (catSectionEl) catSectionEl.classList.remove('header-hidden');
+                            scrollLayer.classList.remove('header-hidden-padding');
+                        }
+                        lastScrollTop = scrollTop;
+                    }
+                });
             }
         });
       ''',

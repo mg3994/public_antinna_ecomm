@@ -1,0 +1,39 @@
+name: Build and Release
+
+on:
+  push:
+    branches:
+      - '**'
+  pull_request:
+    branches:
+      - '**'
+
+permissions:
+  contents: write
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v3
+
+    - name: Set up Dart SDK
+      uses: dart-lang/setup-dart@v1
+
+    - name: Get Dart dependencies
+      working-directory: blogger_theme
+      run: dart pub get
+
+    - name: Compile Blogger XML theme
+      working-directory: blogger_theme
+      run: dart bin/main.dart --generate-only
+
+    - name: Push into Releases Tab
+      uses: ncipollo/release-action@v1
+      with:
+        artifacts: "blogger_theme/build/blogger/theme.xml"
+        tag: "v${{ github.run_number }}"
+        name: "Release v${{ github.run_number }}"
+        allowUpdates: true
+        token: ${{ secrets.GITHUB_TOKEN }}

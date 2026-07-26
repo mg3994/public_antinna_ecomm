@@ -510,7 +510,7 @@ export class ProductRenderer {
     }
   }
 
-  private renderAddOns(addOns: any[], s: Organization | any, p: any): void {
+  private renderAddOns(addOns: any[], _s: Organization | any, p: any): void {
       let addonSec = UIManager.el("addon-services");
       if (!addonSec) {
           addonSec = document.createElement('div');
