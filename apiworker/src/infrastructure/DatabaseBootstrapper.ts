@@ -1,9 +1,9 @@
 import { IDatabaseBootstrapper } from '../domain/types';
 
 export class DatabaseBootstrapper implements IDatabaseBootstrapper {
-  async bootstrap(db: any): Promise<void> {
-    await db.batch([
-      db.prepare(`
+	async bootstrap(db: any): Promise<void> {
+		await db.batch([
+			db.prepare(`
         CREATE TABLE IF NOT EXISTS orders (
           id TEXT PRIMARY KEY,
           payload TEXT NOT NULL,
@@ -11,7 +11,7 @@ export class DatabaseBootstrapper implements IDatabaseBootstrapper {
           created_at DATETIME DEFAULT CURRENT_TIMESTAMP
         )
       `),
-      db.prepare(`
+			db.prepare(`
         CREATE TABLE IF NOT EXISTS payments (
           id TEXT PRIMARY KEY,
           order_id TEXT NOT NULL,
@@ -20,14 +20,14 @@ export class DatabaseBootstrapper implements IDatabaseBootstrapper {
           FOREIGN KEY(order_id) REFERENCES orders(id)
         )
       `),
-      db.prepare(`
+			db.prepare(`
         CREATE TABLE IF NOT EXISTS user_claims (
           uid TEXT PRIMARY KEY,
           owners TEXT NOT NULL,
           moderators TEXT NOT NULL,
           staffs TEXT NOT NULL
         )
-      `)
-    ]);
-  }
+      `),
+		]);
+	}
 }

@@ -12,16 +12,16 @@ import { SessionRepository } from './infrastructure/SessionRepository';
 import { UserClaimsRepository } from './infrastructure/UserClaimsRepository';
 
 import {
-  CreateOrderUseCase,
-  GetOrdersUseCase,
-  GetOrderStatusUseCase,
-  RecordPaymentUseCase,
-  GetNotificationsUseCase,
-  GetNotificationByIdUseCase,
-  SaveSessionUseCase,
-  GetSessionUseCase,
-  DeleteSessionUseCase,
-  ManageUserClaimsUseCase
+	CreateOrderUseCase,
+	GetOrdersUseCase,
+	GetOrderStatusUseCase,
+	RecordPaymentUseCase,
+	GetNotificationsUseCase,
+	GetNotificationByIdUseCase,
+	SaveSessionUseCase,
+	GetSessionUseCase,
+	DeleteSessionUseCase,
+	ManageUserClaimsUseCase,
 } from './application/usecases';
 
 import { configureRoutes, Env } from './presentation/controllers';
@@ -35,12 +35,15 @@ app.use('*', logger());
 app.use('*', secureHeaders());
 
 // Enable CORS for custom domain and Blogger subdomain compatibility
-app.use('*', cors({
-  origin: '*',
-  allowMethods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
-  allowHeaders: ['Content-Type', 'Authorization', 'X-Antinna-Client-Id'],
-  maxAge: 86400,
-}));
+app.use(
+	'*',
+	cors({
+		origin: '*',
+		allowMethods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+		allowHeaders: ['Content-Type', 'Authorization', 'X-Antinna-Client-Id'],
+		maxAge: 86400,
+	}),
+);
 
 // Instantiate Core Services & Repositories
 const authService = new AuthService();
@@ -55,7 +58,13 @@ const userClaimsRepository = new UserClaimsRepository();
 const createOrderUseCase = new CreateOrderUseCase(authService, orderRepository);
 const getOrdersUseCase = new GetOrdersUseCase(authService, orderRepository, userClaimsRepository);
 const getOrderStatusUseCase = new GetOrderStatusUseCase(orderRepository);
-const recordPaymentUseCase = new RecordPaymentUseCase(authService, orderRepository, paymentRepository, notificationRepository, userClaimsRepository);
+const recordPaymentUseCase = new RecordPaymentUseCase(
+	authService,
+	orderRepository,
+	paymentRepository,
+	notificationRepository,
+	userClaimsRepository,
+);
 const getNotificationsUseCase = new GetNotificationsUseCase(notificationRepository);
 const getNotificationByIdUseCase = new GetNotificationByIdUseCase(notificationRepository);
 const saveSessionUseCase = new SaveSessionUseCase(sessionRepository);
@@ -65,28 +74,28 @@ const manageUserClaimsUseCase = new ManageUserClaimsUseCase(authService, userCla
 
 // Wire Presentation and Routing Layers
 configureRoutes(
-  app,
-  bootstrapper,
-  createOrderUseCase,
-  getOrdersUseCase,
-  getOrderStatusUseCase,
-  recordPaymentUseCase,
-  getNotificationsUseCase,
-  getNotificationByIdUseCase,
-  saveSessionUseCase,
-  getSessionUseCase,
-  deleteSessionUseCase,
-  manageUserClaimsUseCase
+	app,
+	bootstrapper,
+	createOrderUseCase,
+	getOrdersUseCase,
+	getOrderStatusUseCase,
+	recordPaymentUseCase,
+	getNotificationsUseCase,
+	getNotificationByIdUseCase,
+	saveSessionUseCase,
+	getSessionUseCase,
+	deleteSessionUseCase,
+	manageUserClaimsUseCase,
 );
 
 // Favicon redirect
 app.get('/favicon.ico', (c) => {
-  return c.redirect('https://www.antinna.in/favicon.ico', 301);
+	return c.redirect('https://www.antinna.in/favicon.ico', 301);
 });
 
 // Root welcome message
 app.get('/', (c) => {
-  return c.text('Welcome to Antinna Ecommerce API Server powered by Hono on Cloudflare Workers!');
+	return c.text('Welcome to Antinna Ecommerce API Server powered by Hono on Cloudflare Workers!');
 });
 
 export default app;
