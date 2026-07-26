@@ -26,6 +26,21 @@ export interface Env {
   FIREBASE_PROJECT_ID: string;
 }
 
+// Standalone global helper to map Domain exceptions to HTTP response codes dynamically
+export function mapDomainExceptionToResponse(c: any, err: any) {
+  let status: any = 500;
+  if (err instanceof UnauthorizedError) {
+    status = 401;
+  } else if (err instanceof ForbiddenError) {
+    status = 403;
+  } else if (err instanceof NotFoundError) {
+    status = 404;
+  } else if (err instanceof ValidationError) {
+    status = 400;
+  }
+  return c.json({ error: err.message }, status);
+}
+
 export function configureRoutes(
   app: Hono<{ Bindings: Env }>,
   bootstrapper: IDatabaseBootstrapper,
@@ -50,20 +65,6 @@ export function configureRoutes(
     await bootstrapper.bootstrap(db);
   };
 
-  const handleError = (c: any, err: any) => {
-    let status: any = 500;
-    if (err instanceof UnauthorizedError) {
-      status = 401;
-    } else if (err instanceof ForbiddenError) {
-      status = 403;
-    } else if (err instanceof NotFoundError) {
-      status = 404;
-    } else if (err instanceof ValidationError) {
-      status = 400;
-    }
-    return c.json({ error: err.message }, status);
-  };
-
   // 1. POST /orders: Create a new order record
   app.post('/orders', async (c) => {
     const db = c.env.DB;
@@ -73,21 +74,17 @@ export function configureRoutes(
     if (!db) return c.json({ error: 'Database binding "DB" is missing.' }, 500);
     if (!kv) return c.json({ error: 'KV Namespace binding "SESSIONS" is missing.' }, 500);
 
-    try {
-      await ensureDb(c);
-      const order = await c.req.json();
-      const authHeader = c.req.header('Authorization');
+    await ensureDb(c);
+    const order = await c.req.json();
+    const authHeader = c.req.header('Authorization');
 
-      const result = await createOrderUseCase.execute(db, kv, projectId, order, authHeader);
-      return c.json({
-        success: true,
-        orderId: result.orderId,
-        order: result.order,
-        message: 'Order created and customer claims linked successfully.'
-      }, 201);
-    } catch (err: any) {
-      return handleError(c, err);
-    }
+    const result = await createOrderUseCase.execute(db, kv, projectId, order, authHeader);
+    return c.json({
+      success: true,
+      orderId: result.orderId,
+      order: result.order,
+      message: 'Order created and customer claims linked successfully.'
+    }, 201);
   });
 
   // 2. GET /orders: List paginated orders (Tenant-aware filter checking database-backed claims)
@@ -103,18 +100,14 @@ export function configureRoutes(
     const page = parseInt(c.req.query('page') || '1') || 1;
     const pageSize = parseInt(c.req.query('pageSize') || '20') || 20;
 
-    try {
-      await ensureDb(c);
-      const result = await getOrdersUseCase.execute(db, kv, projectId, authHeader, page, pageSize);
-      return c.json({
-        orders: result.orders,
-        totalResults: result.totalResults,
-        page,
-        pageSize,
-      });
-    } catch (err: any) {
-      return handleError(c, err);
-    }
+    await ensureDb(c);
+    const result = await getOrdersUseCase.execute(db, kv, projectId, authHeader, page, pageSize);
+    return c.json({
+      orders: result.orders,
+      totalResults: result.totalResults,
+      page,
+      pageSize,
+    });
   });
 
   // 3. GET /orders/:id/status: Check order payment status
@@ -124,13 +117,9 @@ export function configureRoutes(
 
     const orderId = c.req.param('id');
 
-    try {
-      await ensureDb(c);
-      const status = await getOrderStatusUseCase.execute(db, orderId);
-      return c.json({ orderId, status });
-    } catch (err: any) {
-      return handleError(c, err);
-    }
+    await ensureDb(c);
+    const status = await getOrderStatusUseCase.execute(db, orderId);
+    return c.json({ orderId, status });
   });
 
   // 4. POST /payments: Record a payment (requires verified Owner/Moderator claims + idempotent checkout)
@@ -144,20 +133,16 @@ export function configureRoutes(
 
     const authHeader = c.req.header('Authorization');
 
-    try {
-      await ensureDb(c);
-      const paymentData = await c.req.json();
-      const result = await recordPaymentUseCase.execute(db, kv, projectId, authHeader, paymentData);
+    await ensureDb(c);
+    const paymentData = await c.req.json();
+    const result = await recordPaymentUseCase.execute(db, kv, projectId, authHeader, paymentData);
 
-      const statusCode: any = result.alreadyPaid ? 200 : 201;
-      return c.json({
-        success: true,
-        paymentId: result.paymentId,
-        message: result.message
-      }, statusCode);
-    } catch (err: any) {
-      return handleError(c, err);
-    }
+    const statusCode: any = result.alreadyPaid ? 200 : 201;
+    return c.json({
+      success: true,
+      paymentId: result.paymentId,
+      message: result.message
+    }, statusCode);
   });
 
   // 5. GET /notifications: List paginated notifications from KV Namespace SESSIONS
@@ -168,17 +153,13 @@ export function configureRoutes(
     const page = parseInt(c.req.query('page') || '1') || 1;
     const pageSize = parseInt(c.req.query('pageSize') || '20') || 20;
 
-    try {
-      const result = await getNotificationsUseCase.execute(kv, page, pageSize);
-      return c.json({
-        notifications: result.notifications,
-        totalResults: result.totalResults,
-        page,
-        pageSize,
-      });
-    } catch (err: any) {
-      return handleError(c, err);
-    }
+    const result = await getNotificationsUseCase.execute(kv, page, pageSize);
+    return c.json({
+      notifications: result.notifications,
+      totalResults: result.totalResults,
+      page,
+      pageSize,
+    });
   });
 
   // 6. GET /notifications/:id: Read specific notification by ID from KV Namespace SESSIONS
@@ -188,12 +169,8 @@ export function configureRoutes(
 
     const notificationId = c.req.param('id');
 
-    try {
-      const notification = await getNotificationByIdUseCase.execute(kv, notificationId);
-      return c.json(notification);
-    } catch (err: any) {
-      return handleError(c, err);
-    }
+    const notification = await getNotificationByIdUseCase.execute(kv, notificationId);
+    return c.json(notification);
   });
 
   // 7. POST /sessions: Store or update user session data inside KV (using browserClientId)
@@ -201,17 +178,13 @@ export function configureRoutes(
     const kv = c.env.SESSIONS;
     if (!kv) return c.json({ error: 'KV Namespace binding "SESSIONS" is missing.' }, 500);
 
-    try {
-      const { browserClientId, sessionData } = await c.req.json();
-      await saveSessionUseCase.execute(kv, browserClientId, sessionData);
-      return c.json({
-        success: true,
-        browserClientId,
-        message: 'User browser session stored successfully inside KV.'
-      });
-    } catch (err: any) {
-      return handleError(c, err);
-    }
+    const { browserClientId, sessionData } = await c.req.json();
+    await saveSessionUseCase.execute(kv, browserClientId, sessionData);
+    return c.json({
+      success: true,
+      browserClientId,
+      message: 'User browser session stored successfully inside KV.'
+    });
   });
 
   // 8. GET /sessions/:browserClientId: Retrieve user session data from KV
@@ -221,12 +194,8 @@ export function configureRoutes(
 
     const browserClientId = c.req.param('browserClientId');
 
-    try {
-      const sessionData = await getSessionUseCase.execute(kv, browserClientId);
-      return c.json({ browserClientId, sessionData });
-    } catch (err: any) {
-      return handleError(c, err);
-    }
+    const sessionData = await getSessionUseCase.execute(kv, browserClientId);
+    return c.json({ browserClientId, sessionData });
   });
 
   // 9. DELETE /sessions/:browserClientId: Delete user session data from KV
@@ -236,16 +205,12 @@ export function configureRoutes(
 
     const browserClientId = c.req.param('browserClientId');
 
-    try {
-      await deleteSessionUseCase.execute(kv, browserClientId);
-      return c.json({
-        success: true,
-        browserClientId,
-        message: 'User session terminated and removed from KV.'
-      });
-    } catch (err: any) {
-      return handleError(c, err);
-    }
+    await deleteSessionUseCase.execute(kv, browserClientId);
+    return c.json({
+      success: true,
+      browserClientId,
+      message: 'User session terminated and removed from KV.'
+    });
   });
 
   // 10. POST /claims/manage: Manage moderators and staff securely (Owner only check on specific store/business)
@@ -259,14 +224,10 @@ export function configureRoutes(
 
     const authHeader = c.req.header('Authorization');
 
-    try {
-      await ensureDb(c);
-      const params = await c.req.json();
-      const result = await manageUserClaimsUseCase.execute(db, kv, projectId, authHeader, params);
-      return c.json(result, 200);
-    } catch (err: any) {
-      return handleError(c, err);
-    }
+    await ensureDb(c);
+    const params = await c.req.json();
+    const result = await manageUserClaimsUseCase.execute(db, kv, projectId, authHeader, params);
+    return c.json(result, 200);
   });
 
   // 11. POST /claims/register-owner: Bootstrap/claim store ownership safely (First claimer gets registration)
@@ -280,13 +241,9 @@ export function configureRoutes(
 
     const authHeader = c.req.header('Authorization');
 
-    try {
-      await ensureDb(c);
-      const { businessId } = await c.req.json();
-      const result = await registerOwnerUseCase.execute(db, kv, projectId, authHeader, businessId);
-      return c.json(result, 200);
-    } catch (err: any) {
-      return handleError(c, err);
-    }
+    await ensureDb(c);
+    const { businessId } = await c.req.json();
+    const result = await registerOwnerUseCase.execute(db, kv, projectId, authHeader, businessId);
+    return c.json(result, 200);
   });
 }

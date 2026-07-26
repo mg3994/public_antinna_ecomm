@@ -25,7 +25,7 @@ import {
   RegisterOwnerUseCase
 } from './application/usecases';
 
-import { configureRoutes, Env } from './presentation/controllers';
+import { configureRoutes, Env, mapDomainExceptionToResponse } from './presentation/controllers';
 
 const app = new Hono<{ Bindings: Env }>();
 
@@ -42,6 +42,12 @@ app.use('*', cors({
   allowHeaders: ['Content-Type', 'Authorization', 'X-Antinna-Client-Id'],
   maxAge: 86400,
 }));
+
+// Configure Centralized Global Error Handler
+app.onError((err, c) => {
+  console.error('Centralized Global Error caught:', err);
+  return mapDomainExceptionToResponse(c, err);
+});
 
 // Instantiate Core Services & Repositories
 const authService = new AuthService();
